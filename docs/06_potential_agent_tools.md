@@ -8,9 +8,9 @@
 
 ## 1. What this file is for
 
-The project involves a ~1.56 GB **synthetic Swift cross-border payment dataset** and a short preliminary-round deadline (**19 November 2026, noon MYT**). AI assistants may help write and execute analyses, but the **numbers and conclusions must come from reproducible local calculations**, not the assistants' descriptions.
+The project involves a 4.6 GB **synthetic Swift cross-border payment dataset** (about 1.3 GB as Parquet) and a short preliminary-round deadline (**19 November 2026, noon MYT**). AI assistants may help write and execute analyses, but the **numbers and conclusions must come from reproducible local calculations**, not the assistants' descriptions.
 
-The aim of a tool is to make an agent better at **running, checking, reproducing, or presenting** evidence. More autonomy, more MCP servers, or a larger agent roster are not goals in themselves. For scientific investigation approaches rather than tools, see [`RESEARCH_PATHWAYS.md`](RESEARCH_PATHWAYS.md) if that document is present.
+The aim of a tool is to make an agent better at **running, checking, reproducing, or presenting** evidence. More autonomy, more MCP servers, or a larger agent roster are not goals in themselves. For scientific investigation approaches rather than tools, see [`04_research_pathways.md`](04_research_pathways.md).
 
 ## 2. Small shortlist: the default starting point
 
@@ -136,6 +136,8 @@ Possible outcomes: **use existing tools**, **trial in isolation**, **adopt for o
 - Use the official case study and judging rubric as the source of truth if this note conflicts with them.
 
 ## 9. Suggested repository placement
+
+> **Not adopted.** The team keeps both optional notes directly in `docs/` as `04_research_pathways.md` and `06_potential_agent_tools.md`; `AGENTS.md` and the root `README.md` already point to them. The layout below is the original suggestion, kept for the record.
 
 ```text
 docs/

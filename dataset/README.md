@@ -1,6 +1,6 @@
 # Dataset
 
-The sponsor data lives in this folder **on your own machine only**. It is never committed: `.gitignore` blocks `*.csv` and `*.parquet`. Do not upload it, email it, or put raw rows in the PDFs.
+The sponsor data lives in this folder **on your own machine only**. It is never committed: `.gitignore` blocks everything in this folder except this README. Do not upload it, email it, or put raw rows in the PDFs.
 
 ## Get it
 
@@ -12,10 +12,10 @@ The sponsor data lives in this folder **on your own machine only**. It is never 
 From the repository root:
 
 ```bash
-uv run --with duckdb --with pandas python analysis/00_prep/build_parquet.py
+uv run python analysis/00_prep/build_parquet.py
 ```
 
-This writes `payments.parquet` (about 1.3 GB) here. Always analyse the Parquet file, not the CSV: it loads in seconds and has the right types.
+This writes `payments.parquet` (about 1.3 GB) here, after checking that its record count matches the CSV. If the build fails, any existing `payments.parquet` is left as it was. Always analyse the Parquet file, not the CSV: it loads in seconds and has the right types.
 
 ## What is in `payments.parquet`
 

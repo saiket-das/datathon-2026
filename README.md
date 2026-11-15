@@ -24,6 +24,8 @@ Optional tool and agent-integration ideas: [docs/06_potential_agent_tools.md](do
 ```text
 README.md                  you are here
 AGENTS.md                  instructions for AI assistants working in this repo
+pyproject.toml, uv.lock    the Python libraries and their pinned versions (managed by uv)
+.github/workflows/         automatic checks on every pull request (no dataset needed)
 docs/
   01_project_in_simple_words.md   plain-language introduction
   02_competition_brief.md         one-page factual brief of the rules
@@ -34,7 +36,7 @@ docs/
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
-  00_prep/                 shared: CSV -> Parquet conversion, first profile
+  00_prep/                 shared: CSV -> Parquet conversion, first profile, setup tests
   10_amounts_currency/     owner A
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
@@ -47,19 +49,32 @@ deliverables/              final dashboards PDF and slides PDF, plus the submiss
 
 ## Quick start (first time on a new machine)
 
-You need Python 3.11+ and [uv](https://docs.astral.sh/uv/) (`brew install uv` on macOS).
+You need Git and [uv](https://docs.astral.sh/uv/). uv installs Python (3.11 or newer) and the exact library versions pinned in `uv.lock`, so everyone runs the same environment.
+
+| | Install uv |
+|---|---|
+| macOS | `brew install uv` |
+| Windows (PowerShell) | `winget install --id=astral-sh.uv -e` |
+
+Run these from the repository root. The commands are the same on macOS and Windows.
 
 ```bash
-# 1. put the organiser CSV in dataset/ (see dataset/README.md)
-# 2. build the Parquet copy once (~5 min, ~1.3 GB)
-uv run --with duckdb --with pandas python analysis/00_prep/build_parquet.py
-# 3. check it works (~10 s)
-uv run --with duckdb --with pandas python analysis/00_prep/profile.py
+git clone https://github.com/saiket-das/datathon-2026.git
+cd datathon-2026
+# 1. check your environment (~1 min the first time, no dataset needed): expect "31 passed"
+uv run pytest
+# 2. put the organiser CSV in dataset/ (see dataset/README.md)
+# 3. build the Parquet copy once (~5 min, ~1.3 GB; needs ~3 GB free disk)
+uv run python analysis/00_prep/build_parquet.py
+# 4. check it works (~10 s): ends with "OK: all profile queries ran."
+uv run python analysis/00_prep/profile.py
 ```
+
+Need another library? For a one-off, `uv run --with <name> python <script>`. For the team, `uv add <name>` and commit `pyproject.toml` and `uv.lock` together in a pull request.
 
 ## Ground rules
 
-- **Never commit or share the dataset** or raw records, including screenshots of individual rows in the PDFs. `.gitignore` already blocks `*.csv` and `*.parquet`; do not override it.
+- **Never commit or share the dataset** or raw records, including screenshots of individual rows in the PDFs. `.gitignore` blocks everything in `dataset/` and all data-shaped files; never override it with `git add -f`. Do not paste rows into an AI chat either: a cloud-hosted assistant is a third party.
 - **Only the Swift dataset** is primary data. External statistics may support interpretation only, cited in APA style with URLs.
 - **Every claim needs a script.** A number that goes in the PDFs must come from a script in `analysis/` that someone else can re-run.
-- **Work on a branch, merge through a pull request**, and only edit files in your own analysis folder unless agreed.
+- **Work on a branch, merge through a pull request**, and only edit files in your own analysis folder unless agreed. Name branches `<owner letter>/<topic>`, for example `b/duration-by-hops`; never push to `main` directly.
