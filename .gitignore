@@ -26,6 +26,8 @@
 *.avro
 *.jsonl
 *.ndjson
+# Jupyter notebooks may embed cached sponsor transaction records or outputs.
+*.ipynb
 *.xlsx
 *.xls
 *.pkl
