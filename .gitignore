@@ -1,4 +1,17 @@
-# Competition dataset, intermediate datasets, extracts, local databases
+# Sponsor dataset folder: everything in it stays local, except its README.
+/dataset/*
+!/dataset/README.md
+
+# Script outputs: only charts and Markdown aggregate tables may be committed.
+/analysis/*/out/*
+!/analysis/*/out/.gitkeep
+!/analysis/*/out/*.png
+!/analysis/*/out/*.jpg
+!/analysis/*/out/*.svg
+!/analysis/*/out/*.pdf
+!/analysis/*/out/*.md
+
+# Data-shaped files anywhere else in the repository
 /data/
 /datasets/
 /raw/
@@ -6,17 +19,34 @@
 *.csv
 *.tsv
 *.parquet
+*.partial
 *.arrow
 *.feather
+*.orc
+*.avro
 *.jsonl
+*.ndjson
+*.xlsx
+*.xls
+*.pkl
+*.pickle
+*.npy
+*.npz
+*.h5
+*.hdf5
 *.duckdb
+*.wal
 *.sqlite
 *.sqlite3
 *.db
 *.zip
 *.7z
+*.rar
 *.tar
 *.gz
+*.bz2
+*.xz
+*.zst
 
 # Local credentials and environment
 .env
@@ -26,6 +56,7 @@
 venv/
 __pycache__/
 .pytest_cache/
+.ruff_cache/
 .ipynb_checkpoints/
 .DS_Store
 
