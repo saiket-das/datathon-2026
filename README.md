@@ -17,6 +17,8 @@ Private workspace for a 3-person team. Our task: **reverse-engineer the hidden r
 
 Need the exact official wording? See [docs/official/README.md](docs/official/README.md), which says which PDF answers which question.
 
+Optional tool and agent-integration ideas: [docs/06_potential_agent_tools.md](docs/06_potential_agent_tools.md). Use only if a specific need arises.
+
 ## Folder map
 
 ```text
@@ -28,6 +30,7 @@ docs/
   03_execution_plan.md            team strategy and timeline
   04_research_pathways.md         optional method ideas (non-binding)
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
+  06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
