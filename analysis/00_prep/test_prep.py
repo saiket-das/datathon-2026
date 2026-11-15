@@ -230,6 +230,8 @@ def git(*args):
     "dataset/.duckdb_tmp/x.tmp", "analysis/10_amounts_currency/out/rows.csv",
     "analysis/20_routing_time/out/rows.json", "analysis/30_parties_anomalies/out/rows.xlsx",
     "analysis/10_amounts_currency/sample.parquet", "extract.jsonl", "docs/rows.pkl", ".env",
+    "notebook.ipynb", "docs/research-notes.ipynb", "analysis/10_amounts_currency/work.ipynb",
+    "analysis/30_parties_anomalies/out/exploration.ipynb",
 ])
 def test_gitignore_blocks_data_shaped_files(path):
     assert git("check-ignore", "-q", "--no-index", path).returncode == 0, f"{path} is NOT ignored"
@@ -248,6 +250,6 @@ def test_gitignore_allows_intended_files(path):
 @needs_git
 def test_no_data_files_are_tracked():
     tracked = git("ls-files").stdout.split("\n")
-    bad_ext = (".csv", ".tsv", ".parquet", ".xlsx", ".xls", ".jsonl", ".ndjson", ".pkl", ".duckdb", ".db", ".zip", ".gz")
+    bad_ext = (".csv", ".tsv", ".parquet", ".xlsx", ".xls", ".jsonl", ".ndjson", ".pkl", ".ipynb", ".duckdb", ".db", ".zip", ".gz")
     offenders = [f for f in tracked if f.lower().endswith(bad_ext) or (f.startswith("dataset/") and f != "dataset/README.md")]
     assert not offenders, f"data-shaped files are tracked in Git: {offenders}"
