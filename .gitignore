@@ -1,0 +1,30 @@
+# Competition dataset, intermediate datasets, extracts, local databases
+/data/
+/datasets/
+/raw/
+/local-data/
+*.csv
+*.tsv
+*.parquet
+*.arrow
+*.feather
+*.jsonl
+*.duckdb
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.7z
+*.tar
+*.gz
+
+# Local credentials and environment
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.ipynb_checkpoints/
+.DS_Store
