@@ -1,13 +1,13 @@
 # Setup Audit and Handover
 
-Written 15 Nov 2026. Records the repository audit, the setup changes in [pull request #2](https://github.com/saiket-das/datathon-2026/pull/2), how they were verified, and what is left for the owner to decide. It covers repository readiness only; no competition analysis was done.
+Written 15 Nov 2026 and corrected the same day after an independent review of the pull request (see [Correction pass](#correction-pass-after-review)). Records the repository audit, the setup changes in [pull request #2](https://github.com/saiket-das/datathon-2026/pull/2), how they were verified, and what is left for the owner to decide. It covers repository readiness only; no competition analysis was done.
 
-**Status:** pull request #2 is open and not merged. Its checks pass on Ubuntu and Windows. The existing `dataset/payments.parquet` is confirmed correct, so nobody who already built it needs to rebuild.
+**Status:** pull request #2 is open and not merged. Its checks pass on Ubuntu and Windows. On the owner's machine the existing `dataset/payments.parquet` passes the row-level comparison with the CSV described in section D2, so there is no known reason to rebuild it. That is a digest comparison with stated limits, not a proof of exact equality.
 
 ## Two things to know first
 
-1. **Seven raw rows were exposed to an AI session during the audit.** A search command was scoped too broadly, matched inside the sponsor CSV, and printed seven synthetic records into a conversation with a cloud-hosted model. Nothing went to Git, a file or the pull request. `AGENTS.md` now has a rule against exactly this (rule 7).
-2. **One of three full builds wrote a damaged Parquet file.** It had the right size and record count, but the start of one column (`BENEFICIARY_TOKENS`, about 2.9 KB) was zeros and could not be read back. The cause was not established; the repeat run was clean and byte-identical to the existing file. The build now reads every column back and compares it with the CSV before replacing the output, so a damaged file is rejected instead of used.
+1. **Seven raw rows were exposed to an AI session during the audit. This is recorded, not resolved.** A search command was scoped too broadly, matched inside the sponsor CSV, and printed seven synthetic records into a conversation with a cloud-hosted model. The disclosure cannot be undone; the rules added since only reduce the chance of a repeat. See [section I](#i-confidentiality-assessment) for the assessment and the decision that is the owner's to make.
+2. **One full build wrote a damaged Parquet file, and the cause is unknown.** Of the four full builds of this dataset (the owner's original and three run during this work), one produced a file with the right size and record count in which the start of one column (`BENEFICIARY_TOKENS`, about 2.9 KB) was zeros and could not be read back. The other three are byte-identical to each other. The build now compares the written file with the CSV before replacing the output, which rejects such a file; it does not remove whatever caused it. See [section J](#j-the-damaged-build).
 
 ## A. Audit summary
 
@@ -21,7 +21,7 @@ Written 15 Nov 2026. Records the repository audit, the setup changes in [pull re
 
 - The repository is private. No data file has ever been committed.
 - The Markdown copies match the PDFs: 98–100% of each PDF's text is present; the remainder is page headers and footers.
-- The existing Parquet matches the CSV: 10,000,000 records, original order preserved, no missing values except `ANOMALY_TYPE`.
+- The existing Parquet has 10,000,000 records, the same as the CSV, with no missing values except `ANOMALY_TYPE`. Its content and record order agree with the CSV under the row-level digest comparison in section D2.
 - The figures quoted in the issues log reproduce from `profile.py` (for example 7,006 labelled rows, 317 `CUSTOMER_RECALL`, 75,803 payments from the busiest ordering account).
 - All relative links between documents resolved, except one (below).
 
@@ -86,22 +86,45 @@ These are analytical or team decisions, so they were left as written.
 **`build_parquet.py`** now:
 - prints aggregate checks only, never records;
 - stops with a clear message if the CSV is missing;
-- writes to a temporary file, reads every column back, and compares the record count and one exact figure per column against the CSV;
+- writes to a temporary file and compares it with the CSV using one MD5 digest per record over the record's position and all 20 original columns (section D2). The first version of this pull request compared only per-column totals (sums and total text lengths), which could not see same-length or sum-preserving changes; the review was right about that;
 - moves the file into place only if those checks pass, so a failed run leaves an existing `payments.parquet` untouched;
 - accepts `--src` and `--out` (used by the tests) and a `DUCKDB_MEMORY_LIMIT` environment variable (default 5GB).
 
 **`profile.py`** now exits with status 1 if the Parquet file is missing or any query fails, and ends with `OK: all profile queries ran.` on success.
 
-**`test_prep.py`** holds 31 checks that run in about 2 seconds on an invented six-record CSV: order and content are preserved, line breaks and quotes survive, no records are printed, each failure path fails loudly, `.gitignore` blocks data-shaped paths and allows the intended ones, and no data file is tracked.
+**`test_prep.py`** holds 44 checks that run in about 5 seconds on an invented six-record CSV: order and content are preserved, line breaks and quotes survive, no records or error details are printed, each failure path fails loudly, ten kinds of damage are detected (section D2), a failed verification never replaces the output, `.gitignore` blocks data-shaped paths and allows the intended ones, and no data file is tracked.
 
 ## D. Environment
 
-- **Python:** 3.11 or newer; uv installs it. Tested on 3.13.2.
+- **Python:** 3.13, pinned in `.python-version`; uv downloads it if the machine does not have it. `pyproject.toml` still allows 3.11 or newer, so the lock file resolves for those versions, but only 3.13 has been run (3.13.2 on the owner's Mac; CI installs 3.13 on Ubuntu and Windows).
 - **Locked libraries:** DuckDB 2.0.0, pandas 3.1.1, Matplotlib 3.11.2, SciPy 1.18.1; pytest for development.
 - **Run a script:** `uv run python <script>` from the repository root.
 - **One-off extra library:** `uv run --with <name> python <script>`, noted in the script's docstring.
 - **Add a library for everyone:** `uv add <name>`, then commit `pyproject.toml` and `uv.lock` together in a pull request.
 - **Deliberately excluded:** Polars, Pandera, statsmodels, Quarto, marimo, MCP servers and agent frameworks. None solves a problem the repository has today.
+
+## D2. What the CSV-to-Parquet verification establishes
+
+Run automatically at the end of every build, and on demand with `uv run python analysis/00_prep/build_parquet.py --verify-only`.
+
+**What it checks**
+- **Record count:** the same from a parallel read of the CSV, a sequential read of the CSV, and the Parquet.
+- **Content and order:** for every record, an MD5 digest over its position in the file and all 20 original columns. The digests are combined by XOR and by sum into a fingerprint, computed once from a fresh sequential read of the CSV and once from the Parquet as read back from disk. The two must be equal.
+- **Typed conversion:** numbers are compared after conversion, and the number of numeric fields whose CSV text is not reproduced exactly by its typed value is reported. On the real data it is 0, so every integer and amount converts back to its original text.
+- **Structure:** `ROW_ID` runs 1 to n, the 26 columns are present in order, and each helper column equals its definition.
+
+**Exact or probabilistic?** Probabilistic. A digest comparison cannot prove equality. For accidental damage (a zeroed block, a truncated file, a swapped or altered value) an undetected difference would need an MD5 collision, which is not a realistic outcome. It is not a defence against deliberate tampering.
+
+**What can still escape**
+- A fault in DuckDB's CSV reader that repeats identically in both reads, including a wrong record order. `--independent` narrows this by recomputing the CSV fingerprint with Python's `csv` module and `hashlib`, which share no code with DuckDB. It passed on the real data.
+- A fault shared by both parsers, or in the CSV file itself as downloaded.
+- Damage to the file after it was verified (disk fault, later overwrite). Re-run `--verify-only` if in doubt.
+
+**When it fails:** the temporary file is deleted, the existing `payments.parquet` is not touched, the script exits with status 1, and the message names the failed check without quoting data.
+
+**Damage patterns covered by tests** (invented fixture, through the script's own verification): one text field changed at the same length; two amounts changed with the same sum; two integers changed with the same sum; a value swapped between two rows; a label moved to another row; two records exchanging positions; a wrong helper column; a missing record; a truncated file; a block of zeros inside a file of unchanged size.
+
+**Cost on the owner's Mac (8 GB RAM):** about 40 s added to each build, peak memory about 2.5 GB. `--independent` adds about 75 s.
 
 ## E. Verification
 
@@ -109,8 +132,8 @@ These are analytical or team decisions, so they were left as written.
 |---|---|---|---|
 | Security | PASS | 14 data-shaped paths ignored and 9 intended paths allowed (tested); history scan clean; nothing under `dataset/` tracked except its README | A chart or Markdown file can still contain rows; that needs human review |
 | Environment setup | PASS | `uv sync --locked` succeeds on macOS, Ubuntu and Windows | Windows checked in CI only, not on a teammate's laptop |
-| Tests | PASS | 31 passed locally and in CI | The fixture is invented data, not the real schema's edge cases |
-| Data preparation | PASS | Full build on the real CSV: 245 s, about 2.2 GB peak memory, every column matches the CSV, output byte-identical to the existing file | One earlier build was damaged, cause unknown; tested only on an 8 GB Mac |
+| Tests | PASS | 44 passed locally (macOS) and in CI (Ubuntu, Windows) | Invented six-record fixture; it shows the checks work, not that the real data is correct |
+| Data preparation | PASS, with limits | Owner's machine, real CSV, final script: full build 226 s, about 2.2 GB peak memory, passed the row-level comparison; output byte-identical (`cmp`) to the existing file. `--verify-only` on the existing file: 41 s, 2.5 GB peak. `--verify-only --independent`: 116 s, passed | Digest comparison, not value-by-value proof (section D2). One of four builds was damaged, cause unknown. Run only on one 8 GB Mac; not run on Windows with real data |
 | Profiling | PASS | All 18 queries ran on the real Parquet in about 9 s | The account-reuse quantiles are approximate and vary slightly between runs |
 | Documentation | PASS | All relative links resolve; no old commands remain | External links not checked |
 
@@ -131,7 +154,7 @@ The owner's local checkout is on the `setup/repo-hardening` branch.
    git clone https://github.com/saiket-das/datathon-2026.git
    cd datathon-2026
    ```
-3. Check the environment (no dataset needed); expect `31 passed`:
+3. Check the environment (no dataset needed); the last line should say `passed`, with no `failed`:
    ```bash
    uv run pytest
    ```
@@ -150,3 +173,52 @@ The commands are the same on macOS and Windows after step 1.
 ## H. Next phase
 
 Once pull request #2 is merged, hypothesis work can start directly: the data is verified, the environment is locked, and the hypothesis template, owner folders and issues log are unchanged. No analysis has been started.
+
+## I. Confidentiality assessment
+
+**What happened.** During the audit, one search command run by the AI assistant matched inside the sponsor CSV and seven synthetic records were printed into the assistant's session. The records are not reproduced here or anywhere in the repository.
+
+**Where the records went, and where they did not**
+
+| Kind of exposure | Status | Basis |
+|---|---|---|
+| To the AI model provider | Yes, seven records | They were part of the session's input |
+| In the GitHub repository | None found | Scan of all tracked files and every commit diff for account-identifier and bank-path patterns: 0 matches |
+| In the pull request text, comments or reviews | None found | Same scan: 0 matches; there are no review comments |
+| In CI logs or artefacts | None found | Both CI runs scanned: 0 matches, 0 artefacts |
+| Public disclosure | None known | The repository is private; nothing was published |
+
+**Relevant official rules.** Rules and Regulations 2.2: "Redistribution, publication or unauthorised disclosure of competition datasets, in whole or in part, to any third party is strictly prohibited." Against that, rule 3.6 permits AI tools including LLMs, and the case study says using AI is "explicitly allowed". The documents do not say whether data seen by an AI tool counts as disclosure, and they contain no duty to report an incident.
+
+**Assessment.** Small in scale and in a grey area of the rules, but it did happen and cannot be reversed. Whether it breaches rule 2.2 is the organisers' call, not ours.
+
+**Decision for the owner.** Whether to ask the assigned mentor (rule 3.7 allows competition questions) how rule 2.2 applies to AI assistants reading the data. Nobody has contacted the organisers.
+
+**What reduces the chance of a repeat (prevention, not resolution)**
+- `AGENTS.md` rule 7 forbids displaying records and running `grep`, `cat` or `head` over `dataset/`.
+- The preparation scripts print aggregates only, and hide DuckDB error text by default because it can quote a record. Tests assert both.
+- These are instructions and tests, not technical barriers: an assistant with terminal access can still read the file. Human review of what an assistant runs remains necessary.
+
+## J. The damaged build
+
+**Facts.** Four full builds of the real CSV exist: the owner's original and three run during this work on the owner's Mac with DuckDB 2.0.0. Three produced byte-identical files. One produced a file of the same size in which about 2.9 KB at the start of one column chunk were zeros. The original per-column checks of that build passed; the damage was found only when the column was read in full.
+
+**Cause: not established.** What can be said:
+- The damaged build was the only one during which other DuckDB jobs (the test suite and the profile) were run on the same 8 GB machine. That is a correlation from one case, not a finding.
+- Disk space was not exhausted (about 42 GB free).
+- The CSV read is sequential by design; the Parquet writer compresses in parallel. A fault in the writer, the operating system or the storage cannot be told apart from here.
+- Nothing in the script's own file handling explains it: the output is written once and renamed once, after verification.
+
+**What protects the team.** Every build now ends with the row-level comparison, so a damaged file is rejected and the previous one kept. A test reproduces the pattern (a block of zeros in a file of unchanged size) and confirms it is rejected. Advice: do not run other heavy jobs during a build, and run `--verify-only` if a later query reports a read error.
+
+## Correction pass after review
+
+An independent review of pull request #2 raised three points. All were checked before changing anything.
+
+| Finding | Verdict | Resolution |
+|---|---|---|
+| Integrity checks were aggregate fingerprints and were described more strongly than justified | Valid | Replaced by the row-level digest comparison in section D2; ten damage patterns tested; wording corrected here, in the script, in `dataset/README.md` and in the pull request description |
+| The disclosure of seven records was reported but not assessed | Valid | Section I; error text hidden by default; the owner's decision is stated |
+| Python version not pinned | Valid, minor | `.python-version` set to 3.13, the version the owner's machine already runs and all locked libraries support |
+
+Statements in the first version of this document that were too strong, now corrected: "the existing Parquet is confirmed correct", "every column matches the CSV", and "byte-identical" used as if it showed correctness (it shows only that separate builds agree with each other).

@@ -17,7 +17,7 @@ A step-by-step guide from "I just opened this project" to "we submitted". Read [
 ## Step 0: One-time setup (each teammate, about 20 minutes)
 
 1. **Install uv**, the tool that runs our Python scripts without manual package installs: `brew install uv` on macOS, `winget install --id=astral-sh.uv -e` in PowerShell on Windows, or see <https://docs.astral.sh/uv/>.
-2. **Get the code and check your environment** (no dataset needed). The last command should end with `31 passed`:
+2. **Get the code and check your environment** (no dataset needed). The last line should say `passed`, with no `failed`:
    ```bash
    git clone https://github.com/saiket-das/datathon-2026.git
    cd datathon-2026

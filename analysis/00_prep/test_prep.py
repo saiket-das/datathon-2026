@@ -101,8 +101,97 @@ def test_failed_build_keeps_previous_output(built, tmp_path):
     write_csv(tmp_path / "bad.csv", bad)
     result = run(BUILD, "--src", tmp_path / "bad.csv", "--out", out)
     assert result.returncode != 0 and "left untouched" in result.stderr
+    assert "not-a-number" not in result.stderr and SECRET not in result.stderr  # error text quotes no data
+    assert "not-a-number" in run(BUILD, "--src", tmp_path / "bad.csv", "--out", out, "--show-error-detail").stderr
     assert out.read_bytes() == before
     assert not out.with_name(out.name + ".partial").exists()
+
+
+def test_verify_only_accepts_a_good_file(built):
+    src, out, _ = built
+    for flags in ([], ["--independent"]):
+        result = run(BUILD, "--verify-only", "--src", src, "--out", out, *flags)
+        assert result.returncode == 0, result.stderr
+        assert "matches the CSV" in result.stdout and SECRET not in result.stdout
+
+
+# Each case damages a copy of a correct Parquet in a way the earlier aggregate checks
+# (record count, integer sums, amount sum, total text length per column) could not see.
+TAMPERS = {
+    "control: rewritten unchanged": ("*", None),
+    "one text field changed, same length": (
+        "* REPLACE (CASE WHEN ROW_ID = 2 THEN replace(ORDERING_DETAILS, 'STREET', 'STREEX') ELSE ORDERING_DETAILS END AS ORDERING_DETAILS)",
+        "fingerprint"),
+    "two amounts changed, same sum": (
+        "* REPLACE (USD_AMOUNT + CASE ROW_ID WHEN 1 THEN 0.5 WHEN 2 THEN -0.5 ELSE 0 END AS USD_AMOUNT)", "fingerprint"),
+    "two integers changed, same sum": (
+        "* REPLACE (TOTAL_DURATION + CASE ROW_ID WHEN 3 THEN 7 WHEN 6 THEN -7 ELSE 0 END AS TOTAL_DURATION)", "fingerprint"),
+    "one value swapped between two rows": (
+        "* REPLACE (CASE ROW_ID WHEN 1 THEN 'BBB' WHEN 2 THEN 'AAA' ELSE CURRENCY_CODE END AS CURRENCY_CODE)", "fingerprint"),
+    "label moved to another row": (
+        "* REPLACE (CASE ROW_ID WHEN 4 THEN 'TEST_LABEL' WHEN 5 THEN NULL ELSE ANOMALY_TYPE END AS ANOMALY_TYPE)", "fingerprint"),
+    "two records exchanged positions": (
+        "* REPLACE (CASE ROW_ID WHEN 1 THEN 2 WHEN 2 THEN 1 ELSE ROW_ID END AS ROW_ID)", "fingerprint"),
+    "helper column wrong": ("* REPLACE (gap_count + (ROW_ID = 1)::INT AS gap_count)", "helper columns"),
+    "last record missing": ("* EXCLUDE (keep) FROM (SELECT *, ROW_ID < 6 AS keep", "record counts differ"),
+}
+
+
+@pytest.mark.parametrize("case", TAMPERS)
+def test_verification_detects_damage(built, tmp_path, case):
+    src, out, _ = built
+    select, expected = TAMPERS[case]
+    good, damaged = f"read_parquet('{out.as_posix()}')", tmp_path / "damaged.parquet"
+    query = f"SELECT {select} FROM {good}" + (") WHERE keep" if "keep" in select else "")
+    duckdb.connect().execute(f"COPY ({query}) TO '{damaged.as_posix()}' (FORMAT parquet)")
+    result = run(BUILD, "--verify-only", "--src", src, "--out", damaged)
+    assert SECRET not in result.stdout + result.stderr
+    if expected is None:
+        assert result.returncode == 0, result.stderr
+    else:
+        assert result.returncode != 0 and "does NOT match" in result.stderr and expected in result.stderr
+
+
+def test_verification_detects_a_partly_written_file(built, tmp_path):
+    src, out, _ = built
+    data = bytearray(out.read_bytes())
+    cut, zeroed = tmp_path / "cut.parquet", tmp_path / "zeroed.parquet"
+    cut.write_bytes(data[: len(data) // 2])
+    data[200:1200] = bytes(1000)  # same size, a block of zeros inside the column data
+    zeroed.write_bytes(data)
+    for damaged in (cut, zeroed):
+        result = run(BUILD, "--verify-only", "--src", src, "--out", damaged)
+        assert result.returncode != 0 and "does NOT match" in result.stderr
+
+
+def test_python_fingerprint_equals_duckdb_fingerprint(built):
+    """The independent check is only meaningful if both implementations agree on good data."""
+    src, out, _ = built
+    module = load_build_module()
+    con = duckdb.connect()
+    fields = [f"{c}::VARCHAR" for c in module.COLUMNS]
+    from_parquet = con.sql(module.fingerprint_sql(f"read_parquet('{out.as_posix()}')", "ROW_ID", fields)).fetchall()[0]
+    assert module.python_fingerprint(src) == from_parquet
+
+
+def test_failed_verification_never_replaces_output(built, monkeypatch):
+    src, out, _ = built
+    before = out.read_bytes()
+    module = load_build_module()
+    monkeypatch.setattr(module, "verify", lambda *a, **k: (["forced failure"], {}))
+    with pytest.raises(SystemExit) as exit_info:
+        module.build(src, out)
+    assert "left untouched" in str(exit_info.value) and "forced failure" in str(exit_info.value)
+    assert out.read_bytes() == before
+    assert not out.with_name(out.name + ".partial").exists()
+
+
+def load_build_module():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("build_parquet_under_test", BUILD)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def test_profile_runs_and_prints_no_records(built):

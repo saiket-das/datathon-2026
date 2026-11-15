@@ -25,6 +25,7 @@ Optional tool and agent-integration ideas: [docs/06_potential_agent_tools.md](do
 README.md                  you are here
 AGENTS.md                  instructions for AI assistants working in this repo
 pyproject.toml, uv.lock    the Python libraries and their pinned versions (managed by uv)
+.python-version            the Python version uv installs and uses (3.13)
 .github/workflows/         automatic checks on every pull request (no dataset needed)
 docs/
   01_project_in_simple_words.md   plain-language introduction
@@ -50,7 +51,7 @@ deliverables/              final dashboards PDF and slides PDF, plus the submiss
 
 ## Quick start (first time on a new machine)
 
-You need Git and [uv](https://docs.astral.sh/uv/). uv installs Python (3.11 or newer) and the exact library versions pinned in `uv.lock`, so everyone runs the same environment.
+You need Git and [uv](https://docs.astral.sh/uv/). uv installs Python 3.13 (pinned in `.python-version`) and the exact library versions pinned in `uv.lock`, so everyone runs the same environment.
 
 | | Install uv |
 |---|---|
@@ -62,7 +63,7 @@ Run these from the repository root. The commands are the same on macOS and Windo
 ```bash
 git clone https://github.com/saiket-das/datathon-2026.git
 cd datathon-2026
-# 1. check your environment (~1 min the first time, no dataset needed): expect "31 passed"
+# 1. check your environment (~1 min the first time, no dataset needed): the last line should say "passed" with no "failed"
 uv run pytest
 # 2. put the organiser CSV in dataset/ (see dataset/README.md)
 # 3. build the Parquet copy once (~5 min, ~1.3 GB; needs ~3 GB free disk)
