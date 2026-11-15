@@ -2,7 +2,7 @@
 
 > **Status:** Non-binding research notes, **not** an agent policy, implementation plan, or prediction of the hidden rules.
 >
-> **Suggested use:** Read the [official competition documents](../official-pdfs/) and [`DATATHON.md`](../../DATATHON.md) first. Inspect the actual data and draft an independent plan **before** consulting this file. Adopt, change, or reject any suggestion here based on evidence, time, and resources. Official rules always take precedence.
+> **Suggested use:** Read the [official competition documents](official/README.md) and [the competition brief](02_competition_brief.md) first. Inspect the actual data and draft an independent plan **before** consulting this file. Adopt, change, or reject any suggestion here based on evidence, time, and resources. Official rules always take precedence.
 
 ## Purpose
 
@@ -105,6 +105,6 @@ A lightweight loop: **propose → formalise → run reproducible code → challe
 
 ### Provenance and confidence
 
-Prepared from two independent external research reports supplied by the team (one broad source/method review and one more speculative technical survey), cross-checked against the official competition framing. **These reports are leads, not authority; some specific competition-method claims conflict.** Links here are starting points for verification, not proof that a tool or method is appropriate for this dataset. The original PDFs in `docs/official-pdfs/` remain authoritative.
+Prepared from two independent external research reports supplied by the team (one broad source/method review and one more speculative technical survey), cross-checked against the official competition framing. **These reports are leads, not authority; some specific competition-method claims conflict.** Links here are starting points for verification, not proof that a tool or method is appropriate for this dataset. The original PDFs in `docs/official/pdfs/` remain authoritative.
 
 **Use this document as a menu, not a recipe. It is acceptable, and often preferable, to ignore most of it.**

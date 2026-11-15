@@ -21,4 +21,4 @@ UMDAC Datathon 2026's preliminary-round case, supplied by Swift, asks teams to *
 - AI assistance is allowed. Team members remain responsible for validity and explanation of methods and findings.
 - Credit external tools and pre-existing code as required by the official documents.
 
-**Authority:** This file is a quick orientation, not a replacement for the five official PDFs under `docs/official-pdfs/`. When source wording, dates or grading details conflict, check the PDFs and organiser announcements rather than assuming this summary resolves the conflict.
+**Authority:** This file is a quick orientation, not a replacement for the five official PDFs under [`official/pdfs/`](official/pdfs/). When source wording, dates or grading details conflict, check the PDFs and organiser announcements rather than assuming this summary resolves the conflict.

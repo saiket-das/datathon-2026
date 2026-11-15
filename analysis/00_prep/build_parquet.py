@@ -1,7 +1,7 @@
 """Step 0: convert the organiser CSV to a typed Parquet file (one-off, ~few minutes).
 
 Run from the repo root:
-    uv run --with duckdb python analysis/00_prep/build_parquet.py
+    uv run --with duckdb --with pandas python analysis/00_prep/build_parquet.py
 
 Input : dataset/swift_umdac_datathon_2026_fictitious_payment_data.csv  (never committed)
 Output: dataset/payments.parquet                                        (git-ignored)

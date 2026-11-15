@@ -28,3 +28,6 @@ __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/
 .DS_Store
+
+# DuckDB spill directory
+.duckdb_tmp/
