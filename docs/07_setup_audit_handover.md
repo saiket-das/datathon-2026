@@ -6,7 +6,7 @@ Written 15 Nov 2026 and corrected the same day after an independent review of th
 
 ## Two things to know first
 
-1. **Seven raw rows were exposed to an AI session during the audit. This is recorded, not resolved.** A search command was scoped too broadly, matched inside the sponsor CSV, and printed seven synthetic records into a conversation with a cloud-hosted model. The disclosure cannot be undone; the rules added since only reduce the chance of a repeat. See [section I](#i-confidentiality-assessment) for the assessment and the decision that is the owner's to make.
+1. **Seven raw rows were exposed to an AI session during the audit. This is recorded, not resolved.** A search command was scoped too broadly, matched inside the sponsor CSV, and printed seven synthetic records into a conversation with a cloud-hosted model. The disclosure cannot be undone; the rules added since only reduce the chance of a repeat. See [section I](#i-confidentiality-assessment) for the assessment and the owner's recorded decision to document internally without contacting organisers for now.
 2. **One full build wrote a damaged Parquet file, and the cause is unknown.** Of the four full builds of this dataset (the owner's original and three run during this work), one produced a file with the right size and record count in which the start of one column (`BENEFICIARY_TOKENS`, about 2.9 KB) was zeros and could not be read back. The other three are byte-identical to each other. The build now compares the written file with the CSV before replacing the output, which rejects such a file; it does not remove whatever caused it. See [section J](#j-the-damaged-build).
 
 ## A. Audit summary
@@ -69,8 +69,8 @@ These are analytical or team decisions, so they were left as written.
 | P1 | `pyproject.toml` and `uv.lock` | Done |
 | P1 | Dataset-independent tests, run on every pull request | Done |
 | P1 | Windows instructions, documentation fixes, three new `AGENTS.md` rules | Done |
-| P2 | Branch protection on `main` | Needs owner approval |
-| P2 | Block `*.ipynb` (notebook outputs can embed rows) | Needs owner decision |
+| P2 | Branch protection on `main` | Owner decision recorded: require PR and passing CI, block force pushes and deletion; configure after merge where supported |
+| P2 | Block `*.ipynb` (notebook outputs can embed rows) | Implemented in PR #2: ignore rule, agent instructions, regression tests |
 | Deferred | Polars, Pandera, statsmodels, Quarto, marimo, MCP servers, agent frameworks | No present need |
 
 ## C. Changes made
@@ -92,7 +92,7 @@ These are analytical or team decisions, so they were left as written.
 
 **`profile.py`** now exits with status 1 if the Parquet file is missing or any query fails, and ends with `OK: all profile queries ran.` on success.
 
-**`test_prep.py`** holds 44 checks that run in about 5 seconds on an invented six-record CSV: order and content are preserved, line breaks and quotes survive, no records or error details are printed, each failure path fails loudly, ten kinds of damage are detected (section D2), a failed verification never replaces the output, `.gitignore` blocks data-shaped paths and allows the intended ones, and no data file is tracked.
+**`test_prep.py`** previously held 44 checks; four notebook exclusion cases were added (48 total, subject to final CI) that run in about 5 seconds on an invented six-record CSV: order and content are preserved, line breaks and quotes survive, no records or error details are printed, each failure path fails loudly, ten kinds of damage are detected (section D2), a failed verification never replaces the output, `.gitignore` blocks data-shaped paths and allows the intended ones, and no data file is tracked.
 
 ## D. Environment
 
@@ -130,9 +130,9 @@ Run automatically at the end of every build, and on demand with `uv run python a
 
 | Check | Result | Evidence | Limitation |
 |---|---|---|---|
-| Security | PASS | 14 data-shaped paths ignored and 9 intended paths allowed (tested); history scan clean; nothing under `dataset/` tracked except its README | A chart or Markdown file can still contain rows; that needs human review |
+| Security | PASS | 18 data-shaped paths ignored and 9 intended paths allowed (the four new notebook cases require final CI); history scan clean; nothing under `dataset/` tracked except its README | A chart or Markdown file can still contain rows; that needs human review |
 | Environment setup | PASS | `uv sync --locked` succeeds on macOS, Ubuntu and Windows | Windows checked in CI only, not on a teammate's laptop |
-| Tests | PASS | 44 passed locally (macOS) and in CI (Ubuntu, Windows) | Invented six-record fixture; it shows the checks work, not that the real data is correct |
+| Tests | PASS | 44 passed locally (macOS) and in CI (Ubuntu, Windows) before the notebook changes; 48 expected in updated CI | Invented six-record fixture; it shows the checks work, not that the real data is correct |
 | Data preparation | PASS, with limits | Owner's machine, real CSV, final script: full build 226 s, about 2.2 GB peak memory, passed the row-level comparison; output byte-identical (`cmp`) to the existing file. `--verify-only` on the existing file: 41 s, 2.5 GB peak. `--verify-only --independent`: 116 s, passed | Digest comparison, not value-by-value proof (section D2). One of four builds was damaged, cause unknown. Run only on one 8 GB Mac; not run on Windows with real data |
 | Profiling | PASS | All 18 queries ran on the real Parquet in about 9 s | The account-reuse quantiles are approximate and vary slightly between runs |
 | Documentation | PASS | All relative links resolve; no old commands remain | External links not checked |
@@ -141,7 +141,7 @@ Run automatically at the end of every build, and on demand with `uv run python a
 
 1. Review [pull request #2](https://github.com/saiket-das/datathon-2026/pull/2).
 2. Merge it yourself, then ask teammates to pull and run `uv run pytest`.
-3. Decide on branch protection for `main` and on blocking notebooks.
+3. After merging, configure `main` to require pull requests and successful Ubuntu/Windows CI checks, without mandatory review approval; disable force pushes and deletion. Confirm whether the private repository's GitHub plan supports enforcing these rules. Notebook exclusion is implemented in this PR.
 4. Discuss the flagged claims in section A with the team before any of them reaches a slide.
 
 The owner's local checkout is on the `setup/repo-hardening` branch.
@@ -192,7 +192,7 @@ Once pull request #2 is merged, hypothesis work can start directly: the data is 
 
 **Assessment.** Small in scale and in a grey area of the rules, but it did happen and cannot be reversed. Whether it breaches rule 2.2 is the organisers' call, not ours.
 
-**Decision for the owner.** Whether to ask the assigned mentor (rule 3.7 allows competition questions) how rule 2.2 applies to AI assistants reading the data. Nobody has contacted the organisers.
+**Owner decision (16 Nov 2026).** Keep the incident documented internally and do not contact the organisers for now. This is not a determination that the incident complies with rule 2.2. The owner may revisit the decision if new facts or guidance arise. Nobody has contacted the organisers.
 
 **What reduces the chance of a repeat (prevention, not resolution)**
 - `AGENTS.md` rule 7 forbids displaying records and running `grep`, `cat` or `head` over `dataset/`.
@@ -222,3 +222,10 @@ An independent review of pull request #2 raised three points. All were checked b
 | Python version not pinned | Valid, minor | `.python-version` set to 3.13, the version the owner's machine already runs and all locked libraries support |
 
 Statements in the first version of this document that were too strong, now corrected: "the existing Parquet is confirmed correct", "every column matches the CSV", and "byte-identical" used as if it showed correctness (it shows only that separate builds agree with each other).
+
+
+## K. Owner's final setup decisions (16 Nov 2026)
+
+- **Confidentiality:** Retain section I's factual record internally. No organiser or mentor contact for now; do not reproduce the exposed records or treat the decision as a finding of compliance.
+- **Branch protection:** After merging PR #2, require pull requests and both Ubuntu and Windows CI checks before merging into `main`. Do not require a reviewer approval count. Disable force pushes and branch deletion; prevent bypass where available. The owner must configure these settings and verify GitHub-plan support. No protection settings were changed by this PR.
+- **Notebooks:** Ignore `*.ipynb` anywhere in Git, require coding agents to keep notebooks local, add four notebook paths to the ignore-regression tests, and check the tracked-file list for notebooks. This is a Git safeguard, not a substitute for inspecting permitted charts or Markdown outputs.
