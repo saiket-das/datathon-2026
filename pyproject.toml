@@ -1,0 +1,26 @@
+[project]
+name = "umdac-datathon-2026"
+version = "0.0.0"
+description = "Team workspace for the UMDAC Datathon 2026 Swift payments case (not a package)"
+requires-python = ">=3.11"
+# Keep this list short. To add a library: `uv add <name>` on a branch, commit
+# pyproject.toml and uv.lock together, and merge through a pull request.
+dependencies = [
+    "duckdb>=1.4",
+    "pandas>=2.2",
+    "matplotlib>=3.9",
+    "scipy>=1.14",
+]
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["analysis"]
+python_files = ["test_*.py"]
+# importlib mode keeps analysis/00_prep off sys.path, where profile.py would
+# otherwise shadow the standard-library module of the same name.
+addopts = "-q --import-mode=importlib"
