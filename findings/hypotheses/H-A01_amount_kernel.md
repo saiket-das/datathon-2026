@@ -1,7 +1,7 @@
 # H-A01: roughly two log units per business party
 
 - **Owner:** A
-- **Status:** confirmation-ready
+- **Status:** replicated
 - **Script / exact command / commit:** `uv run python analysis/10_amounts_currency/H-A01_amount_kernel.py`; frozen version is the commit introducing this plan. Confirmation: append `--phase confirm --freeze <SHA>`.
 - **Chart:** `analysis/10_amounts_currency/out/H-A01_amount_kernel_confirm.png`
 
@@ -39,11 +39,24 @@ Initial broad comparisons: party-pair log quantiles, currency/pair means and var
 
 ## Confirmation and robustness results
 
-Pending frozen commit and unchanged test. Append results without changing the plan above.
+**Freeze recorded before confirmation:** `25d4703a6388baaec3d0808499dd7bebe05819da`, 16 Nov 2026 16:15:05 +08:00. The plan above and executable scripts are preserved in that commit. The results below were appended after running the unchanged test.
+
+**Completed unchanged:** `uv run python analysis/10_amounts_currency/H-A01_amount_kernel.py --phase confirm --freeze 25d4703a6388baaec3d0808499dd7bebe05819da`. Both primary conditions passed; no executable code or threshold changed after the freeze. [Confirmation tables](../../analysis/10_amounts_currency/out/H-A01_amount_kernel_confirm.md) and [aggregate chart](../../analysis/10_amounts_currency/out/H-A01_amount_kernel_confirm.png).
+
+| Primary contrast | Accounts | Matched payments | Mean log difference | 97.5% account interval | Geometric ratio |
+|---|---:|---:|---:|---:|---:|
+| Business beneficiary, same sender/currency | 63,801 | 2,167,328 | 1.999500 | 1.982281–2.016718 | 7.3854 |
+| Business ordering party, same receiver/currency | 43,795 | 1,127,759 | 1.976398 | 1.952179–2.000618 | 7.2167 |
+
+There are 2,415,020 positive unlabelled confirmation payments (151,189 sending and 724,650 receiving accounts); 1,710 labelled payments are separately counted and excluded. The two matched populations cover **89.74% and 46.70%** of unlabelled confirmation, respectively; they overlap. Transaction-weighted contrasts are **1.998581 / 1.957025**.
+
+**Exceptions:** 12.82% of eligible sender contrasts and 16.65% of eligible receiver contrasts are negative; 52.93% / 59.01% lie more than one log unit from 2. Thus an average rule replicates while a universal individual-account multiplier remains rejected. These proportions concern noisy per-account comparisons, not known anomalous payments.
+
+**Predeclared sensitivity:** endpoint-country-corridor controls yield 1.991680 / 2.002464; removing the busiest 1% of senders yields 1.999932 / 1.938404. May/June/July and all three route-specific pairs of intervals also fall inside [1.85,2.15], including the smaller Covered populations (4,643 senders / 2,883 receivers). Every sensitivity cell and exception share is retained in the report. These are same-partition sensitivity checks, not independent replications or evidence of temporal extrapolation.
 
 ## Assessment
 
-Exploratory evidence supports an approximate mean-log scale rule. No causal direction, exact generator code or payment-level guarantee is established. Confirmation remains conditional on known full-data exposure.
+The approximate mean-log scale rule replicated on separated account strings with unchanged tests. Strong evidence supports a business-type scale component near two log units for eligible matched populations. This does not identify a full distribution, causal direction, exact generator code or payment-level multiplier. Confirmation remains conditional on known full-data exposure and shared banks/counterparties within each partition; account intervals retain their stated dependence limitation. An independent teammate rerun is still required before using this as a final submission headline.
 
 ## Real-world explanation (interpretation, not evidence)
 

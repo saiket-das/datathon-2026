@@ -1,7 +1,7 @@
 # H-A02: day-specific EUR scaling reveals a rounded source-amount component
 
 - **Owner:** A
-- **Status:** confirmation-ready
+- **Status:** replicated
 - **Script / exact command / commit:** `uv run python analysis/10_amounts_currency/H-A02_usd_rounding.py`; frozen version is the commit introducing this plan. Confirmation: append `--phase confirm --freeze <SHA>`.
 - **Chart:** `analysis/10_amounts_currency/out/H-A02_usd_rounding_confirm.png`
 
@@ -43,11 +43,21 @@ Reproducible [aggregate report](../../analysis/10_amounts_currency/out/H-A02_usd
 
 ## Confirmation and robustness results
 
-Pending frozen commit and unchanged test. Append results without revising this plan.
+**Freeze recorded before confirmation:** `25d4703a6388baaec3d0808499dd7bebe05819da`, 16 Nov 2026 16:15:05 +08:00. The plan above and executable scripts are preserved in that commit. The results below were appended after running the unchanged test.
+
+**Completed unchanged:** `uv run python analysis/10_amounts_currency/H-A02_usd_rounding.py --phase confirm --freeze 25d4703a6388baaec3d0808499dd7bebe05819da`. All primary conditions passed. No rate was fitted to confirmation, and no threshold, window, comparator or executable code changed after the freeze. [Confirmation tables](../../analysis/10_amounts_currency/out/H-A02_usd_rounding_confirm.md) and [aggregate chart](../../analysis/10_amounts_currency/out/H-A02_usd_rounding_confirm.png).
+
+- **Coverage:** 516,299 off-anchor confirmation EUR payments, 46,249 senders, 199,269 receivers and 84 supported dates. This is **21.38%** of the 2,415,020 unlabelled payments in the primary confirmation account partition. Applicability is confined to EUR, the stated amount windows and supported dates; excluded amounts/dates are not silently extrapolated.
+- **Row-weighted fit:** same-day **36.9088%** (190,560 payments); wrong-date **0.9221%**; constant-rate **1.1997%**. Primary excess **35.9867 percentage points**; both row thresholds pass. **325,739 payments (63.0912%) remain off-grid**.
+- **Equal sender:** daily fit 36.8054%, excess **35.9120 points**, 97.5% account interval **35.5164–36.3076**; passes the 20-point lower-bound criterion.
+- **Equal receiver:** daily fit 36.9179%, excess **36.0051 points**, interval **35.7764–36.2338**; passes the same criterion.
+- **Separate sensitivity:** excess is 35.49–36.61 points across the four party pairs, 35.95–36.45 across routes and 35.83–36.11 across months. All prespecified displayed cells have sufficient record and entity support. USD whole-unit benchmark is 36.7912% on 254,599 payments in identical windows, close descriptively to EUR's fitted share, without a predeclared cross-currency equivalence test.
+
+**Rejected / unresolved:** one constant EUR scale and wrong-date scaling explain very little of this grid signature. The statement that every payment comes from a whole-unit source amount is contradicted by the large off-grid majority. Neither this majority nor the fitted component estimates the generator's exact mixture weight: continuous amounts can accidentally fall on a grid, and cent precision or an incorrect anchor can lose true members. Daily rate uncertainty is bounded conditional on the learned denomination interpretation; it is not a general confidence interval on an economic exchange rate.
 
 ## Assessment
 
-Strong exploratory evidence for a day-specific scaling/rounding component in EUR. The larger off-grid component remains unexplained. Functional compatibility does not identify the original code or causal order.
+The fixed algorithm replicated the day-specific EUR scaling/rounding signature on separated accounts. The approximately 36-point lift over a mismatched date persists under equal-entity weighting and planned strata. The larger off-grid component remains unexplained; exact source distributions, rounding probabilities, rate-evolution model, other currencies and unseen-date transfer remain open. Functional compatibility does not identify the original code or causal order. Shared date effects and known prior exposure limit claims of independence; an independent teammate rerun is still required before final submission.
 
 ## Real-world explanation (interpretation, not evidence)
 
