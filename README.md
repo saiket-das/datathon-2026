@@ -43,10 +43,16 @@ analysis/
   10_amounts_currency/     owner A
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
+    H-C01_duplicate_bursts.py  exact-context duplicate copy bursts
+    H-C02_romance_bursts.py    chronological, variable-amount romance bursts
+    test_burst_signatures.py  invented-data checks; no sponsor data
+    out/H-C0*_*.md, *.png     safe exploration/confirmation reports and charts
     (each owner folder has out/ for charts)
 findings/
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
+    H-C01_duplicate_bursts.md  C's frozen duplicate-burst validation plan/results
+    H-C02_romance_bursts.md    C's frozen romance-burst validation plan/results
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 

@@ -7,3 +7,20 @@ Starting questions:
 - How are the `_TOKENS` fields derived from `_DETAILS`, and does address format depend on country?
 - For each anomaly type, what exactly differs from a normal payment (amount, timing, repeats, accounts)?
 - What is `CUSTOMER_RECALL`? It is not in the data dictionary.
+
+## Independent C investigation
+
+Two hypotheses discovered using only the MD5 sender-bit-0 exploration partition:
+
+| Record | Reproduce exploration | Evidence |
+|---|---|---|
+| [H-C01: duplicate copy bursts](../../findings/hypotheses/H-C01_duplicate_bursts.md) | `uv run python analysis/30_parties_anomalies/H-C01_duplicate_bursts.py --phase explore` | [Aggregate report](out/H-C01_duplicate_bursts_explore.md), [chart](out/H-C01_duplicate_bursts_explore.png) |
+| [H-C02: romance copy bursts](../../findings/hypotheses/H-C02_romance_bursts.md) | `uv run python analysis/30_parties_anomalies/H-C02_romance_bursts.py --phase explore` | [Aggregate report](out/H-C02_romance_bursts_explore.md), [chart](out/H-C02_romance_bursts_explore.png) |
+
+H-C01 contains the shared label-blind candidate and exact-field comparison code;
+H-C02 invokes it with an explicit alternative key/signature. Invented-data tests
+are in `test_burst_signatures.py`; run `uv run pytest`. Confirmation requires
+`--phase confirm --freeze-commit SHA` and identical frozen scripts. Both plans
+specify thresholds before confirmation; sender separation does not separate all
+receivers/banks. Source-row adjacency is a construction signature, not a fraud
+detector robust to row shuffling. Four other labels remain mechanistically unresolved.
