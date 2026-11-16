@@ -49,7 +49,7 @@ Deadline: Thursday 19 Nov 2026, 12:00 PM Malaysia time.
    - **A:** amounts, currencies, party types, currency-conversion count; also owns shared data prep and the issues log.
    - **B:** routing path, route type, continuity, duration, timestamps, bank geography; also owns the dependency graph and methodology slides.
    - **C:** party details and tokens, account behaviour, anomaly types; also owns the dashboard template and deck assembly.
-2. **Find the "free" rules first** (tonight). Some columns are just calculated from others: for example, a payment marked Direct always has exactly 2 banks. These are exact, easy to prove, and tell you which columns are worth deeper study.
+2. **Read the shared factual foundation first.** [Execution plan section 6](03_execution_plan.md#6-shared-scientific-foundation-and-validation) separates documented meanings, executed structural checks and unresolved semantics. It also explains how to choose validation suited to each investigation.
 3. **Each person explores their own columns** (Monday). The loop is: look at a chart, write a guess, test it with a query, record the result with its numbers.
 4. **Deepen and challenge** (Tuesday). For each promising rule, test one confounder, and have a teammate try to break it.
 5. **Build the PDFs** (Wednesday), re-check every number, and submit Thursday morning.

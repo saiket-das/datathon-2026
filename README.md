@@ -10,7 +10,7 @@ Private workspace for a 3-person team. Our task: **reverse-engineer the hidden r
 |---|---|---|---|
 | 1 | [docs/01_project_in_simple_words.md](docs/01_project_in_simple_words.md) | What the project is, in plain language, with key terms explained | 5 min |
 | 2 | [docs/02_competition_brief.md](docs/02_competition_brief.md) | Deliverables, deadline, scoring weights, rules in one page | 3 min |
-| 3 | [docs/03_execution_plan.md](docs/03_execution_plan.md) | Our strategy: day-by-day plan, who owns what, data traps, submission checklist | 10 min |
+| 3 | [docs/03_execution_plan.md](docs/03_execution_plan.md) | Strategy, shared scientific foundation, validation protocol, responsibilities and submission checklist | 10 min |
 | 4 | [docs/05_how_to_start.md](docs/05_how_to_start.md) | Step-by-step: setup, what to do first, the daily working loop, day-by-day schedule | 10 min |
 | 5 | [dataset/README.md](dataset/README.md) | How to get the data and build the fast Parquet copy | 2 min, then ~5 min to run |
 | 6 | [analysis/README.md](analysis/README.md) | Where to put your work and how to record a finding | 3 min |
@@ -38,7 +38,8 @@ docs/
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
-  00_prep/                 shared: CSV -> Parquet conversion, first profile, setup tests
+  00_prep/                 shared: conversion, profile, scientific_checks.py, fixture tests
+    out/scientific_checks.md  reproducible structural and validation aggregates
   10_amounts_currency/     owner A
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
