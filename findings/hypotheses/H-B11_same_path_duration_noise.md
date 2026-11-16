@@ -1,9 +1,9 @@
 # H-B11: Near-constant duration noise on the same visible path
 
 - **Owner:** B
-- **Status:** confirmation-ready
+- **Status:** joint frozen test failed. Direct-path component supported in internal validation.
 - **Exploration:** `uv run python analysis/20_routing_time/H-B11_same_path_duration_noise.py --phase explore`
-- **Internal validation:** same command with `--phase confirm --freeze <full SHA>`.
+- **Internal validation:** same command with `--phase confirm --freeze 9489c1a051237433c0a6fbbbd260e602b2e27521`.
 - **Evidence:** [discovery report](../../analysis/20_routing_time/out/H-B11_same_path_duration_noise_explore.md) and [fine-bin pilot](../../analysis/20_routing_time/out/H-B11_same_path_duration_noise_pilot.md).
 
 ## Proposed rule and scope
@@ -93,7 +93,33 @@ path or entity identity is emitted.
 
 ## Internal validation and assessment
 
-Pending the frozen test. An economic interpretation is a stable route-specific
-component with a small stochastic timing component, which could also be an artefact
-of a synthetic table of per-path timing baselines. Differencing cannot distinguish
-those mechanisms or identify the original random-number calls.
+Freeze `9489c1a051237433c0a6fbbbd260e602b2e27521` was committed on
+16 November 2026 at 21:46:08 MYT. The unchanged
+[July test](../../analysis/20_routing_time/out/H-B11_same_path_duration_noise_confirm.md)
+**failed the joint claim**. Neither criterion was relaxed.
+
+| Visible banks | Pairs | First visible banks | Paired row coverage | Mean square and 99% interval, s² | Six-bin Gamma model TV and 99% upper bound | Frozen result |
+| --- | ---: | ---: | ---: | --- | --- | --- |
+| 2 | 162,341 | 2,915 | 78.93% | 99.59 [98.38, 100.81] | .001435, upper .004401 | Pass |
+| 3 | 4,794 | 674 | 6.34% | 98.88 [92.61, 104.91] | .014069, upper .033231 | Fail on pair support and TV precision |
+
+Direct differences have median 6 seconds, 90th percentile 16 seconds and 99th
+percentile 30 seconds. The matched-variance exponential and normal TVs are
+.061114 and .077587. Three-bank mean square and the TV advantage over a third
+fixed-scale noise component met their criteria. The TV advantage's 99% interval is
+[.049678,.098754]. These findings still leave the joint claim failed under its
+frozen thresholds. Four and five visible banks provide inadequate pairing support.
+
+Changing gap presence or both account identifiers preserves the narrow observed
+differences in supported groups. No differences exceed 100 seconds in either
+primary length. Three-bank Covered pairs have mean square 103.88 s² and the
+Indirect group 97.91 s². These are descriptive checks inside the frozen population.
+Precise July pair-difference outcomes are now exposed.
+
+The Direct-path component supports a stable route-specific timing level with
+small residual variation. The observed differences are compatible with two
+exponential contributions of scale 5 seconds, a single Gamma shock, or other
+models with similar duration differences. A fixed route baseline, latent bank
+states or a synthetic lookup can explain stable timing levels. B13 tests a
+direction-invariant version of that location model within exploration. B01 and the
+B11 joint failure remain in force.

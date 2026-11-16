@@ -62,3 +62,11 @@ Run `uv run python analysis/20_routing_time/H-B11_same_path_duration_noise.py --
 whether Covered and Indirect follow the directed visible endpoints on novel paths.
 Run `uv run python analysis/20_routing_time/H-B12_directed_endpoint_route_class.py --phase explore`.
 Both records provide the frozen July internal validation command.
+
+[H-B13](../../findings/hypotheses/H-B13_symmetric_direct_duration.md) compares
+the duration of supported Direct paths in opposite directions. Run
+`uv run python analysis/20_routing_time/H-B13_symmetric_direct_duration.py`.
+
+[H-B14](../../findings/hypotheses/H-B14_intermediate_bank_sampling.md) compares
+the two interior positions with draws from a weighted bank catalogue.
+Run `uv run python analysis/20_routing_time/H-B14_intermediate_bank_sampling.py --phase explore`.

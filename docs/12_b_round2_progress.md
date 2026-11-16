@@ -107,6 +107,28 @@ visible sequences. Declared endpoints and reversing direction both give errors.
 Direct payments can coexist on those directed pairs, so visible count is still
 needed when considering all three route labels.
 
-Both plans and scripts are ready to freeze. July outcomes for these particular
-estimands have not been queried. The prior outcome exposure recorded for B01–B10
-makes July an internal test. Publication is to the existing Round 2 research PR.
+Both tests were frozen at `9489c1a051237433c0a6fbbbd260e602b2e27521`, committed
+16 November 2026 at 21:46:08 MYT, before the specific July outcomes were queried.
+The prior outcome exposure recorded for B01–B10 makes July an internal test.
+
+- B11's joint test failed. At two banks, 162,341 July same-path pairs meet the
+  frozen criteria. The 90th-percentile difference is 16 seconds and fitted-law
+  discrepancy is small (TV .001435). The three-bank component missed both the
+  5,000-pair minimum (4,794 observed) and the .020 upper TV gate (.033231).
+- B12 passed. All 167,205 novel paths through May-supported directed endpoints
+  match their May label. Coverage is 73.50% of July v3–5 unlabelled bit-0/0 rows.
+  Reversing the pair gives 19.64% errors on jointly supported trials. The use of
+  known endpoints and reuse of July records limit transport claims.
+
+[B13](../findings/hypotheses/H-B13_symmetric_direct_duration.md) rejects a
+symmetric Direct duration center. Among 905 supported bidirectional corridors,
+31.05% have directional mean gaps above 100 seconds, versus zero of 2,040
+same-direction May–June comparisons. A currency and FX matched subset still has
+gaps. This exploration-only result provides a constraint on any model of the
+stable route duration level.
+
+[B14](../findings/hypotheses/H-B14_intermediate_bank_sampling.md) extends the
+repeat-path investigation to the two interior positions of four-bank paths.
+May rates from three-bank paths predict 0.6088% bank collisions, versus June's
+0.5916% and a uniform-pool expectation of 0.0242%. The specific July collision
+and joint-country results are unqueried before the B14 freeze.

@@ -56,6 +56,8 @@ analysis/
     H-B09_bank_duration_exclusion.py  supported-bank short-duration exclusion test
     H-B11_same_path_duration_noise.py  within-path duration variation and fixed noise laws
     H-B12_directed_endpoint_route_class.py  directed endpoints and multibank route class
+    H-B13_symmetric_direct_duration.py  duration symmetry falsification
+    H-B14_intermediate_bank_sampling.py  interior bank collision and country distribution test
     H-B10_country_bank_class.py       country-only class falsification
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks

@@ -1,9 +1,9 @@
 # H-B12: Covered versus Indirect follows directed visible endpoints
 
 - **Owner:** B
-- **Status:** confirmation-ready
+- **Status:** supported in frozen internal validation
 - **Exploration:** `uv run python analysis/20_routing_time/H-B12_directed_endpoint_route_class.py --phase explore`
-- **Internal validation:** same command with `--phase confirm --freeze <full SHA>`.
+- **Internal validation:** same command with `--phase confirm --freeze 9489c1a051237433c0a6fbbbd260e602b2e27521`.
 - **Evidence:** [discovery report](../../analysis/20_routing_time/out/H-B12_directed_endpoint_route_class_explore.md).
 
 ## Proposed rule and scope
@@ -77,7 +77,34 @@ corridor. It does not determine Direct eligibility or assign classes to unseen p
 
 ## Internal validation and assessment
 
-Pending frozen July execution. A fixed directional correspondent arrangement is
-compatible with the pattern. Latent corridor attributes or a shared route catalogue
-could also determine path and label together. The observation cannot establish
-which attributes are generated first or how new directed pairs get assigned a label.
+Freeze `9489c1a051237433c0a6fbbbd260e602b2e27521` was committed on
+16 November 2026 at 21:46:08 MYT. The unchanged
+[July test](../../analysis/20_routing_time/out/H-B12_directed_endpoint_route_class_confirm.md)
+passed every criterion. On 167,205 of 227,489 July payments (73.50%) with known
+directed endpoints and a new complete visible path, the May rule made zero errors.
+These observations span 39,761 directed endpoint pairs, 164,380 visible paths,
+2,741 first visible banks, 39,984 senders and 81,171 receivers. There are 19,173
+Covered and 148,032 Indirect payments. The 99% upper affected-bank fraction is
+.001679 under the stated cluster independence assumption.
+
+The declared-endpoint comparator errs on .6387% of 159,706 jointly supported
+payments and the reversed-pair comparator on 19.6384% of 73,504 jointly supported
+payments. Within July, 0 of 30,112 repeated directed visible endpoint groups mix
+both labels. Using unordered visible endpoints produces 909 mixed groups, and using
+declared directed bank fields produces 1,154.
+
+There are also zero observed errors in supported subgroups with 3, 4 or 5
+visible banks, the 19,610 payments with gaps, the 10,805 with a new currency for
+the directed pair, and the 11,437 with an endpoint disagreement. Of the target
+population, 50,012 have no supported May directed pair and 10,272 have a visible
+path already seen in May. There are 38,004 July Direct payments on visible
+endpoint pairs also used by Covered routes and 280,090 on pairs also used by
+Indirect routes. This bounds the rule to the multibank classification.
+
+A fixed directional correspondent arrangement is compatible with the pattern.
+Latent corridor attributes or a shared route catalogue could also determine path
+and label together. Novel visible paths and stable labels distinguish the result
+from exact path memorization. Shared banks, corridors and possibly accounts and
+reused July exposure limit inference beyond the selected population. Assignment
+for new directed pairs and the order of generator stages remain unresolved.
+July classification, exception and subgroup outcomes are now exposed.
