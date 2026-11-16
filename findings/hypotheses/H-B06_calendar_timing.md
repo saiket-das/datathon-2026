@@ -1,7 +1,7 @@
 # H-B06: Does timing differ on weekends within comparable payments?
 
 - **Owner:** B
-- **Status:** confirmation-ready
+- **Status:** supported but not independently confirmed
 - **Script:** `uv run python analysis/20_routing_time/H-B06_calendar_timing.py`
 - **Evidence:** [initial aggregate report](../../analysis/20_routing_time/out/H-B06_calendar_timing_explore.md) and [exploratory challenge report](../../analysis/20_routing_time/out/H-B06_calendar_timing_sensitivity.md)
 
@@ -35,6 +35,17 @@ The frozen internal test uses July 2023 UTC, unlabelled rows and the same endpoi
 The tolerances are practical discovery-informed requirements. The 3-point gate is materially smaller than the original 6.97-point contrast and its observed subgroup counterparts. The 1-point gate tests whether one week determines direction and practical size. Omission replicates share most dates and are a sensitivity range rather than a confidence interval. Same banks, customers and calendar dependence can recur. No row-level inference or independent temporal holdout claim is made. Covered stays descriptive and remains suppressed if too sparse.
 
 Run `uv run python analysis/20_routing_time/H-B06_calendar_timing.py --phase confirm --freeze SHA` only after committing this confirmation-ready plan and exact executable. Save all outcomes as internal validation conditional on the recorded exposure. No threshold changes after inspecting July.
+
+## Frozen internal validation result
+
+Freeze `9e737f1d1e1e028b634b318624360902e3b99715`. All four criteria passed unchanged. The [aggregate report](../../analysis/20_routing_time/out/H-B06_calendar_timing_confirm.md) contains denominators and every week-omission result.
+
+- The eligible July population contains 650,668 payments over 31 dates and 3,504 ordering banks. Matching retains 47,954 of 92,009 weekend payments (52.12%) and 285,728 of 558,659 weekday payments (51.15%) across 669 strata and 275 banks.
+- Weekend minus weekday UTC daytime share is −5.3911 points with smaller-arm weights and −5.1850 points with equal stratum weights. The contrast is negative in 71.60% of supported strata. Direct and Indirect contrasts are −5.0749 and −5.8214 points. Covered does not meet the separate 100-bank reporting threshold.
+- Omitting each of six UTC week blocks gives a range of −6.2506 to −4.8242 points. All omissions retain at least 213 ordering banks and at least 44% of each remaining calendar arm.
+- The weekday-only placebo on 530 banks is −0.2520 points. This meets the specificity threshold without excluding confounding within weekend/weekday strata.
+
+The exact B06 outcome was viewed only after freeze. B04 and B05 had already analysed July records, including repeated ordering banks and accounts, so this is internal validation on reused records. The sensitivity range does not measure independent sampling uncertainty.
 
 ## Assessment
 
