@@ -401,6 +401,7 @@ def main() -> None:
             parser.error("Periods mode takes no train/evaluation periods")
 
     conn = duckdb.connect(database=":memory:")
+    conn.execute("SET TimeZone = 'UTC'")  # Calendar cohorts are UTC, not machine-local.
     try:
         if args.phase == "periods":
             source = data.as_posix().replace("'", "''")
