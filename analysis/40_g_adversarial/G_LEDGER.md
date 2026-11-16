@@ -60,3 +60,11 @@
 - Public GitHub repository and draft PR #10 are user-authorised for scoped code and safe aggregates. No datasets, identifiers, or A/B/C frozen files modified; no merge.
 - Current empirical status: **R-G01 NOT RUN**; local Python/container execution is still unavailable; `dataset/payments.parquet` cannot be proven accessible to the scheduled Chat environment. The GitHub-hosted runner has no sponsor dataset. The external local executor remains opt-in until it can access a real local file.
 - Next: run `--phase periods` on approved local executor, freeze exact supported year in protocol, commit freeze, then execute/inspect R-G01 aggregate report and log all exceptions. Until then no numeric replication claims.
+
+## G-004 · Latest fixture CI and scheduled-state audit (2026-11-17 MYT)
+
+- GitHub Actions PR run `43937515534` for prior head `ff045a0ba95977eaeb0f09fa99f04a157555511a` completed **SUCCESS**; `uv run pytest` passed on both Ubuntu and Windows. Only synthetic fixtures, no sponsor data.
+- R-G01's independent executable/protocol, exact period-freeze requirement, explicit UTC timestamp handling and secure local runner remain committed. R-G01 July outcome NOT opened; no real dataset replication yet.
+- Hourly ChatGPT automation creation returned `success=true`, schedule `DTSTART;TZID=Asia/Kuala_Lumpur:20261117T033000; RRULE:FREQ=HOURLY;COUNT=41`, inherited environment metadata `null`. Creation is confirmed by its returned response; persistence of a local dataset executor is NOT confirmed. A later read-back action returned `NOT_FOUND` at invocation level; do not misrepresent that as a test-run failure or as proof the created schedule disappeared.
+- Next scheduled run: recover this ledger and current HEAD; do not repeat preflight; inspect any independently returned aggregate executor report; otherwise advance R-G01 protocol/period inspection or prepare R-G02 without fabricating findings.
+- No merge or raw data publication performed. Public GitHub disclosure remains temporary and explicitly scoped.
