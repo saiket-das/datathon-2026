@@ -71,10 +71,25 @@ both roles. It tests transfer across account sets and amount ranges.
 
 ## Confirmation and robustness results
 
-Pending a frozen internal test.
+Frozen at `f31764d04d8d4280281ace5f0e8c0dbc8cb1dff5` on 16 November 2026
+at 21:36:36 MYT. Run the script with `--phase validate --freeze` and that SHA.
+Both primary currencies passed every threshold. The [aggregate report](../../analysis/10_amounts_currency/out/H-A10_cross_denomination_validate.md)
+retains the full control and coverage results.
+
+| Currency | Eligible | Coverage | Same day | Later date | Constant | Dates with 10-point lift |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| CHF | 33,405 | 83.74% | 41.11% | 0.88% | 0.66% | 65 of 65 |
+| GBP | 41,019 | 85.08% | 40.36% | 0.97% | 1.26% | 65 of 66 |
+
+The corresponding off-grid majorities are 58.89% and 59.64%. SGD again
+failed the coverage and supported-date requirements (19.03%, 11 dates).
+USD's three fits were identical at 40.41%. EUR fit 40.35% and remains
+a benchmark with prior outcome exposure.
 
 ## Assessment
 
-The three grids each leave false matches and misses possible. In particular,
-an observed fit share cannot identify the exact component weight. The
-hypothesis remains provisional until the frozen test runs.
+A date-specific scale transfers from large amounts to small amounts for
+CHF and GBP on the reused-account internal test. Shared dates and bank
+geography limit transfer claims. An observed fit share cannot identify
+the exact component weight because accidental matches and missed grid
+members are possible.

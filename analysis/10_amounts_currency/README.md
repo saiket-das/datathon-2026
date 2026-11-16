@@ -34,3 +34,9 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A07: currency exceptions](../../findings/hypotheses/H-A07_currency_exceptions.md) is an exploration-only comparison of receiving-country alternatives within first-path-country modal errors.
 
 [H-A08: visible-path currency set](../../findings/hypotheses/H-A08_path_currency_set.md) uses exact-set currency-frequency and shifted-map controls before its frozen internal test.
+
+[H-A09: modal scale co-movement](../../findings/hypotheses/H-A09_modal_scale_coherence.md) records the weak common-factor candidate.
+
+[H-A10: cross-denomination scaling](../../findings/hypotheses/H-A10_cross_denomination.md) evaluates CHF and GBP grids learned from large amounts on small amounts.
+
+[H-A11: FX transition support](../../findings/hypotheses/H-A11_fx_transition_residuals.md) compares supported and sparse directed pairs on one-transition paths.

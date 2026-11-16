@@ -12,6 +12,29 @@ No automatic merge; final PDFs need user approval. Round 1 evidence remains unch
 | H-A06 | First visible path-country modal currency | Frozen internal July bit-1 test passed. 93.367% vs 89.408% declared sender. | Supported but not independently confirmed. | Prior currency/FX records exposed. Bank and country overlap, bank/corridor selection remain. | Explains which location is most associated with payment currency and much declared-path disagreement. |
 | H-A07 | Receiving-country alternatives within currency exceptions | July bit-0 residual screen only. 28,220 of 49,548 match a sending-trained currency map applied to receiver country. | Exploratory. | Conditioning and EUR/USD prevalence confound interpretation. No frozen rule or validation. | Narrows currency-choice follow-up toward consistently learned endpoint/path maps. |
 | H-A08 | Payment currency in visible-path country-mode set | Frozen internal test passed on 697,868 eligible July bit-1 rows. 98.7488% membership, 97.2536% endpoints, 24.2718% shifted-map and 29.3716% exact-set frequency controls. | Supported but not independently confirmed. | 8,732 outside-set currencies, prior A06 outcomes, shared banks/countries and route selection. | Extends first-country association to a controlled path-set compatibility relationship. |
+| H-A09 | A common daily factor across stable modal scales | Bit-0 only. Three finite correlations range from .069 to .084. | Little support for dominant co-movement. | Sparse pair and date coverage and possible shifts in anchor denomination. | Led to a cross-denomination test within individual currencies. |
+| H-A10 | Large-amount peaks identify a daily grid for small CHF and GBP payments | Frozen internal test passed. Daily grid 41.11% CHF and 40.36% GBP. Both controls at or below 1.27%. | Reused-account support for cross-denomination scaling. | SGD failed coverage and date support. Exact scale units and off-grid amounts unresolved. | Extends EUR rounding evidence across currencies and disjoint amount ranges. |
+| H-A11 | Single-transition FX overprediction concentrates on sparsely observed directed country pairs | Frozen internal test passed. Zero residuals among 34,714 supported payments versus 100 among 4,372 unsupported. | Reused-account support, limited to one-transition July paths. | Route/edge selection and missing class links remain plausible. | Narrows the explanation for where the FX upper bound is loose. |
+
+## Continuation and publication
+
+A08 freeze `8bf80a9efd104bf2ebb200690a745443f02f4808` and results
+`4b60bec204989675aae2f54a7701ba48e79b0188` were already local. The
+unchanged frozen rerun reproduced the report byte for byte and exited 0.
+Inspection found broad aggregate counts and cluster intervals. Account,
+bank and country identifiers stay in local computation. Only the dataset
+README is tracked under the dataset directory.
+
+PR #8 was open at `256f6f5d474616e288a35b8c0f42299772077fb1`. GitHub
+reported public visibility on 16 November. The original rules PDF,
+section 3.3, limits substantive analyses and source code to the registered
+team. A08 and the continuation remain local pending a verified team-only
+destination. Earlier published material is already accessible on GitHub.
+
+H-A10 froze at `f31764d04d8d4280281ace5f0e8c0dbc8cb1dff5` and H-A11
+at `33bb0c0f921719c2f04bfc5debc18aad043ade8a`. Their records contain
+the exact executable test, cutoffs, failed controls, reused-population
+exposure and local reproduction commands.
 
 ## Completed and exposure
 

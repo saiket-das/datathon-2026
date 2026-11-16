@@ -58,10 +58,19 @@ overlap. This is a frozen internal outcome comparison on reused records.
 
 ## Confirmation and robustness results
 
-Pending a frozen internal test.
+Frozen at `33bb0c0f921719c2f04bfc5debc18aad043ade8a` on 16 November 2026
+at 21:38:27 MYT. Run the script with `--phase validate --freeze` and that SHA.
+The unchanged test passed every criterion. Among 39,086 scoped July
+bit-1 payments, 34,714 had a supported transition (88.81%) and each
+recorded exactly one conversion. All 100 zero-count residuals occurred
+among the 4,372 unsupported payments (2.29%). This latter population
+contains 3,163 senders, 3,698 receivers and 1,253 declared ordering banks.
+There were zero counts above one. The [aggregate report](../../analysis/10_amounts_currency/out/H-A11_fx_transition_residuals_validate.md)
+retains descriptive route groups and masks positive small cells.
 
 ## Assessment
 
-This screen narrows where the class-change bound is loose. Rare support
-can reflect under-learned class equivalence, unmeasured route attributes
-or a reporting rule. A successful test cannot distinguish those mechanisms.
+The support split identifies where the upper bound is loose in this
+single-transition July population. Rare support can reflect under-learned
+class equivalence, unmeasured route attributes or a reporting rule.
+Class changes on more complex paths still have unresolved residuals.
