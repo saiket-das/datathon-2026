@@ -38,7 +38,7 @@ KEYS = {"directed": "directed_key",
 MAP_NAMES = tuple(KEYS) + ("reverse",)
 
 
-def verify_freeze(commit: str) -> None:
+def verify_freeze(commit: str, train_period: str, eval_period: str) -> None:
     """Require frozen byte-identical protocol and executable from Git history."""
     if not re.fullmatch(r"[0-9a-f]{40}", commit or ""):
         raise SystemExit("Validation requires --freeze-commit FULL40CHARSHA")
@@ -50,6 +50,12 @@ def verify_freeze(commit: str) -> None:
         live = (ROOT / rel).read_bytes()
         if frozen != live:
             raise SystemExit(f"Frozen file changed: {rel}; refuse validation")
+    # Validation calendar periods must themselves have been fixed in the frozen
+    # protocol commit, rather than selected after looking at test outcomes.
+    marker = f"FROZEN_PERIODS: {train_period} -> {eval_period}"
+    frozen_protocol = (ROOT / PROTOCOL_REL).read_text(encoding="utf-8")
+    if marker not in frozen_protocol:
+        raise SystemExit("Validation cohort not frozen: add FROZEN_PERIODS to the protocol, commit, then retry")
     # An ancestor may be checked out later; the immutable commit is the freeze.
 
 
@@ -386,7 +392,7 @@ def main() -> None:
             parser.error("Training and validation periods cannot coincide")
         if args.eval_period <= args.train_period:
             parser.error("Evaluation period must follow training period")
-        verify_freeze(args.freeze_commit)
+        verify_freeze(args.freeze_commit, args.train_period, args.eval_period)
     elif args.phase == "explore":
         if not args.train_period or args.eval_period:
             parser.error("Explore needs May --train-period; no eval period")
