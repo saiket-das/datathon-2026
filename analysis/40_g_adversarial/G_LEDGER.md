@@ -52,3 +52,11 @@
 - Fixed script and fixture to use `lambda x: expression` syntax, independently before opening any July dataset outcome. Do NOT erase original failure.
 - Dataset: not present on hosted runner; no sponsor Parquet read. CI validates fixture code only.
 - Next: obtain clean CI, freeze actual commit, verify local external execution access and real aggregate report; if missing report explicitly block empirical claims.
+
+## G-003 · CI recovery and freeze hardening (2026-11-17 MYT)
+
+- GitHub Actions PR run `43936963254` succeeded on both Ubuntu and Windows for commit `d714e0bc0f6c099ebfe51a74cd637e1b47d38a1e`, after preserving the previous CI failure. The dataset-independent fixture test suite passed; this is **code execution, not Parquet execution**.
+- Additional adversarial audit caught two pre-validation specification risks: (i) validation year was not itself frozen and (ii) executable timezone might shift UTC month boundaries. Changed code/protocol before opening July outcomes: exact literal `FROZEN_PERIODS: YYYY-05 -> YYYY-07` must be committed and checked; DuckDB is pinned to UTC for calendar filtering; synthetic UTC boundary regression test added.
+- Public GitHub repository and draft PR #10 are user-authorised for scoped code and safe aggregates. No datasets, identifiers, or A/B/C frozen files modified; no merge.
+- Current empirical status: **R-G01 NOT RUN**; local Python/container execution is still unavailable; `dataset/payments.parquet` cannot be proven accessible to the scheduled Chat environment. The GitHub-hosted runner has no sponsor dataset. The external local executor remains opt-in until it can access a real local file.
+- Next: run `--phase periods` on approved local executor, freeze exact supported year in protocol, commit freeze, then execute/inspect R-G01 aggregate report and log all exceptions. Until then no numeric replication claims.
