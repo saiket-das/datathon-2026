@@ -103,7 +103,7 @@ def generate_selected(conn: duckdb.DuckDBPyConnection, data: Path,
                    BIC8_PATH AS path,
                    list_filter(
                        string_split(coalesce(BIC8_PATH, ''), ';'),
-                       x -> regexp_full_match(trim(x), '^[A-Z0-9]{{8}}$')
+                       lambda x: regexp_full_match(trim(x), '^[A-Z0-9]{{8}}$')
                    ) AS visible
             FROM read_parquet('{path_literal}')
             WHERE strftime(to_timestamp(EPOCH_SECONDS), '%Y-%m') IN ({literals})
