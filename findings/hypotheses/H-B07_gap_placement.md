@@ -1,8 +1,8 @@
 # H-B07: Conditional placement of internal path placeholders
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Evidence level:** Exploratory until frozen internal validation
+- **Status:** rejected
+- **Evidence level:** Frozen conjunction rejected. Conditional point approximations remain supported but not independently confirmed.
 - **Reproduce discovery:** `uv run python analysis/20_routing_time/H-B07_gap_placement.py --phase explore`
 - **Reproduce internal validation:** same script with `--phase confirm --freeze SHA`
 
@@ -37,7 +37,23 @@ Phase 0 exposed full-data structural/count aggregates. B02 inspected gap counts 
 
 ## Confirmation results
 
-Pending the introducing freeze commit. Record every criterion unchanged.
+Freeze `f28120d22534ea09b8a1015ac910dca4545b6ce3` preceded July conditional-shape queries. The unchanged executable produced a [failed internal result](../../analysis/20_routing_time/out/H-B07_gap_placement_confirm.md). No gate was relaxed afterward.
+
+July has 650,668 source-population payments, 239,333 multibank payments and 49,974 paths with any placeholder. The selected v3–5/g1–2 shape population contains 26,211 payments. Endpoint placeholders and visible-count mismatches are both zero.
+
+All five primary strata meet the minimum row/entity support, but two uniform-TV uncertainty criteria fail. The v4/two-gap upper bound .074385 exceeds .06, and the v5/one-gap upper bound .040449 exceeds .03. This rejects the conjunction even though the two-gap ratio bounds pass.
+
+| Visible banks / gaps | Payments | Ordering banks | TV uniform | 99% upper | Primary decision |
+| --- | ---: | ---: | ---: | ---: | --- |
+| 3 / 1 | 13,702 | 1,572 | .002700 | .013649 | Pass |
+| 3 / 2 | 1,015 | 482 | .013136 | .048945 | Pass |
+| 4 / 1 | 7,060 | 1,223 | .009585 | .023502 | Pass |
+| 4 / 2 | 680 | 373 | .025000 | .074385 | Fail |
+| 5 / 1 | 3,318 | 903 | .021398 | .040449 | Fail |
+
+Descriptively, v3/v4 two-gap adjacency is .662069/.508824 compared with uniform-composition .666667/.500000 and iid-slot .500000/.333333. Corresponding iid-slot TVs are .162069/.175490, with ratio upper bounds .347570/.441859. These conditional point patterns distinguish the simple iid-slot comparator but cannot rescue the failed broader precision claim. The v5/two-gap descriptive TV is .072477, with upper bound .139014. Complete route/month controls, including suppressed cohorts, remain in the report.
+
+The finite cohort and bank-resampling uncertainty are material. No independent validation or exact conditional law is established. July now has explicit conditional-shape exposure for future B work.
 
 ## Alternatives and limitations
 
