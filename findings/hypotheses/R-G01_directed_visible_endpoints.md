@@ -43,7 +43,8 @@ The above rule definitions are G-created, potentially different from B12. Freeze
 
 - **May exploratory query:** NOT RUN.
 - **July validation outcome:** NOT OPENED BY G.
-- **Freeze SHA:** PENDING COMMIT.
+- **Frozen calendar periods:** NOT YET SELECTED. Periods-only scan is permitted; after learning supported year, append the exact literal `FROZEN_PERIODS: YYYY-05 -> YYYY-07` to this protocol and commit BEFORE running validation. The script rejects uncommitted period choices. Do not substitute periods after inspecting label outcomes.
+- **Freeze SHA:** PENDING PERIOD-SPECIFIC COMMIT.
 - **Observed numerators/denominators:** NONE from G.
 - **Unsupported cohorts:** NOT YET COUNTED.
 - **Failures/controls:** NOT YET TESTED.
