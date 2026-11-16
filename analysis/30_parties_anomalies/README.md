@@ -34,3 +34,10 @@ Confirmation evidence: [H-C01 report](out/H-C01_duplicate_bursts_confirm.md) and
 [chart](out/H-C02_romance_bursts_confirm.png). Run either command above with
 `--phase confirm --freeze-commit bd61bc32dc61f4985c757244051404fb6622a71b`
 instead of `--phase explore`.
+
+## Round 2 entity and token investigation
+
+- [C03 adjacent source edits](../../findings/hypotheses/H-C03_adjacent_edit.md)
+- [C04 literal line-break marker](../../findings/hypotheses/H-C04_literal_linebreak.md)
+- [C05 scam endpoint concordance](../../findings/hypotheses/H-C05_scam_endpoint_agreement.md)
+- [C progress register](../../docs/13_c_round2_progress.md)
