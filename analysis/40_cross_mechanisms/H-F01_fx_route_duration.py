@@ -96,7 +96,7 @@ def main() -> int:
             expression = literals[0] if len(files) == 1 else "[" + ",".join(literals) + "]"
             con.execute("CREATE TEMP VIEW payments AS SELECT * FROM read_parquet(" + expression + ")")
             cols = set(x[0] for x in con.execute("DESCRIBE payments").fetchall())
-            if not REQUIRED.issubset(cols):
+            if len(cols) != 26 or not REQUIRED.issubset(cols):
                 raise ValueError("Payment schema is missing required fields")
             count, distinct_id = con.execute(
                 "SELECT COUNT(*), COUNT(DISTINCT ROW_ID) FROM payments"
