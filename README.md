@@ -43,6 +43,7 @@ analysis/
   10_amounts_currency/     owner A
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
+  40_g_adversarial/        owner G, isolated falsification scripts/ledger and local aggregate executor
     (each owner folder has out/ for charts)
 findings/
   issues_log.md            data problems found and the decision taken for each
