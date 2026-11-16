@@ -89,3 +89,24 @@ B09 passed its unchanged July internal test at freeze 399a3dd62f9cbcac3e0869585c
 ## H-B10 country-class falsification
 
 Rejected in May-only exploration. Of1,061 supported banks in142 countries,71 countries contain both observed May duration labels. Country-majority assignment misclassifies34.8728% of training banks, or39.5284% on the721 banks in countries with>=10 supported banks. Country alone cannot determine those observed labels, while probabilistic geography/latent classes remain open. No B10 validation claim.
+
+## B11 and B12 follow-up
+
+[B11](../findings/hypotheses/H-B11_same_path_duration_noise.md) isolates a small
+timing component by pairing payments on the same ordered visible path. The May–June
+mean squared difference is 100.35 s² at two banks and 98.82 s² at three. Their
+90th-percentile differences are both 16 seconds. A discretised Gamma(2,5) shock
+is compatible with that shape. At three banks, a fixed-scale shock count growing with
+visible bank count fits worse. The fine-bin pilot missed a three-bank precision gate.
+Its result is preserved alongside the discovery-informed coarse-bin plan.
+
+[B12](../findings/hypotheses/H-B12_directed_endpoint_route_class.md) conditions
+Covered versus Indirect on the directed first and last visible banks. May lookup
+has zero June errors on 233,973 paths with known endpoints and unseen complete
+visible sequences. Declared endpoints and reversing direction both give errors.
+Direct payments can coexist on those directed pairs, so visible count is still
+needed when considering all three route labels.
+
+Both plans and scripts are ready to freeze. July outcomes for these particular
+estimands have not been queried. The prior outcome exposure recorded for B01–B10
+makes July an internal test. Publication is to the existing Round 2 research PR.

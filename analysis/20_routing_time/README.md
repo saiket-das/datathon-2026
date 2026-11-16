@@ -53,3 +53,12 @@ or use the recorded freeze for July internal validation.
 [H-B09](../../findings/hypotheses/H-B09_bank_duration_exclusion.md) tests a persistent visible-bank-associated exclusion of sub-100-second durations. Run the matching script with --phase explore, or use its frozen internal July command.
 
 [H-B10](../../findings/hypotheses/H-B10_country_bank_class.md) falsifies a country-determined explanation of the May bank-duration witness classes. Run the matching script for aggregate-only exploration.
+
+[H-B11](../../findings/hypotheses/H-B11_same_path_duration_noise.md) compares duration
+differences on the same ordered visible path with fixed noise laws.
+Run `uv run python analysis/20_routing_time/H-B11_same_path_duration_noise.py --phase explore`.
+
+[H-B12](../../findings/hypotheses/H-B12_directed_endpoint_route_class.md) tests
+whether Covered and Indirect follow the directed visible endpoints on novel paths.
+Run `uv run python analysis/20_routing_time/H-B12_directed_endpoint_route_class.py --phase explore`.
+Both records provide the frozen July internal validation command.
