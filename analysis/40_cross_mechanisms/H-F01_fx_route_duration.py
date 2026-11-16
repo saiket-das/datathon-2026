@@ -173,7 +173,11 @@ def main() -> int:
                        MIN(n0) smallest_fx0_cell, MIN(n1) smallest_fx1_cell
                 FROM eligible
             """).fetchone()
-            # Sender support <100 is suppressed even when payment count is large.\n            displayed_base = [tuple(row[:4]) +\n                              ((row[4] if row[4] >= 100 else "<100"),) +\n                              tuple(row[5:]) for row in base]\n            parts = [
+            # Sender support <100 is suppressed even when payment count is large.
+            displayed_base = [tuple(row[:4]) +
+                              ((row[4] if row[4] >= 100 else "<100"),) +
+                              tuple(row[5:]) for row in base]
+            parts = [
                 "# H-F01 — exploratory route, FX and duration pilot", "",
                 "Scientific status: **EXPLORATORY ONLY; NO VALIDATION OPENED OR FREEZE CLAIMED.**",
                 "Population: all unlabelled rows dated May 1 (inclusive) through July 1",
@@ -183,7 +187,8 @@ def main() -> int:
                 f"Generated UTC: {datetime.now(timezone.utc).isoformat()}",
                 f"Source file count: {len(files)}; full-data rows: {count:,}; unique ROW_ID: {distinct_id:,}.",
                 f"Required schema columns present: {len(REQUIRED)} of {len(REQUIRED)}.",
-                f"SHA-256 verified against split manifest: {is_split and not args.skip_hash}.",\n                f"Source SHA-256 fingerprints: {', '.join(fingerprints) if fingerprints else 'not computed'}.",
+                f"SHA-256 verified against split manifest: {is_split and not args.skip_hash}.",
+                f"Source SHA-256 fingerprints: {', '.join(fingerprints) if fingerprints else 'not computed'}.",
                 f"Development eligible denominator: {ndev:,}.", "",
                 "## Supported coarse cells (each >=100 records)", "",
                 markdown_table(["route","participants","fx_bin","n","distinct_senders",
