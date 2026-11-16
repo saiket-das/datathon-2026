@@ -40,3 +40,13 @@
 ## Scheduled task register
 
 No F research automation has been created in this chat. Desired schedule: hourly starting 2026-11-17 03:00 MYT, with last start 2026-11-18 19:00 MYT; **hard cutoff 20:00 on 18 Nov**. Creation remains gated on successful dataset execution and recovery checks.
+
+
+## F-PREFLIGHT-003 — GitHub persistence and H-F01 code preparation (17 Nov 2026 MYT)
+
+- Dedicated F branch created successfully from `main`. GitHub contents writes were successful and a separate `fetch_file` read confirmed the persisted original F-PREFLIGHT-001 entry, new F-PREFLIGHT-002 entry and cutoff text. This is **remote Git state recovery**, not a scheduled automation recovery test.
+- H-F01 protocol created at `findings/hypotheses/H-F01_fx_route_duration.md`; aggregate-only May–June pilot source created at `analysis/40_cross_mechanisms/H-F01_fx_route_duration.py`. Index references were added to `README.md` and `analysis/README.md` on F branch only.
+- Preparation commits included ledger `093fa971bbeb9f67d0abddb20f15e7637aa0ab9f`, first experiment script `b60ac1c1cc009d448d98a369eab0015c5a13453f`, H-F01 record `d91873c0f6c8d04722dfd398a778fedcb002dbf3`, pilot repairs `ce4cfabac6880f29b905157a8173b2ac8f36bd49` and `e1ba1f8d25d145c2ba20d38ea6e72b91f13d20bb`, index updates `d6acfbaa0d4bc69fcd61e3294fe249a20f283a7a` and `624b11ab1cd8aff5011d997b3fcb4818d6150789`, and exact schema check `7c839e49d8a684ba502e03dd518764bc482726bb`. These are **unfrozen preparatory commits**, not executed science.
+- A source-serialization newline defect was noticed during GitHub code review and repaired before any run. No source execution or test-suite execution occurred; syntax, performance, SHA verification and research results all remain unverified.
+- **No dataset row read by F, no tested H-F01 outcome, no designated validation opened, no freeze, no GitHub draft PR, and no scheduled ChatGPT task.** Opening a PR awaits `uv run pytest` as required by the repository's `AGENTS.md`; running that command requires a functioning Python environment.
+- External local read-only execution and post-execution safe aggregate publication are still mandatory for autonomy. The user-authorised public-repository exception is recorded, but the raw-data prohibition remains in force.
