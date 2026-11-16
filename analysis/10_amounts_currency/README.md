@@ -17,3 +17,10 @@ Starting questions:
 Default commands run exploration only. Confirmation requires `--phase confirm --freeze <SHA>`.
 Exact plans, partition restrictions, prior exposure, failed alternatives and results belong in
 the hypothesis records. `test_value_mechanisms.py` uses invented data only; run `uv run pytest`.
+
+## Round 2
+
+[H-A03: latent country classes and FX steps](../../findings/hypotheses/H-A03_fx_country_classes.md)
+uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
+`--phase validate --freeze SHA`. Reports are `out/H-A03_fx_country_classes_*.md`.
+[Progress and limitations](../../docs/11_a_round2_progress.md). Round 1 files remain unchanged.
