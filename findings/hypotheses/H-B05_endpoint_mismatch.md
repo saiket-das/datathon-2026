@@ -1,8 +1,8 @@
 # H-B05: Approximate joint 5% endpoint disagreement law
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Evidence level:** Exploratory before frozen temporal validation.
+- **Status:** uncertain (frozen internal-validation criteria passed)
+- **Evidence level:** Supported but not independently confirmed.
 - **Script:** `uv run python analysis/20_routing_time/H-B05_endpoint_mismatch.py --phase explore`.
 - **Validation:** replace `--phase explore` with `--phase confirm --freeze <SHA>`.
 
@@ -30,7 +30,15 @@ Phase 0 and Round 1 exposed full-data and partition summaries, including endpoin
 
 The original executable freeze is `4cec50a611750402ace7a72e1d4602dbc6325ba1`. Its July attempt ended with DuckDB BinderException in the final visible-path overlap query and wrote no report. The run computed primary values internally, but surfaced no estimates, criteria decision, or cohorts. An invented-data regression test reproduced the unsupported single-arrow lambda. The retry freeze changes only that auxiliary query from single-arrow to the supported explicit lambda syntax. The population, primary calculations, uncertainty, and acceptance criteria are identical. The original frozen file and failed-run record are retained.
 
-Pending. Retain failed criteria and limitations without tuning.
+Retry freeze: `1c4580bac192eac0d76727648796a6c2b14c9279`. The frozen retry command exited 0:
+`uv run python analysis/20_routing_time/H-B05_endpoint_mismatch.py --phase confirm --freeze 1c4580bac192eac0d76727648796a6c2b14c9279`.
+The executable has no diff against the retry freeze. [July aggregates](../../analysis/20_routing_time/out/H-B05_endpoint_mismatch_confirm.md).
+
+**PASS on all predeclared internal-validation criteria.** July contains 650,668 eligible payments and zero unscorable endpoint comparisons, with 84,156 senders, 254,069 receivers and 3,504 ordering banks. Ordering mismatch is 5.048504% (99% interval [4.920545%, 5.178590%]) and beneficiary mismatch is 5.040205% ([4.919990%, 5.159552%]). Both flags occur in 1,657 payments (0.254661%). Observed joint probability minus the product of marginal rates is .00000206 (interval [-.00015791, .00016910]). TV from the fixed four-cell law is .00084047 (99% upper bound .00324862). The disjoint single-endpoint comparator's zero joint cases cannot explain these aggregates.
+
+Covered ordering disagreement reaches 5.850168% versus 5.052086% for Direct and 4.953310% for Indirect. These are descriptive subgroup results and the common pooled approximation does not establish the same probability across routes. Among July mismatches, 4.80% ordering and 5.52% beneficiary preserve the path-end country. About 0.4% in either role match the opposite path endpoint. Same-country remapping and swapping cannot be the sole explanation.
+
+July shares 65,380 sender identities, 92,216 receiver identities, 128,589 cross-role account strings, 3,696 declared endpoint banks and 6,319 visible path banks with May–June. No rows overlap across periods. The reported bootstrap reflects sensitivity to ordering-bank resampling. B04 and both earlier research phases already exposed aggregate information about this population. The result supports a pooled approximation conditional on this selection, with causal direction, exact parameters and replacement distribution unresolved. Keep it separate from the two Round 1 duration and Covered rejections.
 
 ## Real-world explanation (interpretation only)
 
