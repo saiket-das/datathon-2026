@@ -82,6 +82,11 @@ def main() -> int:
     if args.out.suffix != ".md" or args.out.resolve().is_relative_to(args.data_dir.resolve()):
         print("ERROR: reports must be Markdown outside dataset directory.", file=sys.stderr)
         return 1
+    # Guard data access even if a local scheduler mistakenly fires after the cutoff.
+    cutoff_utc = datetime(2026, 11, 18, 12, 0, 0, tzinfo=timezone.utc)
+    if datetime.now(timezone.utc) >= cutoff_utc:
+        print("ERROR: Investigator F research cutoff reached; refusing data access.", file=sys.stderr)
+        return 1
     try:
         files, is_split = source_files(args.data_dir.resolve())
         fingerprints = [sha256_file(p) for p in files] if not args.skip_hash else []
