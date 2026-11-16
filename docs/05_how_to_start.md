@@ -16,16 +16,21 @@ A step-by-step guide from "I just opened this project" to "we submitted". Read [
 
 ## Step 0: One-time setup (each teammate, about 20 minutes)
 
-1. **Get the code.** Clone the team's private GitHub repository.
-2. **Install uv**, the tool that runs our Python scripts without manual package installs: `brew install uv` on macOS, or see <https://docs.astral.sh/uv/> for Windows and Linux.
+1. **Install uv**, the tool that runs our Python scripts without manual package installs: `brew install uv` on macOS, `winget install --id=astral-sh.uv -e` in PowerShell on Windows, or see <https://docs.astral.sh/uv/>.
+2. **Get the code and check your environment** (no dataset needed). The last line should say `passed`, with no `failed`:
+   ```bash
+   git clone https://github.com/saiket-das/datathon-2026.git
+   cd datathon-2026
+   uv run pytest
+   ```
 3. **Get the data.** Download the CSV from the organisers' channel and put it in `dataset/`. Details: [dataset/README.md](../dataset/README.md).
 4. **Build the fast copy** (about 5 minutes), from the project's root folder:
    ```bash
-   uv run --with duckdb --with pandas python analysis/00_prep/build_parquet.py
+   uv run python analysis/00_prep/build_parquet.py
    ```
-5. **Check it works** (about 10 seconds). You should see tables of counts:
+5. **Check it works** (about 10 seconds). You should see tables of counts, ending with `OK: all profile queries ran.`:
    ```bash
-   uv run --with duckdb --with pandas python analysis/00_prep/profile.py
+   uv run python analysis/00_prep/profile.py
    ```
 6. **Pick your role.** Agree who is A, B and C (see the table in [03_execution_plan.md](03_execution_plan.md), section 4) and write the names into that table.
 
