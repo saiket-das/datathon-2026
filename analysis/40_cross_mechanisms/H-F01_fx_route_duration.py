@@ -35,11 +35,14 @@ PART_SHA = (
 )
 
 REQUIRED = {
-    "ROW_ID", "ts_utc", "CURRENCY_CODE", "USD_AMOUNT",
-    "ORDERING_ACCOUNT", "BENEFICIARY_ACCOUNT", "ORDERING_TYPE", "BENEFICIARY_TYPE",
-    "TRANSACTION_TYPE_CODE", "PARTICIPANT_COUNT", "CURRENCY_CONVERSION_COUNT",
-    "TOTAL_DURATION", "ANOMALY_TYPE", "gap_count", "BIC8_PATH",
-    "ORDERING_BIC8", "BENEFICIARY_BIC8",
+    "ROW_ID", "EPOCH_SECONDS", "CURRENCY_CODE", "USD_AMOUNT",
+    "ORDERING_BIC8", "BENEFICIARY_BIC8", "BIC8_PATH", "TOTAL_DURATION",
+    "CONTINUITY_QFLAG", "CURRENCY_CONVERSION_COUNT", "PARTICIPANT_COUNT",
+    "TRANSACTION_TYPE_CODE", "ORDERING_ACCOUNT", "BENEFICIARY_ACCOUNT",
+    "ORDERING_DETAILS", "ORDERING_TOKENS", "BENEFICIARY_DETAILS",
+    "BENEFICIARY_TOKENS", "ORDERING_TYPE", "BENEFICIARY_TYPE",
+    "ANOMALY_TYPE", "ts_utc", "ord_country", "ben_country", "path_len",
+    "gap_count",
 }
 
 
@@ -170,7 +173,7 @@ def main() -> int:
                        MIN(n0) smallest_fx0_cell, MIN(n1) smallest_fx1_cell
                 FROM eligible
             """).fetchone()
-            parts = [
+            # Sender support <100 is suppressed even when payment count is large.\n            displayed_base = [tuple(row[:4]) +\n                              ((row[4] if row[4] >= 100 else "<100"),) +\n                              tuple(row[5:]) for row in base]\n            parts = [
                 "# H-F01 — exploratory route, FX and duration pilot", "",
                 "Scientific status: **EXPLORATORY ONLY; NO VALIDATION OPENED OR FREEZE CLAIMED.**",
                 "Population: all unlabelled rows dated May 1 (inclusive) through July 1",
@@ -180,11 +183,11 @@ def main() -> int:
                 f"Generated UTC: {datetime.now(timezone.utc).isoformat()}",
                 f"Source file count: {len(files)}; full-data rows: {count:,}; unique ROW_ID: {distinct_id:,}.",
                 f"Required schema columns present: {len(REQUIRED)} of {len(REQUIRED)}.",
-                f"SHA-256 verified against split manifest: {is_split and not args.skip_hash}.",
+                f"SHA-256 verified against split manifest: {is_split and not args.skip_hash}.",\n                f"Source SHA-256 fingerprints: {', '.join(fingerprints) if fingerprints else 'not computed'}.",
                 f"Development eligible denominator: {ndev:,}.", "",
                 "## Supported coarse cells (each >=100 records)", "",
                 markdown_table(["route","participants","fx_bin","n","distinct_senders",
-                                "median_seconds","median_usd"], base),
+                                "median_seconds","median_usd"], displayed_base),
                 "", f"Coarse cells included: {base_all[0] or 0}; represented rows: {base_all[1] or 0}.",
                 "Unsupported cells (<100 rows) are not shown.", "",
                 "## Within-stratum comparison, FX=1 minus FX=0", "",
