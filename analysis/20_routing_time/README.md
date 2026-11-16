@@ -45,3 +45,5 @@ of declared-versus-path endpoint disagreement. Run
 or use the recorded freeze for July internal validation.
 
 [H-B06](../../findings/hypotheses/H-B06_calendar_timing.md) screens the UTC weekday/weekend timing contrast within bank, route, party pair and month. Run `uv run python analysis/20_routing_time/H-B06_calendar_timing.py` for May–June exploration or add `--phase confirm --freeze SHA` for the frozen July internal test.
+
+[H-B07](../../findings/hypotheses/H-B07_gap_placement.md) tests conditional internal placeholder placement against uniform weak compositions and iid slot allocation. Run `uv run python analysis/20_routing_time/H-B07_gap_placement.py --phase explore` or the recorded frozen July command. The broad v5/two-gap pilot failure is preserved.
