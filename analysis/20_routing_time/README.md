@@ -38,3 +38,8 @@ Covered-propensity transfer across months with safe aggregates.
 Run `uv run python analysis/20_routing_time/H-B04_covered_bank_stability.py --phase explore`
 or `--phase confirm --freeze SHA` after freezing. This reuses Round1-exposed records
 and cannot establish independent confirmation. Tests: `test_covered_stability.py`.
+
+[H-B05](../../findings/hypotheses/H-B05_endpoint_mismatch.md) tests the joint frequency
+of declared-versus-path endpoint disagreement. Run
+`uv run python analysis/20_routing_time/H-B05_endpoint_mismatch.py --phase explore`
+or use the recorded freeze for July internal validation.

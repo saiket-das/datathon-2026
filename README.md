@@ -49,6 +49,7 @@ analysis/
     H-B03_covered_coin.py            rejected independent Covered-label candidate
     H-B04_covered_bank_stability.py  frozen internal temporal test of Covered propensity
     test_covered_stability.py         invented-data guard/uncertainty tests
+    H-B05_endpoint_mismatch.py        frozen test of joint endpoint disagreement
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks
     out/                            safe exploration/confirmation charts and Markdown tables
