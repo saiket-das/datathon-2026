@@ -12,6 +12,10 @@ When <condition>, <variable> changes by <effect> relative to <baseline>, for <po
 List input/outcome variables, unit of analysis, exclusions, and why this is more than a definition.
 
 ## Test plan (freeze before confirmation)
+While developing this hypothesis, query only the selected exploration partition. Do not
+examine confirmation or robustness results until the proposed rule, comparator, acceptance
+criteria and validation design are frozen in a commit. Record that commit and any prior exposure below.
+
 - Comparator, statistic and effect-size/exception tolerance:
 - Alternative explanations and controls:
 - Falsification criterion (what result would reject or limit the proposed rule):

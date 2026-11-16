@@ -48,6 +48,42 @@ def metrics(table):
     return dict(zip(table[0], table[1][0]))
 
 
+@pytest.fixture
+def bank_routes(con):
+    # Select invented endpoint banks independently of the SQL partition implementation.
+    banks = {bit: [f"{i:04d}ZZ00" for i in range(32)
+                   if int(hashlib.md5(f"{i:04d}ZZ00".encode()).hexdigest()[:8], 16) % 2 == bit]
+             for bit in (0, 1)}
+    e0, e1 = banks[0][:2]
+    c0, c1 = banks[1][:2]
+    pairs = [(e0, e1), (e1, e0), (c0, c1), (c1, c0), (e0, c0), (c0, e0)]
+    con.execute("DELETE FROM t WHERE ROW_ID>6")
+    for row_id, (ordering, beneficiary) in enumerate(pairs, 1):
+        # Only crossing records use the second intermediary; it must not enter the active audit.
+        intermediary = "9999ZZ99" if row_id <= 4 else "8888ZZ88"
+        con.execute("""UPDATE t SET ORDERING_BIC8=?,BENEFICIARY_BIC8=?,BIC8_PATH=?,
+          ORDERING_ACCOUNT='SHARED_TEST_SENDER',BENEFICIARY_ACCOUNT='SHARED_TEST_RECEIVER',
+          ord_country='ZZ',ben_country='ZZ',path_len=3,gap_count=0,PARTICIPANT_COUNT=3,
+          TRANSACTION_TYPE_CODE='Indirect',CONTINUITY_QFLAG='Y',CURRENCY_CONVERSION_COUNT=0
+          WHERE ROW_ID=?""", [ordering, beneficiary,
+                               f"{ordering};{intermediary};{beneficiary}", row_id])
+    return con
+
+
+def test_banks_partition_with_crossing_routes_and_shared_intermediaries(bank_routes):
+    result = checks.validation_checks(bank_routes)
+    coverage = result["banks: coverage and baseline stability"][1]
+    assert {row[0]: row[1] for row in coverage} == {"explore": 2, "confirm": 2, "excluded": 2}
+    audit = metrics(result["banks: overlap audit"])
+    assert audit == {"row_ids": 0, "sender_ids": 1, "account_ids_either_role": 2,
+                     "endpoint_bank_ids": 0, "visible_path_bank_ids": 1}
+    bank_routes.execute(f"CREATE OR REPLACE TEMP VIEW p AS SELECT *,{checks.partition_sql('banks')} split FROM t")
+    wrong = bank_routes.execute("""SELECT count(*) FROM p WHERE split <> CASE
+      WHEN ROW_ID IN (1,2) THEN 'explore' WHEN ROW_ID IN (3,4) THEN 'confirm'
+      ELSE 'excluded' END""").fetchone()[0]
+    assert wrong == 0
+
+
 def test_definitions_and_deliberate_violations(con):
     baseline = metrics(checks.query(con, checks.STRUCTURE_SQL))
     assert baseline["records"] == 400
