@@ -35,6 +35,7 @@ docs/
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
+  08_b_routing_investigation.md   B's independent search ledger, frozen tests and review handoff
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
@@ -42,6 +43,12 @@ analysis/
     out/scientific_checks.md  reproducible structural and validation aggregates
   10_amounts_currency/     owner A
   20_routing_time/         owner B
+    H-B01_bank_additive_duration.py  bank-effect duration approximation
+    H-B02_route_gap_process.py       fixed joint route-length/placeholder count law
+    H-B03_covered_coin.py            rejected independent Covered-label candidate
+    routing_common.py               local validation/privacy helpers
+    test_routing_research.py         dataset-independent research checks
+    out/                            safe exploration/confirmation charts and Markdown tables
   30_parties_anomalies/    owner C
     (each owner folder has out/ for charts)
 findings/
