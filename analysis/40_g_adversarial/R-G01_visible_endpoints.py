@@ -409,7 +409,9 @@ def main() -> None:
         if args.eval_period or args.train_period:
             parser.error("Periods mode takes no train/evaluation periods")
 
-    # Fingerprint before opening the input; validation is invalid if bytes change.\n    input_sha256_before = sha256_file(data) if args.phase != "periods" else None\n    conn = duckdb.connect(database=":memory:")
+    # Fingerprint before opening the input; validation is invalid if bytes change.
+    input_sha256_before = sha256_file(data) if args.phase != "periods" else None
+    conn = duckdb.connect(database=":memory:")
     conn.execute("SET TimeZone = 'UTC'")  # Calendar cohorts are UTC, not machine-local.
     try:
         if args.phase == "periods":
