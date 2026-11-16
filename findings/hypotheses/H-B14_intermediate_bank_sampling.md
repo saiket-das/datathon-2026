@@ -1,9 +1,9 @@
 # H-B14: Interior banks are consistent with draws from a shared weighted pool
 
 - **Owner:** B
-- **Status:** confirmation-ready
+- **Status:** supported in frozen internal validation
 - **Exploration:** `uv run python analysis/20_routing_time/H-B14_intermediate_bank_sampling.py --phase explore`
-- **Internal validation:** same command with `--phase confirm --freeze <full SHA>`.
+- **Internal validation:** same command with `--phase confirm --freeze b1dbe22f6712359081a4577de1643f032e9866ae`.
 - **Evidence:** [discovery report](../../analysis/20_routing_time/out/H-B14_intermediate_bank_sampling_explore.md).
 
 ## Proposed rule and scope
@@ -66,8 +66,28 @@ are available in the aggregate report. The June observations guided tolerances.
 
 ## Internal validation and assessment
 
-Pending the frozen July test. A repeatable weighted bank mix is compatible with
-selection from a shared pool of potential correspondents. Conditional mixtures
-and dependencies can have similar coarse summaries. This test does not identify
-the exact original bank weights, independence conditional on every endpoint pair,
-catalogue maintenance, generator ordering or eligibility rules.
+Freeze `b1dbe22f6712359081a4577de1643f032e9866ae` was committed on
+16 November 2026 at 21:53:11 MYT before the
+[unchanged July execution](../../analysis/20_routing_time/out/H-B14_intermediate_bank_sampling_confirm.md).
+The test passed all gates on 55,865 four-bank paths from 2,908 first visible banks,
+20,994 senders and 34,153 receivers. Both interior banks appear in the May
+catalogue for 98.55% of paths.
+
+| Statistic | July observed | May prediction | Resampling evidence and gate |
+| --- | ---: | ---: | --- |
+| Same bank in both interior positions | 0.6229% | 0.6088% | Difference 99% range from −0.0641 to +0.0985 points, inside ±0.15 points |
+| Same country in both interior positions | 6.4531% | 6.5458% | Difference range from −0.3112 to +0.1605 points, inside ±0.60 points |
+| Joint TV for top ten countries plus remainder | .016403 | 0 under equality | Resampled upper .027272, below .035 |
+
+The exact-bank repeat rate is about 25.8 times the uniform-bank baseline.
+Joint fit was evaluated at the country level, alongside the exact-bank collision rate.
+The country marginal TVs for the two slots are .003311 and .005508. Same-country
+coincidence is similar for Covered (6.51%) and Indirect (6.45%). The route,
+gap and endpoint-country comparisons are descriptive. Precise July collision
+and country outcomes are now exposed.
+
+A shared weighted pool can account for both the elevated repeat rate and
+the country pair distribution on these reused records. Conditional mixtures
+and dependencies can yield the same coarse summaries. The fit does not identify
+the original weights, independence within every pair of endpoints, catalogue
+maintenance, generator ordering or eligibility rules.

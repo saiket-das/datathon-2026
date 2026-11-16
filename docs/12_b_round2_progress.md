@@ -131,4 +131,10 @@ stable route duration level.
 repeat-path investigation to the two interior positions of four-bank paths.
 May rates from three-bank paths predict 0.6088% bank collisions, versus June's
 0.5916% and a uniform-pool expectation of 0.0242%. The specific July collision
-and joint-country results are unqueried before the B14 freeze.
+and joint-country results were unqueried before freeze
+`b1dbe22f6712359081a4577de1643f032e9866ae` on 16 November 2026 at 21:53:11 MYT.
+The unchanged July internal test passed. Across 55,865 four-bank paths, 0.6229%
+repeat the interior bank and the pooled joint country TV is .016403. The estimate
+is compatible with a shared weighted pool. It covers the tested collision and
+country summaries and leaves exact identity weights and conditional dependence
+unresolved.
