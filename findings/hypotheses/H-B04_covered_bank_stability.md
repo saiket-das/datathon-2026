@@ -1,8 +1,8 @@
 # H-B04: Ordering-bank Covered propensities transfer across months
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Evidence level:** Exploratory until frozen internal validation; no independent holdout claim is available.
+- **Status:** uncertain (frozen internal-validation test passed)
+- **Evidence level:** Supported but not independently confirmed.
 - **Script / exact command:** `uv run python analysis/20_routing_time/H-B04_covered_bank_stability.py --phase explore`
 - **Validation:** same command with `--phase confirm --freeze <SHA>`.
 - **Evidence:** matching `_explore.md` / `_confirm.md` aggregate reports in the script's out folder; no bank coefficients/identities exported.
@@ -80,12 +80,34 @@ acceptance thresholds were changed before freezing; no July outcome informed the
 
 ## Confirmation and robustness results
 
-Not accessed. Append unchanged-test results after freeze. Any pass is labelled
-**Supported but not independently confirmed**, not a new independent replication.
+Frozen commit `f0259aa156723f60943dca219b8153532dca9860` was recorded before querying
+July B04 errors/calibration. Executable diff against freeze is empty. Command:
+`uv run python analysis/20_routing_time/H-B04_covered_bank_stability.py --phase confirm --freeze f0259aa156723f60943dca219b8153532dca9860`.
+
+**PASS, unchanged frozen internal test.** July had239,333 eligible-population multibank
+payments;218,479 scored (91.2866%),42,073 senders,104,342 receivers and840 supported
+ordering banks. Training-bank Brier=.06038437 versus global=.09131520 and
+composition=.08869949. Ratios are .66127395 (99% interval [.58981634,.74504310])
+and .68077469 ([.60324234,.75861473]), both below the frozen .85 ceiling.
+Row-weighted bank calibration absolute error=.00925026 ([.00802591,.01038991]),
+below .05. All support/coverage criteria passed. Retain the failed tighter pilot
+acceptance variant above; the July pass does not erase it or confirm a new .75 criterion.
+
+Descriptive party-pair bank/composition ratios span .673803-.707909; capped visible-count
+ratios .670321-.685213. No subgroup was substituted for the primary test. Full currencies,
+including inadequate-support suppression, remain in the report. Full training/evaluation
+month populations share35,930 same-role senders,39,334 receivers,2,939 ordering banks
+and2,874 beneficiary banks; these are not globally entity-independent samples.
+
+At most **Supported but not independently confirmed**: the chosen July mechanism outcomes
+were not queried before freeze, but Round1 full-period bank aggregates and July route
+summaries already exposed these records and outcomes. No independent estimator or
+independent methodological review has yet been performed. Unseen-bank, excluded-cross-bit,
+labelled-payment and later-date transfer are not established.
 
 ## Assessment
 
-Exploratory evidence supports stable bank-associated Covered propensity. Exact assignment,
+Frozen internal temporal testing supports stable bank-associated Covered propensity. Exact assignment,
 causal direction, corridor controls and unseen-bank transfer remain unresolved.
 
 ## Real-world explanation (interpretation, not evidence)
