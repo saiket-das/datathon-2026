@@ -40,35 +40,16 @@ uv run python analysis/40_g_adversarial/R-G01_visible_endpoints.py \
   --phase validate --train-period "${YEAR}-05" --eval-period "${YEAR}-07" \
   --freeze-commit "$FREEZE"
 
+# Privacy gate: NEVER auto-stage, commit, or push a generated report.
+# Derived percentages, intervals, or overlapping marginals can reconstruct
+# suppressed small cells even when individual counts are masked.
 REPORT="analysis/40_g_adversarial/out/R-G01_aggregates.md"
-LEDGER="analysis/40_g_adversarial/G_LEDGER.md"
 if [[ ! -s "$REPORT" ]]; then
-  echo "ERROR: no aggregate report; not committing" >&2
+  echo "ERROR: no local aggregate report" >&2
   exit 3
 fi
-REPORT_SHA="$(shasum -a 256 "$REPORT" | awk '{print $1}')"
-STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
-{
- echo
- echo "## R-G01 external local executor, ${STAMP} UTC"
- echo "- Recovery head before execution: $(git rev-parse HEAD)"
- echo "- Original frozen test commit: ${FREEZE}"
- echo "- Data: local dataset/payments.parquet, not added to Git; year ${YEAR}"
- echo "- Program: R-G01_visible_endpoints.py; actual dataset script and pytest executed."
- echo "- Aggregate report SHA256: ${REPORT_SHA}"
- echo "- Report: analysis/40_g_adversarial/out/R-G01_aggregates.md"
- echo "- Status: executed internally on reused synthetic dataset, NOT independent confirmation."
- echo "- Read report for denominators, exclusions, failures and negative-control results."
-} >> "$LEDGER"
-git add -- "$REPORT" "$LEDGER"
-CHANGED="$(git diff --cached --name-only)"
-if [[ "$CHANGED" != "$REPORT"$'\n'"$LEDGER" &&
-      "$CHANGED" != "$LEDGER"$'\n'"$REPORT" ]]; then
-  echo "ERROR: unexpected staged contents; refuse publication" >&2
-  git reset -- "$REPORT" "$LEDGER" >&2
-  exit 3
-fi
-git diff --cached --check
-git commit -m "G: R-G01 supervised local aggregate-only replication"
-git push origin "HEAD:refs/heads/${BRANCH}"
-echo "G-R01 EXECUTED: pushed aggregate commit $(git rev-parse HEAD)"
+printf '%s\\n' "R-G01 dataset computation finished locally; publication NOT authorised by this script." \\
+  "Review all counts, complementary totals, rates, bounds and subgroup intersections" \\
+  "for disclosure before any separate human-approved aggregate-only commit." \\
+  "Local report: $REPORT" \\
+  "Report SHA256: $(shasum -a 256 "$REPORT" | awk '{print $1}')"
