@@ -49,6 +49,7 @@ analysis/
     H-A04_fx_gap_residuals.py     exploratory signed errors by gap status and route
     H-A05_fx_repeat_classes.py    tighter FX bound and repeated-class alternatives
     H-A06_currency_endpoint.py    first-path-country currency association
+    H-A07_currency_exceptions.py  exploratory receiver-country currency alternatives
     test_fx_country_classes.py  invented aggregate graph tests
     out/H-A03_*                safe exploration/internal-validation reports
     test_value_mechanisms.py   dataset-independent calculation checks
@@ -64,6 +65,7 @@ findings/
     H-A04_fx_gap_residuals.md     Round 2 exploration and FX residual limitations
     H-A05_fx_repeat_classes.md    Round 2 tighter FX bound and prior exposure
     H-A06_currency_endpoint.md    Round 2 endpoint currency association
+    H-A07_currency_exceptions.md  Round 2 currency exceptions and prevalence controls
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
