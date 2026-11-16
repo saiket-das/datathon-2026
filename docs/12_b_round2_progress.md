@@ -142,3 +142,22 @@ unresolved.
 ## B15 supported three-bank duration decomposition
 
 Exploratory, confirmation-ready. On 7,335/211,787 June three-visible-bank paths, May directed adjacent-edge medians plus a June −14.5s offset give MAE 7.5419s and 96.13% within20s. Equally calibrated maximum-edge comparison gives MAE21.6437s. This narrow coverage and shared edges limit transport and causal interpretations. B01 remains rejected. The new July B15 residual outcomes remain unqueried before freeze and reuse previously analysed records.
+
+B15 was frozen at `44a4a5afa7959ad79e4bfe9058882a0a1f52e142` on
+17 November 2026 at 03:15:34 MYT before opening its July errors.
+
+## B16 currency and duration location
+
+Exploration on 418 recurring Direct visible paths with at least ten payments in
+each of two supported currencies covers 113,279 payments and 249 first visible
+banks. No within-path currency mean range exceeds20 seconds. Median and99th
+percentile ranges are1.1644 and5.4124 seconds. The same-path/currency month
+reference has median mean drift .8659 seconds across1,900 cells. Higher currency-cell
+support lacks adequate path/bank coverage. Large currency-specific shifts cannot
+explain the observed locations on this subset. Other rare combinations and
+account composition remain unresolved. The script is exploration only.
+
+B15 frozen July test passed on5,219/151,146 payments (3.4530%).
+Sum MAE7.323913s, maximum MAE21.820368s, ratio .335646 and96.148687% within20s.
+Coverage stays narrow. Shorter-edge paths show similar sum/max errors.
+July B15 outcomes are exposed. Known edges and shared entities limit interpretation.

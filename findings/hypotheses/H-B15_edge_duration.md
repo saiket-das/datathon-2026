@@ -1,8 +1,8 @@
 # H-B15 shifted directed-edge duration on supported paths
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Evidence level:** Exploratory until the frozen internal test runs
+- **Status:** supported in frozen internal validation
+- **Evidence level:** Supported on a narrow reused population
 - **Command:** `uv run python analysis/20_routing_time/H-B15_edge_duration.py --phase explore`
 - **Frozen command:** replace the phase with `--phase confirm --freeze SHA`
 
@@ -36,3 +36,26 @@ Resample whole declared ordering-bank groups 1,000 times with seed20261116. Boun
 ## Prior exposure
 
 Phase 0 structural, Round 1 B01 additive duration results, B02 paths and other outcomes, and B04–B14 routing/duration/temporal aggregates were already available. In particular B09 used July durations for its exclusion signature, B11 used July within-path duration differences and B13 used May–June directed pairs. The specific July B15 edge-sum errors remain uninspected before freeze. July is reused internal evaluation, and every scored edge was seen during May. Other selections and higher visible counts are unresolved. A pass can only support the stated narrow empirical rule without independent confirmation.
+
+## Frozen July result
+
+Freeze 44a4a5afa7959ad79e4bfe9058882a0a1f52e142 was committed on
+17 November 2026 at 03:15:34 MYT. The unchanged executable passed all gates.
+Reproduce with the recorded command, --phase confirm and --freeze followed by that SHA.
+
+July supports 5,219/151,146 three-visible-bank payments (3.4530%), across 331
+ordering banks, 3,055 senders and 3,977 receivers. Sum MAE is 7.323913s,
+maximum MAE 21.820368s, ratio .335646, p90 error 15.5s and within20s share 96.148687%.
+One-sided99% resampling bounds are 7.629742s for sum MAE, .482308 for the MAE
+ratio and 95.545228% for the within20s share. June-calibrated offsets stayed fixed.
+
+On 3,493 paths with the endpoint comparator, sum MAE 7.435585s contrasts with
+endpoint MAE 160.668194s. On 4,936 paths with shorter edge below100s, sum MAE
+7.218497s and max MAE 7.860920s are close. Covered and both-long-edge subgroups
+lack display entity support. These restrictions limit extrapolation of the pooled effect.
+
+The -14.5s shift and directed-edge fit provide an empirical decomposition.
+Possible explanations include edge-associated states, shared node contributions
+counted in both edge medians, or stable path centers. Noise and selection also
+enter the medians. Physical processing costs remain unresolved. B01 remains
+failed. July B15 residual outcomes are now exposed.
