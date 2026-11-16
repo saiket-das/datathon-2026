@@ -50,3 +50,10 @@ No F research automation has been created in this chat. Desired schedule: hourly
 - A source-serialization newline defect was noticed during GitHub code review and repaired before any run. No source execution or test-suite execution occurred; syntax, performance, SHA verification and research results all remain unverified.
 - **No dataset row read by F, no tested H-F01 outcome, no designated validation opened, no freeze, no GitHub draft PR, and no scheduled ChatGPT task.** Opening a PR awaits `uv run pytest` as required by the repository's `AGENTS.md`; running that command requires a functioning Python environment.
 - External local read-only execution and post-execution safe aggregate publication are still mandatory for autonomy. The user-authorised public-repository exception is recorded, but the raw-data prohibition remains in force.
+
+
+## F-PREFLIGHT-004 — isolation audit and cutoff guard (17 Nov 2026 MYT)
+
+- GitHub `compare(main, codex/r2-f-cross-mechanisms)` returned **9 commits ahead, 0 behind** at audit time and only these changed paths: `README.md`, `analysis/40_cross_mechanisms/H-F01_fx_route_duration.py`, `analysis/README.md`, `docs/08_investigator_f_research_ledger.md`, `findings/hypotheses/H-F01_fx_route_duration.md`. No A/B/C files changed.
+- F-only H-F01 pilot now refuses to initiate data access after 18 November 2026, 20:00 MYT; code guard commit `021c6b81280768e70330d4a51d072357cfe263aa`. A local supervisor must also terminate any in-flight process at the cutoff; a start-time guard alone does not enforce the end of a long-running query.
+- GitHub ledger and code were read back after persistence checks. No local runtime or DuckDB query executed; no test outcome, draft PR, or F schedule exists.
