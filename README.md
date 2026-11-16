@@ -1,4 +1,4 @@
-# UMDAC Datathon 2026 · Swift Payments Case (Preliminary Round)
+# UMDAC Datathon 2026 Â· Swift Payments Case (Preliminary Round)
 
 Private workspace for a 3-person team. Our task: **reverse-engineer the hidden rules Swift used to generate 10 million fake cross-border payments**, and present them as a dashboards PDF and a slide deck PDF.
 
@@ -36,6 +36,7 @@ docs/
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
   08_b_routing_investigation.md   B's independent search ledger, frozen tests and review handoff
+  12_b_round2_progress.md        Round2 B hypotheses, validation exposure and handoff
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
@@ -46,6 +47,8 @@ analysis/
     H-B01_bank_additive_duration.py  bank-effect duration approximation
     H-B02_route_gap_process.py       fixed joint route-length/placeholder count law
     H-B03_covered_coin.py            rejected independent Covered-label candidate
+    H-B04_covered_bank_stability.py  frozen internal temporal test of Covered propensity
+    test_covered_stability.py         invented-data guard/uncertainty tests
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks
     out/                            safe exploration/confirmation charts and Markdown tables

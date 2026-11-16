@@ -29,3 +29,12 @@ entity-overlap audits, cluster resampling and small-group suppression. No sponso
 records, model coefficients or bank identities are saved. Reports and PNG charts use
 matching script stems with `_explore`/`_confirm` suffixes in [out/](out/).
 Dataset-independent checks: `uv run pytest analysis/20_routing_time/test_routing_research.py`.
+
+## Round2
+
+[Progress and exposure](../../docs/12_b_round2_progress.md).
+[H-B04](../../findings/hypotheses/H-B04_covered_bank_stability.md) tests known-bank
+Covered-propensity transfer across months with safe aggregates.
+Run `uv run python analysis/20_routing_time/H-B04_covered_bank_stability.py --phase explore`
+or `--phase confirm --freeze SHA` after freezing. This reuses Round1-exposed records
+and cannot establish independent confirmation. Tests: `test_covered_stability.py`.
