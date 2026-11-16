@@ -95,11 +95,34 @@ exposure.
 
 ## Validation and robustness results
 
-Pending at freeze.
+The test froze at `8bf80a9efd104bf2ebb200690a745443f02f4808`,
+16 November 2026 21:23:27 MYT. Reproduce with:
+
+~~~text
+uv run python analysis/10_amounts_currency/H-A08_path_currency_set.py --phase validate --freeze 8bf80a9efd104bf2ebb200690a745443f02f4808
+~~~
+
+The unchanged internal test passed. July bit-1 had 699,603 scoped payments,
+697,868 eligible (99.7520%), 88,886 senders and 270,205 receivers.
+All-path membership was 98.7488%, endpoint membership 97.2536% and first
+country membership 93.4662%. There were 8,732 outside-set currencies.
+
+The exact-set frequency baseline covered 29.3716% and shifted-country map
+24.2718%. Lower 99% bank-cluster bounds were .986755 for membership,
+.685364 lift over the frequency baseline, .706373 lift over shifted
+membership, and .038524 multibank lift over endpoint membership.
+All pass the .98/.50/.50/.02 floors. The 5,651 declared ordering banks
+include 4,380 shared with pre-July bit-0 training.
+
+The [full report](../../analysis/10_amounts_currency/out/H-A08_path_currency_set_validate.md)
+retains route/gap, set-cardinality and opportunity controls. These overlap
+the primary population. Known bank/country dependence and opportunity
+differences of the shifted map limit causal interpretation.
 
 ## Assessment
 
-A pass supports bounded path-set compatibility on eligible reused records.
+Evidence level **Supported but not independently confirmed**. The passed
+frozen internal test supports path-set compatibility on eligible reused records.
 It does not prove original denomination choice, sampling probabilities,
 causality or generator stage order. A03's failed exact criterion,
 A05's upper-bound scope and A06's association limits remain.
