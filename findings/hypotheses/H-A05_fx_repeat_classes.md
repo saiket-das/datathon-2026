@@ -96,10 +96,31 @@ Bank and country overlap can matter even with disjoint literal accounts.
 
 ## Validation and robustness results
 
-Pending at freeze.
+Freeze: `54fe784a9ac96ba5fffd1f5bcbf172ad4018ac77`, 16 November 2026
+20:42:16 MYT. The executable cross-checked the freeze before reading the
+bit-1 population. Reproduce from the repository root:
+
+~~~text
+uv run python analysis/10_amounts_currency/H-A05_fx_repeat_classes.py --phase validate --freeze 54fe784a9ac96ba5fffd1f5bcbf172ad4018ac77
+~~~
+
+The frozen test passed all criteria. There were zero violations in 876,388
+eligible payments of 888,944 scoped (98.5875%). In 161,137 eligible
+payments (18.3865%), the class bound was strictly smaller than the raw
+country bound. This tighter subset included 36,148 senders, 78,173
+receivers and 4,248 declared ordering banks. The raw country bound also
+had zero violations. The shifted-class bound had 9,002 violations (1.0272%).
+
+The 3,558 errors already counted in A03 are all overpredictions. Counting
+distinct classes instead of transitions repairs 475 and breaks 200,290 prior
+exact matches on the same records. The [validation report](../../analysis/10_amounts_currency/out/H-A05_fx_repeat_classes_validate.md)
+records scoped coverage, aggregate controls and descriptive strata.
 
 ## Assessment
 
-A passing test can support an empirical tighter bound on the reused
-population. The original count algorithm and the cause of residuals remain
-open.
+Evidence level: **Supported but not independently confirmed**. The learned
+class-change count tightens the empirical bound on the reused eligible
+multibank population. The A03 near-exact claim still fails. Sparse or
+incorrect class grouping, recording conventions and unobserved attributes
+remain alternatives. The distinct-class correction fails as a general
+replacement and the cause of the one-sided residuals remains open.
