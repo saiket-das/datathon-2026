@@ -44,3 +44,11 @@
 5. H-G01+: propose new hypotheses only after explicit exploration log and freeze protocol.
 
 **Independence guard:** Do not read E's uncommitted blind work or disclose this ledger to D/E prior to their initial freezes.
+
+## G-002 · CI falsification of first test implementation (2026-11-17 MYT)
+
+- Draft PR #10 opened on G branch; existing GitHub Actions dataset-independent matrix executed. Initial run `43936672256` failed in both Ubuntu and Windows at `uv run pytest`.
+- Ubuntu run: **62 passed, 1 failed**; a synthetic token-extraction test hit DuckDB 2.0's deprecated `x -> expression` lambda binder error. This was a real implementation failure, not a synthetic-payment rule counterexample.
+- Fixed script and fixture to use `lambda x: expression` syntax, independently before opening any July dataset outcome. Do NOT erase original failure.
+- Dataset: not present on hosted runner; no sponsor Parquet read. CI validates fixture code only.
+- Next: obtain clean CI, freeze actual commit, verify local external execution access and real aggregate report; if missing report explicitly block empirical claims.
