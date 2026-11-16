@@ -43,3 +43,5 @@ and cannot establish independent confirmation. Tests: `test_covered_stability.py
 of declared-versus-path endpoint disagreement. Run
 `uv run python analysis/20_routing_time/H-B05_endpoint_mismatch.py --phase explore`
 or use the recorded freeze for July internal validation.
+
+[H-B06](../../findings/hypotheses/H-B06_calendar_timing.md) screens the UTC weekday/weekend timing contrast within bank, route, party pair and month. Run `uv run python analysis/20_routing_time/H-B06_calendar_timing.py`. Exploration only.
