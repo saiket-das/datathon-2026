@@ -59,6 +59,15 @@ def verify_freeze(commit: str, train_period: str, eval_period: str) -> None:
     # An ancestor may be checked out later; the immutable commit is the freeze.
 
 
+def sha256_file(path: Path) -> str:
+    """Stream a private input-byte fingerprint without loading Parquet into Python."""
+    digest = hashlib.sha256()
+    with path.open('rb') as handle:
+        for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def parse_period(value: str) -> str:
     if not re.fullmatch(r"20[0-9]{2}-(0[1-9]|1[0-2])", value):
         raise argparse.ArgumentTypeError("Period must be YYYY-MM")
@@ -433,7 +442,11 @@ def main() -> None:
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(report, encoding="utf-8")
     code_hash = hashlib.sha256((ROOT / SCRIPT_REL).read_bytes()).hexdigest()
+    # Fingerprint the exact local source after the query; keep digest private.
+    # A concurrent file mutation is not ruled out: execute on immutable input.
+    input_sha256 = sha256_file(data)
     metadata = {
+        "dataset_sha256_private": input_sha256,
         "phase": args.phase,
         "train_period": args.train_period,
         "eval_period": args.eval_period,
