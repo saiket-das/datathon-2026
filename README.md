@@ -28,6 +28,7 @@ pyproject.toml, uv.lock    the Python libraries and their pinned versions (manag
 .python-version            the Python version uv installs and uses (3.13)
 .github/workflows/         automatic checks on every pull request (no dataset needed)
 docs/
+  handoff.md                     role A frozen investigation, results and exact review commands
   01_project_in_simple_words.md   plain-language introduction
   02_competition_brief.md         one-page factual brief of the rules
   03_execution_plan.md            team strategy and timeline
@@ -35,7 +36,6 @@ docs/
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
-  handoff.md                     role A frozen investigation, results and exact review commands
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
@@ -50,9 +50,9 @@ analysis/
   30_parties_anomalies/    owner C
     (each owner folder has out/ for charts)
 findings/
+    H-A01_amount_kernel.md, H-A02_usd_rounding.md  A's frozen plans and results
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
-    H-A01_amount_kernel.md, H-A02_usd_rounding.md  A's frozen plans and results
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
