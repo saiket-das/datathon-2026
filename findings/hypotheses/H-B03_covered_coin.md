@@ -40,6 +40,10 @@ does not include this label claim. This change was not based on confirmation.
 
 Not run: an exploratory candidate that has already failed does not need confirmation
 to be reported as rejected. A revised bank-dependent label rule would need a fresh plan.
+After B01/B02 were frozen, B02's predeclared descriptive outputs also exposed a .122243
+Covered share in multibank bank-confirmation payments. This is subsequent outcome
+exposure, **not** a frozen independent confirmation of H-B03; do not reuse that population
+as unseen data to tune a new Covered-assignment hypothesis.
 
 ## Assessment
 

@@ -1,8 +1,8 @@
 # H-B01: Direct-route bank effects predict longer-route duration
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Script / exact command / commit:** `uv run python analysis/20_routing_time/H-B01_bank_additive_duration.py --phase explore`; freeze SHA to be recorded after committing this plan. Confirmation: same command with `--phase confirm --freeze <SHA>`.
+- **Status:** rejected
+- **Script / exact command / commit:** `uv run python analysis/20_routing_time/H-B01_bank_additive_duration.py --phase explore`; freeze `0607592078394baacf5454c6a1737916ea9b84c6` (16 November 2026, 16:22:47 UTC+8). Confirmation: same command with `--phase confirm --freeze 0607592078394baacf5454c6a1737916ea9b84c6`.
 - **Chart:** `analysis/20_routing_time/out/H-B01_bank_additive_duration_confirm.png` (after confirmation); discovery chart has `_explore` suffix.
 
 ## Proposed rule and scope
@@ -63,11 +63,12 @@ label defines the baseline population, not proven legitimacy.
   pooled labelled anomalies. No sequence target, so no sequence purge is applicable.
   All robustness shares records with primary evaluation; it is not independent replication.
 - **Freeze/time/prior exposure:** freeze SHA/time recorded after commit, before any
-  confirmation query. Phase 0 full-data summaries and the shared scientific foundation
+  confirmation query: `0607592078394baacf5454c6a1737916ea9b84c6`, 16 November 2026,
+  16:22:47 Malaysia time. Phase 0 full-data summaries and the shared scientific foundation
   were read, including median duration, route counts, endpoint disagreement and split
   audits. No other investigator's developing branch, PR or provisional finding was read.
   Only the bank-exploration partition was queried during discovery. Source schema and
-  official data dictionary were inspected. No confirmation outcome has been accessed.
+  official data dictionary were inspected. No confirmation outcome had been accessed at freeze.
 
 ## Discovery evidence
 
@@ -93,12 +94,47 @@ Indirect RMSE=145.536. Accuracy worsens for longer routes. These are discovery r
 
 ## Confirmation and robustness results
 
-Pending the frozen commit and unchanged test. Do not replace these criteria after viewing results.
+**Unchanged primary test: failed.** See the complete
+[`_confirm.md` report](../../analysis/20_routing_time/out/H-B01_bank_additive_duration_confirm.md)
+and matching PNG. Executables match freeze `0607592078394baacf5454c6a1737916ea9b84c6`;
+no model, eligibility, comparator, threshold or resampling change followed confirmation.
+
+| Criterion | Confirmation result | Decision |
+| --- | --- | --- |
+| >=60% unlabelled non-Direct coverage | 350,282 / 1,003,726 = 34.8982% | Fail |
+| Entire 99% R2 interval >=.95 | R2=.900205; interval [.880433,.920206] | Fail |
+| Entire 99% MSE ratio interval <=.10 | .044379; interval [.033854,.055850] | Pass |
+| Entire 99% bias interval inside +/-60 seconds | -11.6517 seconds; [-24.5987,1.0336] | Pass |
+| >=100 senders, receivers, ordering banks | 42,080 / 131,367 / 1,854 | Pass |
+
+RMSE=182.755 seconds, MAE=122.488. The selected subset beats the route/count baseline
+on squared error, but this does not rescue the failed breadth and R2 criteria. Covered
+R2=.817138 and Indirect R2=.917564. Eligible Direct confirmation R2=.757934 is also
+much lower than its in-sample exploration counterpart. The model supports approximate
+bank-associated structure, not a fully reconstructed duration generator.
+
+The eligible confirmation set shares zero row IDs and declared endpoint banks with
+unlabelled exploration, but 2,164 account strings and **1,827 visible path banks**.
+Every eligible path bank was already supported in Direct training; this is explicitly
+not unseen-path-bank prediction. Endpoint agreement, support-driven selection and
+bank composition can all affect the result. Declared endpoint agreement alone does
+not eliminate the failure (R2=.884209 in that subgroup).
+
+**Predeclared sensitivity:** equal-ordering-bank MSE ratio=.034037; dropping the largest
+sender gives R2=.902438 on 342,335 payments. July's 101,711 eligible payments give
+R2=.900991, RMSE=183.294 seconds. Party-pair R2 spans .896327-.901245; duration
+error grows with visible count. Labelled multibank eligibility has only 150 payments
+with inadequate entity support, so errors are suppressed and no anomaly transfer claim
+is made. These robustness checks share records/entities with the primary test and
+do not create a replacement confirmation population.
 
 ## Assessment
 
-Promising statistical approximation, not yet confirmed; even a successful confirmation
-would identify an association, not causal direction or original generator code.
+Reject the frozen broad duration-transfer claim. Preserve the useful **limited statistical
+approximation** as partial evidence: on 34.9% of unlabelled non-Direct confirmation
+payments it reduces MSE substantially, but misses the declared accuracy/coverage targets.
+Do not present exploration R2=.982510 as confirmed. Recovering latent bank delays, their
+combination rule and the remaining residual mechanism is unresolved. No causal claim.
 
 ## Real-world explanation (interpretation, not evidence)
 

@@ -1,8 +1,8 @@
 # H-B02: One fixed event law reconstructs route length and placeholder counts
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Script / exact command / commit:** `uv run python analysis/20_routing_time/H-B02_route_gap_process.py --phase explore`; freeze SHA to be recorded after commit. Confirmation: same command with `--phase confirm --freeze <SHA>`.
+- **Status:** replicated
+- **Script / exact command / commit:** `uv run python analysis/20_routing_time/H-B02_route_gap_process.py --phase explore`; freeze `0607592078394baacf5454c6a1737916ea9b84c6` (16 November 2026, 16:22:47 UTC+8). Confirmation: same command with `--phase confirm --freeze 0607592078394baacf5454c6a1737916ea9b84c6`.
 - **Chart:** `analysis/20_routing_time/out/H-B02_route_gap_process_confirm.png` (after confirmation); exploration chart uses `_explore`.
 
 ## Proposed rule and scope
@@ -67,7 +67,8 @@ Covered versus Indirect assignment is deliberately outside this rule (see H-B03)
   confirmation partitions. Conditional route/FX selection changes the visible-event mix,
   so the marginal .35 law is not claimed within every selected subgroup.
 - **Freeze/time/prior exposure:** SHA/time recorded after committing this plan, before
-  opening confirmation. Read Phase 0 and shared full-data summaries, including the
+  opening confirmation: `0607592078394baacf5454c6a1737916ea9b84c6`, 16 November 2026,
+  16:22:47 Malaysia time. Read Phase 0 and shared full-data summaries, including the
   767,204 paths with placeholders, Direct/count and continuity definitions and split
   audit. That prior exposure means confirmation is not wholly unseen. Candidate
   probabilities and joint distribution were investigated only on bank exploration.
@@ -92,12 +93,58 @@ unchanged. All counts and tolerances concern distributions, not a deterministic 
 
 ## Confirmation and robustness results
 
-Pending frozen commit and unchanged test.
+**Unchanged primary test: passed its practical criteria.** See the complete
+[`_confirm.md` report](../../analysis/20_routing_time/out/H-B02_route_gap_process_confirm.md)
+and matching PNG. No executable, probabilities, grid, comparator, tolerances or
+resampling changes followed confirmation. Freeze is
+`0607592078394baacf5454c6a1737916ea9b84c6`.
+
+Confirmation covers 2,730,400 unlabelled payments (of 2,732,147 bank-confirmation
+payments), 151,586 senders, 784,772 receivers and 3,990 ordering banks.
+
+| Frozen statistic | Estimate | 99% ordering-bank interval | Criterion |
+| --- | --- | --- | --- |
+| Visible intermediate event | .349351 | [.348792,.349862] | Inside [.345,.355]: pass |
+| Placeholder event | .050133 | [.049894,.050374] | Inside [.045,.055]: pass |
+| Finish event | .600515 | [.599938,.601102] | Inside [.595,.605]: pass |
+| Joint distribution TV | .000967 | [.000424,.001778] | Upper bound <=.01: pass |
+| TV ratio to independence baseline | .027911 | [.012471,.050228] | Upper bound <=.50: pass |
+
+Thus the fixed count law reduces joint-distribution distance by about 97.2% relative
+to the exploration-trained independent-marginals baseline. The parameter .350000
+is **outside** the visible-event sensitivity interval: practical replication must not
+be misreported as exact parameter equality or recovery of the generating code.
+All 18 coarse cells have >=100 observations, and all discrepancies remain in the report.
+There are 10,826 adjacent-placeholder paths and no endpoint placeholders, visible-count
+mismatches or Direct/count mismatches in the unlabelled confirmation population.
+
+**Predeclared robustness:** July (792,353 payments) estimates visible/gap/finish as
+.349778/.050298/.599924. Across ten source-file blocks, visible ranges
+.348399-.350671 and gap .049252-.050841. Party-pair estimates remain near the
+pooled event probabilities. Removing the largest sender leaves 2,690,584 payments
+and estimates .349396/.050147/.600457. Equal weighting of 1,623 banks with >=100
+payments gives .347858/.050370/.601772. Equal weighting of all 3,990 banks gives
+.323900/.048449/.627651; sparse-bank ratio bias and genuine heterogeneity are not
+separated, so this is not a universal per-bank parameter claim.
+
+The pooled labelled sensitivity differs: 1,747 records give gap=.043165 and path-gap
+share .059531, versus .050133 and .077084 for unlabelled payments. Labels are neither
+assumed interchangeable nor used to extend the primary claim. Covered share among
+multibank confirmation payments is .122243; the rejected independent .10 label coin
+was not reinstated.
+
+Actual unlabelled overlap with exploration: zero ROW_IDs, zero declared endpoint banks,
+11,558 account strings and 6,708 visible path banks. Temporal/monthly checks share records
+with primary confirmation; neither they nor bank metadata separation prove independence
+of the whole network. Cross-bit excluded records remain unexamined.
 
 ## Assessment
 
-Promising reconstructed joint count law. It does not recover bank selection, Covered
-assignment, hidden participants, causal direction, or the original random-number implementation.
+Replicated **approximate joint count law** for unlabelled payments across the selected
+endpoint-bank partition, conditional on prior full-data structural exposure. It predicts
+route-length and gap-count distributions with TV=.000967, but does not recover bank
+selection, Covered assignment, hidden participant counts, causal direction, exact event
+probabilities, positions conditional on counts or the original random-number implementation.
 
 ## Real-world explanation (interpretation, not evidence)
 
