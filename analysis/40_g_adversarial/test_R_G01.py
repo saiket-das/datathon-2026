@@ -17,7 +17,7 @@ def test_visible_path_extraction_ignores_gaps_and_rejects_non_bic():
         WITH t AS (
             SELECT list_filter(
               string_split(' AAAAAAAA ;...; XXXXXXX ; BBBBBBBB ', ';'),
-              x -> regexp_full_match(trim(x), '^[A-Z0-9]{8}$')
+              lambda x: regexp_full_match(trim(x), '^[A-Z0-9]{8}$')
             ) AS nodes
         )
         SELECT trim(list_extract(nodes, 1)),
