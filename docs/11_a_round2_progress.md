@@ -7,6 +7,7 @@ No automatic merge; final PDFs need user approval. Round 1 evidence remains unch
 | Hypothesis | Mechanism | Validation | Evidence strength | Blocker | Submission impact |
 | --- | --- | --- | --- | --- | --- |
 | H-A03 | Learned country equivalence classes predict FX counts over visible paths | Frozen internal validation completed. 99.5940% agreement vs 81.2848% baseline, with 98.5875% eligible coverage. | Rejected at the near-exact threshold. Comparative gain supported but not independently confirmed. | 99% bank-cluster lower bound 99.4690% vs required 99.5%. Round 1 reuse and 6,530 shared training banks. | High for approximate FX-count reconstruction with the rejected threshold displayed. |
+| H-A04 | Do path gaps concentrate H-A03 errors? | Bit-0 exploration only. All 3,594 errors overpredict. Gap rates slightly lower within displayed Indirect length groups. | Exploratory signed-error clue. No support for broad gap concentration. | Covered gap strata have sparse errors. Phase 0, Round 1 and A03 exposure retained. | Negative comparison narrows the FX-count question; residual mechanism unresolved. |
 
 ## Completed and exposure
 

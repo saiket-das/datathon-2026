@@ -24,3 +24,5 @@ the hypothesis records. `test_value_mechanisms.py` uses invented data only; run 
 uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 `--phase validate --freeze SHA`. Reports are `out/H-A03_fx_country_classes_*.md`.
 [Progress and limitations](../../docs/11_a_round2_progress.md). Round 1 files remain unchanged.
+
+[H-A04: FX residuals and path gaps](../../findings/hypotheses/H-A04_fx_gap_residuals.md) is exploration only. Run H-A04_fx_gap_residuals.py for grouped signed errors and gap comparisons.

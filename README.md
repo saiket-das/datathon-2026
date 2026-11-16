@@ -46,6 +46,7 @@ analysis/
     H-A01_amount_kernel.py     account-controlled business-party scale investigation
     H-A02_usd_rounding.py      exploration-trained EUR daily scaling investigation
     H-A03_fx_country_classes.py  Round 2 learned-country-class FX-count test
+    H-A04_fx_gap_residuals.py     exploratory signed errors by gap status and route
     test_fx_country_classes.py  invented aggregate graph tests
     out/H-A03_*                safe exploration/internal-validation reports
     test_value_mechanisms.py   dataset-independent calculation checks
@@ -58,6 +59,7 @@ findings/
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
     H-A03_fx_country_classes.md  Round 2 frozen internal-validation design
+    H-A04_fx_gap_residuals.md     Round 2 exploration and FX residual limitations
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
