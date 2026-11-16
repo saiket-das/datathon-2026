@@ -138,3 +138,7 @@ repeat the interior bank and the pooled joint country TV is .016403. The estimat
 is compatible with a shared weighted pool. It covers the tested collision and
 country summaries and leaves exact identity weights and conditional dependence
 unresolved.
+
+## B15 supported three-bank duration decomposition
+
+Exploratory, confirmation-ready. On 7,335/211,787 June three-visible-bank paths, May directed adjacent-edge medians plus a June −14.5s offset give MAE 7.5419s and 96.13% within20s. Equally calibrated maximum-edge comparison gives MAE21.6437s. This narrow coverage and shared edges limit transport and causal interpretations. B01 remains rejected. The new July B15 residual outcomes remain unqueried before freeze and reuse previously analysed records.

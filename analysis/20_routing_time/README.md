@@ -70,3 +70,5 @@ the duration of supported Direct paths in opposite directions. Run
 [H-B14](../../findings/hypotheses/H-B14_intermediate_bank_sampling.md) compares
 the two interior positions with draws from a weighted bank catalogue.
 Run `uv run python analysis/20_routing_time/H-B14_intermediate_bank_sampling.py --phase explore`.
+
+[H-B15](../../findings/hypotheses/H-B15_edge_duration.md) tests shifted directed-edge sums for supported three-visible-bank durations. See the record for the pilot and frozen command.
