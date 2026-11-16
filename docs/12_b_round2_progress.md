@@ -9,7 +9,7 @@ unavailable17November18:00â€“21:00MYT; routine work does not wait for feedb
 | Hypothesis/question | Mechanism and current evidence | Validation | Evidence strength | Blocker / submission impact |
 | --- | --- | --- | --- | --- |
 | H-B04 bank-specific Covered stability | July bank probabilities reduce Brier error33.9% vs global and31.9% vs composition; calibration error .93points | Frozen internal test passed, f0259aa | Supported but not independently confirmed | Reused population exposure precludes independent holdout label; could materially explain rejected B03 coin |
-| H-B05 joint endpoint disagreement | Approximately 5% disagreement per role in May–June, with a joint rate near the product. Covered ordering has a higher mismatch rate. | Ready to freeze before the July-only joint test | Exploratory | Could quantify a second routing relationship. Direction and selection mechanism remain unresolved. |
+| H-B05 joint endpoint disagreement | Approximately 5% disagreement per role in May–June, with a joint rate near the product. Covered ordering has a higher mismatch rate. | Frozen: 4cec50a611750402ace7a72e1d4602dbc6325ba1 before the July-only joint test | Exploratory | Could quantify a second routing relationship. Direction and selection mechanism remain unresolved. |
 | Endpoint disagreement explains Covered | Covered and Indirect endpoint agreement both about95%; simple mismatch interpretation inadequate | Exploratory aggregate screen only | Unresolved | No recovered mismatch mechanism; low priority |
 | B01 duration transfer / B03 global coin | Round1 rejection remains intact | No retuning or replacement | Rejected | Useful methodological lesson, not a confirmed mechanism |
 

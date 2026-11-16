@@ -101,7 +101,7 @@ def evaluate(connection: duckdb.DuckDBPyConnection, phase: str, freeze: str | No
             "receiver": "SELECT DISTINCT receiver entity FROM {}",
             "accounts across both roles": "SELECT sender entity FROM {0} UNION SELECT receiver FROM {0}",
             "declared endpoint banks": "SELECT ob entity FROM {0} UNION SELECT bb FROM {0}",
-            "visible path banks": """SELECT DISTINCT unnest(list_filter(path, entry -> entry <> '...'))
+            "visible path banks": """SELECT DISTINCT unnest(list_filter(path, lambda entry: entry <> '...'))
                                       entity FROM {}""",
         }
         for label, template in membership.items():

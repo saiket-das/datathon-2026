@@ -28,6 +28,8 @@ Phase 0 and Round 1 exposed full-data and partition summaries, including endpoin
 
 ## Confirmation and assessment
 
+The original executable freeze is `4cec50a611750402ace7a72e1d4602dbc6325ba1`. Its July attempt ended with DuckDB BinderException in the final visible-path overlap query and wrote no report. The run computed primary values internally, but surfaced no estimates, criteria decision, or cohorts. An invented-data regression test reproduced the unsupported single-arrow lambda. The retry freeze changes only that auxiliary query from single-arrow to the supported explicit lambda syntax. The population, primary calculations, uncertainty, and acceptance criteria are identical. The original frozen file and failed-run record are retained.
+
 Pending. Retain failed criteria and limitations without tuning.
 
 ## Real-world explanation (interpretation only)

@@ -19,3 +19,19 @@ def test_independent_and_correlated_flags_separate() -> None:
     metrics = module.metrics(stats)
     assert np.allclose(metrics[0], [.05, .05, .0025, 0., 0.])
     assert np.allclose(metrics[1], [.05, .05, .05, .0475, .095])
+
+
+def test_validation_reports_visible_path_bank_overlap() -> None:
+    import duckdb
+
+    spec.loader.exec_module(module)
+    with duckdb.connect() as connection:
+        connection.execute("""
+            CREATE TABLE sample AS SELECT i::VARCHAR sender, i::VARCHAR receiver,
+              i::VARCHAR ob, i::VARCHAR bb,
+              [i::VARCHAR, '...'] path, i::VARCHAR po, i::VARCHAR pb,
+              i%20=0 o, i%20=1 b, 'Direct' route, 'BB' party
+            FROM range(120) t(i)
+        """)
+        connection.execute("CREATE VIEW earlier AS SELECT * FROM sample")
+        assert "| visible path banks | 120 |" in module.evaluate(connection, "confirm", "fixture")
