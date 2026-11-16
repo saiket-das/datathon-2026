@@ -79,3 +79,7 @@ H-B07 frozen result at `f28120d22534ea09b8a1015ac910dca4545b6ce3`: **Rejected** 
 ## H-B08 simple-path falsification
 
 **Rejected in exploration.** May–June bit0/0 unlabelled displayed paths can repeat visible banks: 1,966/370,978 three-bank paths and 2,225/137,022 four-bank paths. Endpoints differ throughout the supported displayed cohorts. Candidate intermediate-bank sampling and endpoint exclusion remain unresolved. The script removes placeholders before testing visible adjacency, retains safe counts and has no validation mode. See [H-B08](../findings/hypotheses/H-B08_simple_paths.md). New precise sampling hypotheses require a separate freeze and exposure record. No independent-holdout, original-source-code or causal claim follows.
+
+## H-B09 bank-associated short-duration exclusion
+
+Exploratory and confirmation-ready. May Direct exposure identifies 1,061 supported visible banks, 440 with zero observed duration<100. In June, all-visible-bank-supported paths cover 646,066/891,959 v2-5 payments. All 209,343 containing an exclusion bank have duration>=100, whereas 86.5803% of other supported paths are fast. An exposure-bin label permutation gives 41.4656% fast among its exclusion paths. Supported route/length controls also have zero fast exceptions. A broad unnest/grouping query exceeded 512MB before results, replaced by fixed-position joins. A latent bank group/attribute remains among alternatives. Earlier exposure includes B06 July timing and B07 shapes. July B09 outcomes remain unexamined before freeze.

@@ -50,6 +50,10 @@ analysis/
     H-B04_covered_bank_stability.py  frozen internal temporal test of Covered propensity
     test_covered_stability.py         invented-data guard/uncertainty tests
     H-B05_endpoint_mismatch.py        frozen test of joint endpoint disagreement
+    H-B06_calendar_timing.py          matched UTC calendar timing and frozen internal test
+    H-B07_gap_placement.py            conditional shape test with preserved failed gates
+    H-B08_simple_paths.py             repeated-visible-bank counterexamples
+    H-B09_bank_duration_exclusion.py  supported-bank short-duration exclusion test
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks
     out/                            safe exploration/confirmation charts and Markdown tables
