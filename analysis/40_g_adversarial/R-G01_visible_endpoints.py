@@ -439,14 +439,16 @@ def main() -> None:
     finally:
         conn.close()
 
+    # Verify the source bytes BEFORE writing either report or metadata.
+    # A failed integrity check must not leave a new, apparently valid result.
+    input_sha256 = sha256_file(data)
+    if input_sha256 != input_sha256_before:
+        raise SystemExit("INPUT INTEGRITY FAILURE: Parquet SHA256 changed during query; no report written")
+    code_hash = hashlib.sha256((ROOT / SCRIPT_REL).read_bytes()).hexdigest()
     # Only aggregate Markdown is eligible for Git; metadata stays under ignored dataset/.
     output = ROOT / "analysis/40_g_adversarial/out/R-G01_aggregates.md"
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(report, encoding="utf-8")
-    code_hash = hashlib.sha256((ROOT / SCRIPT_REL).read_bytes()).hexdigest()
-    # Fingerprint the exact local source after the query; keep digest private.
-    # A concurrent file mutation is not ruled out: execute on immutable input.
-    input_sha256 = sha256_file(data)
     metadata = {
         "dataset_sha256_private": input_sha256,
         "phase": args.phase,
