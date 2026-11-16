@@ -4,12 +4,17 @@ All code that produces a number or chart for the submission lives here. Run ever
 
 | Folder | Owner | Covers |
 |---|---|---|
-| [00_prep/](00_prep/) | A (shared) | CSV → Parquet conversion and the first profile. Run these first. `test_prep.py` checks the setup without the dataset: `uv run pytest`. |
+| [00_prep/](00_prep/) | A (shared) | CSV → Parquet, profile, and `scientific_checks.py` structural/partition audits. Safe aggregate evidence: [out/scientific_checks.md](00_prep/out/scientific_checks.md). Dataset-independent tests: `uv run pytest`. |
 | [10_amounts_currency/](10_amounts_currency/) | A | `USD_AMOUNT`, `CURRENCY_CODE`, `ORDERING_TYPE`, `BENEFICIARY_TYPE`, `CURRENCY_CONVERSION_COUNT` |
 | [20_routing_time/](20_routing_time/) | B | `BIC8_PATH`, BIC codes, `TRANSACTION_TYPE_CODE`, `PARTICIPANT_COUNT`, `CONTINUITY_QFLAG`, `TOTAL_DURATION`, `EPOCH_SECONDS` |
 | [30_parties_anomalies/](30_parties_anomalies/) | C | `*_ACCOUNT`, `*_DETAILS`, `*_TOKENS`, `ANOMALY_TYPE` |
 
 ## How to work
+
+Owners may query any of the 20 source columns and analyse relationships across domains;
+ownership determines where the investigation's files live, not which columns it may use.
+Validation schemes are alternatives with overlapping records across schemes, not independent
+holdouts. Freeze a primary scheme and label additional checks as robustness evidence.
 
 1. **Guess.** Write the hypothesis first, as a file in [`../findings/hypotheses/`](../findings/hypotheses/) copied from the template.
 2. **Test.** Write one script per question in your folder, named after the hypothesis, e.g. `H-A03_round_amounts.py`. Start the script with a docstring saying what it tests and how to run it.
@@ -21,4 +26,4 @@ All code that produces a number or chart for the submission lives here. Run ever
 - Read `dataset/payments.parquet`, never the CSV.
 - Print or save **aggregates only** (counts, medians, shares), never individual records.
 - Stratify before claiming an effect: compare like with like (for example, same party pair).
-- Find a rule on half of the accounts, confirm it unchanged on the other half: `WHERE hash(ORDERING_ACCOUNT) % 2 = 0` versus `= 1`.
+- Choose and freeze a hypothesis-appropriate partition and falsification criterion using the [shared protocol](../docs/03_execution_plan.md#6-shared-scientific-foundation-and-validation). A sender-only split does not separate receivers or banks; inspect executed coverage and overlap audits before choosing.

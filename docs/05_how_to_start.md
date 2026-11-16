@@ -43,27 +43,31 @@ A step-by-step guide from "I just opened this project" to "we submitted". Read [
    - C: [analysis/30_parties_anomalies/](../analysis/30_parties_anomalies/README.md)
 3. Read the official meaning of your columns in [official/pdfs/1_case_study_swift.pdf](official/pdfs/1_case_study_swift.pdf), pages 3–4.
 
-## Step 2: Find the "free" rules (Sunday night to Monday morning)
+## Step 2: Read the shared factual foundation
 
-Some columns are simply calculated from other columns. These rules are exact (true for 100% of rows), quick to prove, and tell us which columns are *not* worth deeper study. Each owner checks their own list.
-
-| Owner | Check whether... |
-|---|---|
-| A | `CURRENCY_CONVERSION_COUNT` can be worked out from the path or the currencies involved |
-| B | `PARTICIPANT_COUNT` always equals the number of banks in `BIC8_PATH`; `Direct` always means exactly 2 banks; `CONTINUITY_QFLAG` = N always means the path contains `...`; the first and last bank in the path equal `ORDERING_BIC8` and `BENEFICIARY_BIC8` |
-| C | `_TOKENS` can be rebuilt from `_DETAILS`; the account number embeds the bank code; an account always keeps the same type (B or C), bank and name |
-
-For each check: write a hypothesis file, write a script, record the result. The first one takes the longest; after that it is a routine.
+Read [execution plan section 6](03_execution_plan.md#6-shared-scientific-foundation-and-validation)
+and its reproducible aggregate evidence. It separates official definitions, dataset-exact
+relationships and unresolved semantics. These are safeguards for independent investigations;
+they do not assign hidden-rule hypotheses or prove a generating order.
 
 ## Step 3: The working loop (Monday and Tuesday)
 
+Investigation and folder ownership do not restrict analysis: A, B and C may query any of
+the 20 source columns. Cross-domain comparisons are encouraged when relevant, including
+for C's anomaly work; keep scripts in the investigation owner's folder.
+
+The validation schemes are alternatives, not independent holdouts. A record may be exploratory
+under one scheme and confirmatory under another. Choose and freeze the primary scheme before
+confirmation; do not pool results across schemes as independent replications. Label additional
+bank/time checks as robustness tests and record any prior exposure.
+
 Repeat this for every idea. One idea should take 20–60 minutes.
 
-1. **Guess.** Copy [`findings/hypotheses/H-000_template.md`](../findings/hypotheses/H-000_template.md) to a new file such as `H-A01_amount_by_party_pair.md`. Fill in "Guess" and "Test" *before* looking at the answer.
+1. **Propose.** Copy [`findings/hypotheses/H-000_template.md`](../findings/hypotheses/H-000_template.md) to a new file such as `H-A01_amount_by_party_pair.md`. Fill in the proposed rule and test plan before confirmation.
 2. **Test.** Write a script with the same name in your analysis folder (`H-A01_amount_by_party_pair.py`). It reads the Parquet file, computes counts or medians per group, and saves a chart to your `out/` folder.
 3. **Compare like with like.** If you claim "X changes the amount", hold the sender/receiver types fixed, because business payments are far larger than personal ones and can fake almost any pattern.
-4. **Confirm.** Run the same test on the other half of the accounts. A real rule gives the same numbers on both halves.
-5. **Record.** Fill in "Result" and set the status: confirmed, rejected or uncertain. **Rejected ideas stay in the folder**; the judges award marks for them.
+4. **Confirm.** Freeze the rule, tolerance and suitable partition before testing it unchanged. Follow the [shared validation protocol](03_execution_plan.md#6-shared-scientific-foundation-and-validation); sampling variation means identical numbers are not required. Report exceptions and limited support.
+5. **Record.** Fill in discovery, confirmation and robustness results; set the status to exploratory, confirmation-ready, replicated, rejected or uncertain. **Rejected ideas stay in the folder**; the judges award marks for them.
 6. **Write the rule** in the required shape: *when* it applies, *what* changes, *by how much*, *which rows*, and *where it fails*.
 7. **Add a real-world reason**, clearly marked as interpretation.
 
@@ -102,6 +106,6 @@ That becomes **one dashboard page** and **at most one slide**.
 |---|---|
 | "I do not know what to test" | Take the first starting question in your folder's README and make one chart of it |
 | "My computer runs out of memory" | Query the Parquet file with DuckDB and select only the columns you need; never load the CSV with pandas |
-| "My pattern might be a coincidence" | Check it on the other half of the accounts, and inside each sender/receiver type pair |
+| "My pattern might be a coincidence" | Freeze a falsifiable claim, choose a suitable partition from the shared protocol, and test composition and entity concentration |
 | "I found something odd in the data" | Log it in the issues log, then carry on |
 | "A rule is unclear in the official documents" | Check [official/README.md](official/README.md); if still unclear, ask the mentor on Discord |
