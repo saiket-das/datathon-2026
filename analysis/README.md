@@ -8,6 +8,7 @@ All code that produces a number or chart for the submission lives here. Run ever
 | [10_amounts_currency/](10_amounts_currency/) | A | `USD_AMOUNT`, `CURRENCY_CODE`, `ORDERING_TYPE`, `BENEFICIARY_TYPE`, `CURRENCY_CONVERSION_COUNT` |
 | [20_routing_time/](20_routing_time/) | B | `BIC8_PATH`, BIC codes, `TRANSACTION_TYPE_CODE`, `PARTICIPANT_COUNT`, `CONTINUITY_QFLAG`, `TOTAL_DURATION`, `EPOCH_SECONDS` |
 | [30_parties_anomalies/](30_parties_anomalies/) | C | `*_ACCOUNT`, `*_DETAILS`, `*_TOKENS`, `ANOMALY_TYPE` |
+| [40_cross_mechanisms/](40_cross_mechanisms/) | F | Exploratory cross-domain relationships and aggregate-only local-execution scripts; see [F ledger](../docs/08_investigator_f_research_ledger.md). |
 
 ## How to work
 
