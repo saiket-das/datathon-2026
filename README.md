@@ -35,6 +35,7 @@ docs/
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
+  08_investigator_f_research_ledger.md   F-only exposure, preflight and execution contract
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
@@ -43,8 +44,10 @@ analysis/
   10_amounts_currency/     owner A
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
+  40_cross_mechanisms/   investigator F, experimental cross-domain scripts only
     (each owner folder has out/ for charts)
 findings/
+  hypotheses/H-F01_fx_route_duration.md   F pilot (not yet executed)
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
