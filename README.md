@@ -41,12 +41,17 @@ analysis/
   00_prep/                 shared: conversion, profile, scientific_checks.py, fixture tests
     out/scientific_checks.md  reproducible structural and validation aggregates
   10_amounts_currency/     owner A
+    H-A01_amount_kernel.py     account-controlled business-party scale investigation
+    H-A02_usd_rounding.py      exploration-trained EUR daily scaling investigation
+    test_value_mechanisms.py   dataset-independent calculation checks
+    out/H-A01_*, H-A02_*       aggregate exploration/confirmation reports and charts
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
     (each owner folder has out/ for charts)
 findings/
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
+    H-A01_amount_kernel.md, H-A02_usd_rounding.md  A's frozen plans and results
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
