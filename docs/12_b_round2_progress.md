@@ -161,3 +161,20 @@ B15 frozen July test passed on5,219/151,146 payments (3.4530%).
 Sum MAE7.323913s, maximum MAE21.820368s, ratio .335646 and96.148687% within20s.
 Coverage stays narrow. Shorter-edge paths show similar sum/max errors.
 July B15 outcomes are exposed. Known edges and shared entities limit interpretation.
+
+## B17–B19 Direct duration and the directed Covered state
+
+May–June exploration rejects a bank-score difference as the full explanation
+for stable Direct duration asymmetry. In B17, 35.67% of 28,016 supported
+triangles fail closure by more than 100 seconds, including 31.56% or more
+after deleting any one bank. No split-month reference cycle exceeds 100
+seconds. B18 finds approximately uniform 20–600-second gaps in 511 supported
+asymmetric short-median corridors. A triangular difference-of-two-shocks
+comparator fits worse.
+
+B19 links the gap to a directed multibank label learned on different
+payments. In exploration, 504 of 521 one-Covered pairs are slower in
+the Covered direction by over 20 seconds. None of the 2,569 both-Indirect
+pairs has a gap over 20 seconds. A shared directed corridor state could
+generate the Covered label and a stable extra duration. The July outcomes
+for B17–B19's specific contrasts are unqueried before freeze.

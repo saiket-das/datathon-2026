@@ -60,6 +60,10 @@ analysis/
     H-B14_intermediate_bank_sampling.py  interior bank collision and country distribution test
     H-B15_edge_duration.py              shifted directed-edge duration decomposition
     H-B16_currency_duration_location.py currency-conditioned Direct duration screen
+    H-B17_directional_triangle.py     directional bank-score falsification
+    H-B18_bounded_directional_gap.py  conditional shape of Direct duration gaps
+    H-B19_covered_direction_duration.py  multibank labels and Direct timing
+    duration_reversals.py            shared directed-median query for B17–B19
     H-B10_country_bank_class.py       country-only class falsification
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks

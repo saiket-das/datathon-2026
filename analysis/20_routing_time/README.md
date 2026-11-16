@@ -76,3 +76,11 @@ Run `uv run python analysis/20_routing_time/H-B14_intermediate_bank_sampling.py 
 [H-B16](../../findings/hypotheses/H-B16_currency_duration_location.md) screens
 currency-specific mean durations within recurring Direct paths.
 Run `uv run python analysis/20_routing_time/H-B16_currency_duration_location.py`.
+
+[H-B17](../../findings/hypotheses/H-B17_directional_triangle.md) checks whether
+Direct direction gaps cancel around bank triangles.
+[H-B18](../../findings/hypotheses/H-B18_bounded_directional_gap.md) compares
+short-median corridor gaps with bounded distributions.
+[H-B19](../../findings/hypotheses/H-B19_covered_direction_duration.md) tests
+whether earlier multibank labels locate the slower Direct direction.
+The records link the exact commands and frozen tests.
