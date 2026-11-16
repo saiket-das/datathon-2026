@@ -86,9 +86,34 @@ No causal direction or universal country-currency rule is identified.
 
 ## Validation and robustness results
 
-Pending at freeze.
+Freeze `3fb8c1dcd842bdb20ccafeb2ee2f44dfec15f357` was committed at
+16 November 2026 21:05:46 MYT before bit-1 currency prediction outcomes.
+The unchanged command was:
+
+~~~text
+uv run python analysis/10_amounts_currency/H-A06_currency_endpoint.py --phase validate --freeze 3fb8c1dcd842bdb20ccafeb2ee2f44dfec15f357
+~~~
+
+All primary criteria passed on 699,603 unlabelled July payments, spanning
+89,167 senders, 270,945 receivers and 5,696 declared ordering banks.
+First-path-country accuracy was 93.367%, versus 89.408% declared sender,
+33.528% path receiver and 33.385% global mode. The paired bank-cluster
+99% intervals were [.929433,.937553] for accuracy,
+[.038577,.040776] for lift over declared sender and [.546036,.647430]
+for lift over path receiver, passing their .90/.02/.50 floors.
+
+The scoring population shares zero same-role senders and receivers with
+training, and 4,414 declared ordering banks. Bank, country, route and
+other generator context can remain shared. In the sending-country mismatch
+strata, first-path accuracy was 93.329% / 93.262%, versus declared sender
+10.904% / 10.393%. Direct, Indirect and Covered first-path accuracy was
+94.685%, 90.968% and 92.246%. The complete report includes every eligible
+mismatch cell and retains categorical fallbacks.
 
 ## Assessment
 
-Use the exact conditional predictive scope and disclose all prior exposure.
-Keep the earlier A03 failed near-exact threshold and A05 upper-bound claim intact.
+Evidence level **Supported but not independently confirmed**. The test
+supports first-path-country currency association on reused records, with
+paired comparisons and a frozen temporal/account-transfer design. Selection
+and shared metadata remain explanations. The result establishes no original
+generation order. Earlier A03 failure and A05 upper-bound conclusions stand.
