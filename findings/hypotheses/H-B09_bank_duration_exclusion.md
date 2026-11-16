@@ -1,8 +1,8 @@
 # H-B09: Persistent bank-associated exclusion of short durations
 
 - **Owner:** B
-- **Status:** confirmation-ready
-- **Evidence level:** Exploratory before frozen internal testing
+- **Status:** supported but not independently confirmed
+- **Evidence level:** Supported but not independently confirmed
 - **Discovery command:** `uv run python analysis/20_routing_time/H-B09_bank_duration_exclusion.py --phase explore`
 - **Internal validation:** same script with `--phase confirm --freeze SHA`
 
@@ -43,3 +43,16 @@ Report the other supported-bank cohort, each adequately supported route/length s
 Phase0 full-data summaries, Round1 B01 duration outcomes and all other Round1 summaries were exposed. B04–B06 and B07 use reused July bank/account records or other outcomes; B07 conditional placement outcomes are now exposed. The June bank-duration pilot is development evidence. The new July exclusion-bank fast counts are unqueried before freeze, but July records and many duration statistics have already been examined. Only a reused-population internal test can follow.
 
 Either-role accounts, currencies, counterparties, path banks and text can remain shared. The estimate cannot identify exact original code, a bank-delay distribution, source-stage order, a causal effect or unseen-bank transfer. A successful result would support a persistent bank-associated duration constraint. Retain B01's rejection and all pilot resource failures.
+
+## Frozen internal result
+
+Freeze `399a3dd62f9cbcac3e0869585cb2a49c10f7d578` preceded July B09 evaluation. The unchanged executable [passed all criteria](../../analysis/20_routing_time/out/H-B09_bank_duration_exclusion_confirm.md).
+
+- July contains638,824 v2–5 population payments, of which462,931 have every visible bank supported in May (72.4661%).
+- The150,010 eligible paths containing an exclusion bank have zero duration<100 observations, across1,325 declared ordering banks,32,968 senders and69,913 receivers. The one-sided affected-ordering-bank upper bound is.00346957 under its stated independence assumption.
+- The remaining312,921 eligible paths have270,933 fast durations (86.5819%). Thus an all-other-bank path can still take at least100 seconds.
+- The exposure-bin permutation has73,994 fast durations among178,992 exclusion-labelled paths (41.3393%), a41.3393-point difference from real bank labels.
+- Every supported displayed route/length cell has zero fast exceptions. The script omits a route/length cell when row or entity support is inadequate. Omission is not evidence that a route is absent.
+- Full eligible evaluation versus May Direct shares38,348 same-role senders,45,484 same-role receivers and1,725 declared ordering banks. All1,061 fitted visible banks recur, by construction.
+
+This supports a persistent bank-associated duration exclusion on eligible reused records. The mechanism may reside in bank attributes or correlated generator state. It does not prove a literal service-delay floor or original duration aggregation rule. July bank-duration class outcomes are now exposed for later work.

@@ -83,3 +83,9 @@ H-B07 frozen result at `f28120d22534ea09b8a1015ac910dca4545b6ce3`: **Rejected** 
 ## H-B09 bank-associated short-duration exclusion
 
 Exploratory and confirmation-ready. May Direct exposure identifies 1,061 supported visible banks, 440 with zero observed duration<100. In June, all-visible-bank-supported paths cover 646,066/891,959 v2-5 payments. All 209,343 containing an exclusion bank have duration>=100, whereas 86.5803% of other supported paths are fast. An exposure-bin label permutation gives 41.4656% fast among its exclusion paths. Supported route/length controls also have zero fast exceptions. A broad unnest/grouping query exceeded 512MB before results, replaced by fixed-position joins. A latent bank group/attribute remains among alternatives. Earlier exposure includes B06 July timing and B07 shapes. July B09 outcomes remain unexamined before freeze.
+
+B09 passed its unchanged July internal test at freeze 399a3dd62f9cbcac3e0869585cb2a49c10f7d578. Evidence is Supported but not independently confirmed. Among462,931/638,824 eligible paths (72.4661%), all150,010 with a May exclusion bank have duration>=100. Other supported paths are86.5819% fast and the exposure-bin permutation cohort41.3393% fast. The primary cohort spans1,325 ordering banks,32,968 senders,69,913 receivers; known-bank/entity overlap limits the bank-bound interpretation. Literal service delays and source aggregation order remain unresolved.
+
+## H-B10 country-class falsification
+
+Rejected in May-only exploration. Of1,061 supported banks in142 countries,71 countries contain both observed May duration labels. Country-majority assignment misclassifies34.8728% of training banks, or39.5284% on the721 banks in countries with>=10 supported banks. Country alone cannot determine those observed labels, while probabilistic geography/latent classes remain open. No B10 validation claim.

@@ -54,6 +54,7 @@ analysis/
     H-B07_gap_placement.py            conditional shape test with preserved failed gates
     H-B08_simple_paths.py             repeated-visible-bank counterexamples
     H-B09_bank_duration_exclusion.py  supported-bank short-duration exclusion test
+    H-B10_country_bank_class.py       country-only class falsification
     routing_common.py               local validation/privacy helpers
     test_routing_research.py         dataset-independent research checks
     out/                            safe exploration/confirmation charts and Markdown tables

@@ -51,3 +51,5 @@ or use the recorded freeze for July internal validation.
 [H-B08](../../findings/hypotheses/H-B08_simple_paths.md) rejects selection of all visible banks without replacement in the exploration partition. Run `uv run python analysis/20_routing_time/H-B08_simple_paths.py`; output preserves supported aggregate counterexamples.
 
 [H-B09](../../findings/hypotheses/H-B09_bank_duration_exclusion.md) tests a persistent visible-bank-associated exclusion of sub-100-second durations. Run the matching script with --phase explore, or use its frozen internal July command.
+
+[H-B10](../../findings/hypotheses/H-B10_country_bank_class.md) falsifies a country-determined explanation of the May bank-duration witness classes. Run the matching script for aggregate-only exploration.
