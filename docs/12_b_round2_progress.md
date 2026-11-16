@@ -178,3 +178,27 @@ the Covered direction by over 20 seconds. None of the 2,569 both-Indirect
 pairs has a gap over 20 seconds. A shared directed corridor state could
 generate the Covered label and a stable extra duration. The July outcomes
 for B17–B19's specific contrasts are unqueried before freeze.
+
+The three unchanged July checks ran after freeze `1979ad17f1431755e99d54a4579ade48eb35c71d`
+at 03:27:59 MYT on 17 November 2026. All met their declared criteria.
+These specific outcomes are now exposed.
+
+- B17 rejected directional bank scores. 2,065 of 3,846 triangles fail
+  closure by over 100 seconds. The failure share stays above 48.05% after
+  any single-bank deletion. The split-period drift control has zero
+  failures among 1,805 triangles.
+- B18 supports the bounded conditional gap shape on 289 pairs and 127
+  canonical first banks. TV is .036630 for a single uniform and .257841
+  for the triangular comparator. The median directional gap is 318
+  seconds, versus 3 seconds of split-period gap drift on eligible pairs.
+- B19 links that asymmetry to earlier multibank route labels. The
+  Covered direction is slower by over 20 seconds on 284 of 293
+  one-Covered pairs, with zero reverse large gaps. There are zero large
+  gaps across 643 both-Indirect pairs. The agreeing-endpoint control
+  yields the same contrast. The labels and timing use separate payments
+  but share known corridors and reused July data.
+
+The next open question is what determines the directed Covered state,
+including its relationship with bank support and pairs with no early
+multibank witnesses. The observed rules do not determine assignment
+for new corridors or identify the original sequence of generator stages.

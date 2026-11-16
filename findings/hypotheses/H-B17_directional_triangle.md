@@ -1,8 +1,8 @@
 # H-B17 direction gaps and bank-score triangle closure
 
-- **Status:** confirmation-ready
+- **Status:** bank-score model rejected in frozen internal validation
 - **Command:** `uv run python analysis/20_routing_time/H-B17_directional_triangle.py --phase explore`.
-- **Internal test:** replace the phase with `--phase confirm --freeze <full SHA>`.
+- **Internal test:** replace the phase with `--phase confirm --freeze 1979ad17f1431755e99d54a4579ade48eb35c71d`.
 
 ## Candidate and frozen test
 
@@ -54,4 +54,21 @@ as a bank processing time.
 Phase 0, B01–B16 results and May–June triangle and gap-shape probes were exposed
 before freeze. B11, B13, B15 and B16 cover related duration outcomes. Exact
 July cycle outcomes were unqueried before freeze, but records and entities are
-reused. Pending frozen internal evaluation.
+reused.
+
+## Frozen July result
+
+Freeze `1979ad17f1431755e99d54a4579ade48eb35c71d` was committed on 17 November
+2026 at 03:27:59 MYT. The unchanged script met every gate for rejection.
+Of 973 supported bidirectional pairs with 50,641 of 411,335 July Direct
+payments, the script forms 3,846 triangles across 135 banks. The 2,065
+closure failures account for 53.69% of the triangles. Single-bank deletion
+ranges from 48.06% to 55.84%. The largest bank appears in 18.95% of triangles.
+
+With agreeing declared endpoints, 1,877 of 3,415 triangles fail (54.96%).
+The full sample's split-period reference has zero failures across 1,805
+triangles and a 99th percentile of 21.98 seconds. A stable directional
+corridor component or other context varying by ordered pair is needed to
+account for this violation of the bank-score restriction. See the
+[July aggregate report](../../analysis/20_routing_time/out/H-B17_directional_triangle_confirm.md).
+These cycle outcomes are now exposed.

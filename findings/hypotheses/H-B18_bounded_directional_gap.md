@@ -1,8 +1,8 @@
 # H-B18 bounded directional gaps on selected Direct corridors
 
-- **Status:** confirmation-ready
+- **Status:** bounded gap shape supported in frozen internal validation
 - **Command:** `uv run python analysis/20_routing_time/H-B18_bounded_directional_gap.py --phase explore`.
-- **Internal test:** replace the phase with `--phase confirm --freeze <full SHA>`.
+- **Internal test:** replace the phase with `--phase confirm --freeze 1979ad17f1431755e99d54a4579ade48eb35c71d`.
 
 ## Candidate and frozen test
 
@@ -54,4 +54,22 @@ Phase 0 and B01–B16 results were exposed before discovery, including previous
 July duration and path summaries. B17 and B18 shared May–June pilot queries.
 The July gap histogram and comparison metrics were unqueried before freeze.
 Any pass is internal validation. The test does not identify an exact penalty
-law, which direction gets a penalty, or its rate among all pairs. Pending July.
+law, which direction gets a penalty, or its rate among all pairs.
+
+## Frozen July result
+
+The unchanged test from freeze `1979ad17f1431755e99d54a4579ade48eb35c71d`
+passed on 289 of 973 supported pairs across 127 canonical first banks,
+covering 18,169 payments. The median gap was 318 seconds and p99 was 592.92
+seconds. No observed gap exceeded 600 seconds. Uniform TV was .036630
+with upper resampling bound .116289. The triangular alternative had TV
+.257841 and the lower bound on the improvement was .111180. The empirical
+upper bound for the share above 620 seconds was zero.
+
+Declared endpoint agreement retained 280 pairs and a median gap of
+316.75 seconds. The 209 pairs with enough observations to compare both July
+halves had median absolute directional gap drift of 3 seconds. The
+comparison supports a near-uniform conditional shape, with B19 providing
+evidence about the direction of large gaps on separately labelled pairs.
+Selection on gap size and duration still limits model identification.
+These July gap outcomes are now exposed. [July aggregate report](../../analysis/20_routing_time/out/H-B18_bounded_directional_gap_confirm.md).
