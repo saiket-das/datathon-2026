@@ -42,3 +42,18 @@ Phase 0 and Round 1 aggregate/outcome exposure applies. Unlabelled does not impl
 | --- | --- | --- | --- | --- | --- |
 | Covered | 110177 | 21808 | 51022 | 0.9968686749503073 | 0.81039599916498 |
 | Indirect | 824052 | 93984 | 300493 | 0.996057287646896 | 0.8173015780557538 |
+
+## Eligible identity and overlap audit
+
+| n | distinct_rows | visible_banks | shared_training_banks |
+| --- | --- | --- | --- |
+| 934229 | 934229 | 7142 | 6735 |
+
+## Month sensitivity
+
+| period | n | senders | receivers | exact_share |
+| --- | --- | --- | --- | --- |
+| 4 | 573 | 504 | 545 | 1.0 |
+| 5 | 284385 | 55021 | 126792 | 0.9962128804261828 |
+| 6 | 378095 | 63879 | 160549 | 0.9961226675835438 |
+| 7 | 271176 | 53625 | 122429 | 0.996124288285099 |

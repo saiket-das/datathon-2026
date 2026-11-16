@@ -6,30 +6,29 @@ No automatic merge; final PDFs need user approval. Round 1 evidence remains unch
 
 | Hypothesis | Mechanism | Validation | Evidence strength | Blocker | Submission impact |
 | --- | --- | --- | --- | --- | --- |
-| H-A03 | Learned country equivalence classes predict FX counts over visible paths | Exploration complete; freeze and internal validation next | Exploratory | Round 1 reuse prevents independent-holdout claim | High if validated: explains most differences between FX count and country changes |
+| H-A03 | Learned country equivalence classes predict FX counts over visible paths | Frozen internal validation completed. 99.5940% agreement vs 81.2848% baseline, with 98.5875% eligible coverage. | Rejected at the near-exact threshold. Comparative gain supported but not independently confirmed. | 99% bank-cluster lower bound 99.4690% vs required 99.5%. Round 1 reuse and 6,530 shared training banks. | High for approximate FX-count reconstruction with the rejected threshold displayed. |
 
 ## Completed and exposure
 
 Read AGENTS, competition brief, the original case-study PDF, existing scientific helper and
-A01/A02 code/records. Used Ponytail for minimal code. All queries use only both-account
-exploration until a complete new plan and executable are committed. Phase 0 and Round 1
+A01/A02 code/records. Used Ponytail for minimal code. All pre-freeze queries used both-account exploration. The complete plan and executable were
+committed at `2196f80cc3ab647ce67e7eb493aeed23cc190628` (16 November 17:31:22 MYT). Phase 0 and Round 1
 aggregate exposure is disclosed in H-A03. No Round 2 colleague developing work was read.
 Sponsor data remain a local ignored hard link; no rows or identifiers are printed/exported.
 Initial materialisation hit the 512MB cap; switched to lazy streaming views without spill.
 
 ## Next wave
 
-1. Freeze H-A03, record SHA/time, run unchanged internal validation and preserve failure if any.
-2. Audit discrepancies only as a new exploratory question with honest exposure disclosure;
+1. Audit discrepancies only as a new exploratory question with honest exposure disclosure;
    do not repair H-A03 and label it the same frozen success.
-3. Consider further amount-tail/rounding and multi-currency mechanisms after reviewing this
+2. Consider further amount-tail/rounding and multi-currency mechanisms after reviewing this
    wave's submission value. No precise mixture weight follows from Round 1 grid shares.
-4. Maintain new frozen records and register outcomes, then independent methodological review.
+3. Maintain new frozen records and register outcomes, then independent methodological review.
 
 ## Handoff
 
 Goal: explanatory Round 2 value/FX mechanisms, no new infrastructure. New files are H-A03
 script, invented-aggregate tests and hypothesis record, this register, and matching aggregate
-reports. Tests and final commit/PR links will be recorded after validation. Parent coordinator
-handles parallel production and schedule. Routine progress must not block on user feedback
-17 November 18:00-21:00 MYT.
+reports. `uv run pytest` passed 68 tests. Frozen executable and helper matched the commit.
+The original Parquet hash matched setup. Use the H-A03 record and its reported denominators
+for independent review and production. The user is unavailable on 17 November 18:00-21:00 MYT.

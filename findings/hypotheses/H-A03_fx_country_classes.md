@@ -1,9 +1,9 @@
 # H-A03: Country equivalence classes approximately reconstruct FX-step counts
 
 - **Owner:** A
-- **Status:** confirmation-ready (Round 2 internal validation, not independent confirmation)
-- **Evidence level:** Exploratory until the frozen internal validation is run
-- **Script / command:** `uv run python analysis/10_amounts_currency/H-A03_fx_country_classes.py --phase explore`; validation appends `--phase validate --freeze <SHA>`.
+- **Status:** rejected at the frozen near-exact threshold
+- **Evidence level:** Rejected for the complete frozen claim. The improvement over country-transition counting is Supported but not independently confirmed.
+- **Script / command:** `uv run python analysis/10_amounts_currency/H-A03_fx_country_classes.py --phase explore`; validation uses `--phase validate --freeze 2196f80cc3ab647ce67e7eb493aeed23cc190628` instead.
 - **Chart:** none yet; complete aggregate tables in the matching exploration/validation Markdown reports.
 
 ## Proposed rule and scope
@@ -71,14 +71,41 @@ error accessed validation or changed the scientific population.
 
 ## Validation and robustness results
 
-Not accessed yet. Record the unchanged test's results, failures and the freeze SHA here.
+Freeze commit 2196f80cc3ab647ce67e7eb493aeed23cc190628 was recorded at 17:31:22 MYT on 16 November 2026. No bit-1 country-class score was recorded before the freeze. The interrupted process finished writing the bit-0 exploration overlap and month summaries after the freeze commit. These additions come from the frozen executable and belong to exploration. The frozen script and shared partition helper matched the committed versions at execution.
+
+The unchanged validation command was:
+
+```text
+uv run python analysis/10_amounts_currency/H-A03_fx_country_classes.py --phase validate --freeze 2196f80cc3ab647ce67e7eb493aeed23cc190628
+```
+
+| Frozen criterion | Internal validation result | Outcome |
+| --- | --- | --- |
+| Eligible coverage >=90% | 876,388 / 888,944 = 98.5875% | Pass |
+| At least 100 eligible senders and receivers each | 97,364 senders and 323,316 receivers | Pass |
+| 99% bank-cluster interval lower bound for agreement >=99.5% | [99.4690%, 99.6805%] | **Fail** |
+| 99% bank-cluster interval lower bound for lift >=2 percentage points | [17.3691, 19.5347] percentage points | Pass |
+
+Exact FX count agreement was 872,830 / 876,388 (99.5940%). The country-transition baseline
+agreed on 81.2848% and the shifted-class comparison on 80.3338%. There were 3,558 errors.
+Mean absolute error was 0.004363 conversions and the maximum absolute error was 3.
+Eligible records had distinct row IDs and separated literal accounts by construction.
+Of 7,110 visible validation banks, 6,530 also occurred in two-bank training.
+Covered and Indirect exact agreement was 99.7293% and 99.5776%, respectively.
+The April sensitivity had 545 payments and 98.7156% agreement. The three other displayed
+months ranged from 99.5834% to 99.6048%. All are subgroups of the same validation split.
+See the [validation report](../../analysis/10_amounts_currency/out/H-A03_fx_country_classes_validate.md).
+The process exited successfully and reported `practical decision=False`.
+The executable, comparator, thresholds and split did not change after the freeze.
 
 ## Assessment
 
-Exploration supports a latent country-equivalence explanation for most FX-count exceptions
-to naive country-transition counting. It does not identify real-world exchange currencies,
-explain all mismatches, or establish a causal generator sequence. Validation remains internal
-because the record population has prior Round 1 exposure.
+The frozen near-exact claim failed. The learned grouping nonetheless improved observed
+agreement by 18.3092 percentage points on eligible longer visible paths, consistent with a
+country-equivalence mechanism. This approximate relationship is supported by internal
+validation on a reused Round 1 account population. Bank overlap, eligibility exclusions,
+and unresolved mismatches limit transfer. The currency identity of each latent group and
+the generator's operation order remain unresolved.
 
 ## Real-world explanation (interpretation, not evidence)
 
