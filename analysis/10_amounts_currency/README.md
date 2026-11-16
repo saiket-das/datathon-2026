@@ -40,3 +40,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A10: cross-denomination scaling](../../findings/hypotheses/H-A10_cross_denomination.md) evaluates CHF and GBP grids learned from large amounts on small amounts.
 
 [H-A11: FX transition support](../../findings/hypotheses/H-A11_fx_transition_residuals.md) compares supported and sparse directed pairs on one-transition paths.
+
+[H-A12: conditional log-amount shape](../../findings/hypotheses/H-A12_log_shape.md) compares trained standardization against equal-variance reference shapes.
