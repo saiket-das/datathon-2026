@@ -11,6 +11,11 @@ All code that produces a number or chart for the submission lives here. Run ever
 
 ## How to work
 
+Owners may query any of the 20 source columns and analyse relationships across domains;
+ownership determines where the investigation's files live, not which columns it may use.
+Validation schemes are alternatives with overlapping records across schemes, not independent
+holdouts. Freeze a primary scheme and label additional checks as robustness evidence.
+
 1. **Guess.** Write the hypothesis first, as a file in [`../findings/hypotheses/`](../findings/hypotheses/) copied from the template.
 2. **Test.** Write one script per question in your folder, named after the hypothesis, e.g. `H-A03_round_amounts.py`. Start the script with a docstring saying what it tests and how to run it.
 3. **Record.** Put the result, with numbers, back into the hypothesis file, including when the idea fails.

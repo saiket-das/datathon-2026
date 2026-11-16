@@ -52,6 +52,15 @@ they do not assign hidden-rule hypotheses or prove a generating order.
 
 ## Step 3: The working loop (Monday and Tuesday)
 
+Investigation and folder ownership do not restrict analysis: A, B and C may query any of
+the 20 source columns. Cross-domain comparisons are encouraged when relevant, including
+for C's anomaly work; keep scripts in the investigation owner's folder.
+
+The validation schemes are alternatives, not independent holdouts. A record may be exploratory
+under one scheme and confirmatory under another. Choose and freeze the primary scheme before
+confirmation; do not pool results across schemes as independent replications. Label additional
+bank/time checks as robustness tests and record any prior exposure.
+
 Repeat this for every idea. One idea should take 20–60 minutes.
 
 1. **Propose.** Copy [`findings/hypotheses/H-000_template.md`](../findings/hypotheses/H-000_template.md) to a new file such as `H-A01_amount_by_party_pair.md`. Fill in the proposed rule and test plan before confirmation.

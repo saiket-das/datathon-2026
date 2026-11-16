@@ -50,8 +50,8 @@ Deadline: Thursday 19 Nov 2026, 12:00 PM Malaysia time.
    - **B:** routing path, route type, continuity, duration, timestamps, bank geography; also owns the dependency graph and methodology slides.
    - **C:** party details and tokens, account behaviour, anomaly types; also owns the dashboard template and deck assembly.
 2. **Read the shared factual foundation first.** [Execution plan section 6](03_execution_plan.md#6-shared-scientific-foundation-and-validation) separates documented meanings, executed structural checks and unresolved semantics. It also explains how to choose validation suited to each investigation.
-3. **Each person explores their own columns** (Monday). The loop is: look at a chart, write a guess, test it with a query, record the result with its numbers.
-4. **Deepen and challenge** (Tuesday). For each promising rule, test one confounder, and have a teammate try to break it.
+3. **Each person owns an investigation, with access to all 20 source columns** (Monday). Combine domains as needed, especially for anomaly work. The loop is: look at a chart, write a guess, test it with a query, record the result with its numbers.
+4. **Deepen and challenge** (Tuesday). For each promising rule, choose confounder and alternative-explanation checks appropriate to the hypothesis, and have a teammate try to break it.
 5. **Build the PDFs** (Wednesday), re-check every number, and submit Thursday morning.
 
 You do not need to write the queries yourself. Tell the AI assistant a column group or a guess in plain words and it can run the test, show the chart and explain what it means. Step 2 is the natural place to begin.

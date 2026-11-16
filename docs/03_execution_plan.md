@@ -64,7 +64,7 @@ does not establish causal direction, and reconstructing the exact original code 
 | Phase | When | Output |
 |---|---|---|
 | Baseline | Sun 15 Nov evening – Mon 16 Nov midday | Parquet copy (done), issues log, first dependency map, one headline observation per feature group |
-| Iteration | Mon 16 Nov midday – Wed 18 Nov morning | Each observation turned into a quantified rule, one confounder tested per rule, failures recorded. **No new lines of inquiry after Tue 17 Nov night.** |
+| Iteration | Mon 16 Nov midday – Wed 18 Nov morning | Each observation turned into a quantified rule, hypothesis-appropriate confounder and alternative-explanation checks completed, failures recorded. **No new lines of inquiry after Tue 17 Nov night.** |
 | Polish | Wed 18 Nov – Thu 19 Nov 09:00 | For the top rules, simulate the rule and overlay it on the data. Build dashboards and deck; a second person re-runs every headline number. |
 
 ## 4. Who owns what
@@ -75,6 +75,7 @@ does not establish causal direction, and reconstructing the exact original code 
 | B | Routing path, route type, continuity, duration, timestamps, bank geography | `analysis/20_routing_time/` | Dependency map and methodology slides |
 | C | Party details and tokens, account behaviour, anomaly types | `analysis/30_parties_anomalies/` | Dashboard template and deck assembly |
 
+- Ownership assigns investigation and file responsibility, not column access. A, B and C may query any of the 20 source columns and combine domains as needed, including for C's anomaly work.
 - One folder per owner and one file per hypothesis, so nobody edits the same file.
 - Daily 15-minute cross-review: each person tries to break one of another person's rules.
 
