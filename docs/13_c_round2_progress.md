@@ -25,7 +25,7 @@ comparison population of unknown legitimacy.
 | --- | --- | --- | --- | --- | --- |
 | [C03 immediate source-neighbour edit](../findings/hypotheses/H-C03_adjacent_edit.md) | Neither account matches at either adjacent offset in the three supported classes | Exploration only | Rejected | Recall neighbour cohorts lack support. Different positions and replacement of both accounts remain open. | Useful negative control for extending the C01/C02 batch patterns |
 | [C04 literal LINEBREAK marker](../findings/hypotheses/H-C04_literal_linebreak.md) | More than 4.97M rows per role contain line feeds without the proposed literal marker | Exploration only | Rejected | Structured encoding remains unresolved. | Narrow token interpretation caveat |
-| [C05 scam endpoint concordance](../findings/hypotheses/H-C05_scam_endpoint_agreement.md) | Two scam labels preserve observed receiving endpoint agreement in discovery, while sender disagreement persists | Freeze and internal validation pending | Exploratory | Covered cohorts are sparse. Prior bit-1 exposure and shared entities limit independence. | Potential constraint on the generator's observable fields |
+| [C05 scam endpoint concordance](../findings/hypotheses/H-C05_scam_endpoint_agreement.md) | Zero receiving mismatches in 312 account-replacement and 465 CEO payments during internal validation. Both retained ordering mismatch. | Frozen combined test failed the account-replacement Indirect support criterion | Supported but not independently confirmed for the observed totals. Combined requirement failed. | Sparse route cells, prior exposure and shared receivers and banks. | Secondary output-field constraint, anomaly editing mechanism unresolved. |
 | Beneficiary profile reuse | The two scam labels seldom reuse exact beneficiary detail strings within the same beneficiary account | Discovery lead only | Unresolved | Account support, activity, bank and cohort mix confound the comparison. | Substitution mechanism remains open |
 
 ## Search ledger
@@ -45,8 +45,9 @@ comparison population of unknown legitimacy.
 
 ## Handoff
 
-Run the frozen C05 plan with sender-bit-1 internal validation after the exact
-freeze commit. Preserve every criterion outcome and any coverage failure.
+C05 freeze `cc24a3820411f7ac0a28aca53975d5d5f13ecca0` and the result report
+preserve every criterion. Account-replacement Indirect support failed. The
+frozen threshold remains in place. Teammate methodological review is pending.
 Source-order and literal-marker candidates were rejected during discovery and
 have no associated validation run. Round 1 C01/C02, scripts and evidence retain
 their original scope. Four unresolved label mechanisms remain open.

@@ -1,7 +1,7 @@
 # H-C05: beneficiary endpoint concordance in two scam labels
 
 - **Owner:** C
-- **Status:** Validation-ready.
+- **Status:** Frozen combined test failed on support. Receiving-endpoint pattern supported but not independently confirmed.
 - **Reproduce:** `uv run python analysis/30_parties_anomalies/H-C05_scam_endpoint_agreement.py --phase explore`
 - **Evidence:** [Exploration report](../../analysis/30_parties_anomalies/out/H-C05_scam_endpoint_agreement_explore.md)
 
@@ -64,10 +64,33 @@ cohorts do not support a separate route-specific statement.
 
 ## Validation results
 
-Pending commit and unchanged internal validation.
+Freeze: `cc24a3820411f7ac0a28aca53975d5d5f13ecca0`, recorded before
+any C05 bit-1 outcomes were queried.
+
+```text
+uv run python analysis/30_parties_anomalies/H-C05_scam_endpoint_agreement.py --phase validate --freeze cc24a3820411f7ac0a28aca53975d5d5f13ecca0
+```
+
+**Overall result: FAIL.** The account-replacement Indirect cell did not reach the
+frozen support floor. The corresponding statistics remain suppressed. Both
+target totals met their criteria: 0 receiving mismatches in 312 account-replacement
+payments (301 senders) and 465 CEO payments (442 senders). Both targets passed
+the 2% ordering mismatch floor. The exact simultaneous upper bounds for any
+receiving mismatch at sender level were approximately 1.445% and 0.986%.
+The Direct and Indirect unlabelled controls retained about 5% receiving mismatch.
+
+Zero target row IDs or sending accounts overlap across sender bits. The audit
+found 231 shared receiver accounts, 232 account strings in either role and 375
+endpoint banks in either role. Shared receivers and banks limit the interpretation
+of the sender intervals. These outcomes came from reused Round 1 records.
+
+See the [frozen validation report](../../analysis/30_parties_anomalies/out/H-C05_scam_endpoint_agreement_validate.md)
+for every criterion decision and supported count.
 
 ## Assessment
 
-A near-exact association under frozen internal validation would constrain
-reconstructions of output fields. It would leave causal ordering, account
-substitution, and exact mechanism unresolved.
+Retain the failure of the combined rule and the descriptive endpoint asymmetry.
+Zero beneficiary endpoint mismatches in the two observed totals is a constraint
+on output fields. It leaves causal ordering, account substitution and the
+exact mechanism unresolved. Review its role as a secondary finding after
+independent methodological review.
