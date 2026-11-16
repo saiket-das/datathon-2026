@@ -69,3 +69,16 @@ def test_one_sided_bound_and_public_small_cell_suppression():
     assert r01.upper_one_sided(1, 1) == "100.000000%"
     assert r01.safe_count(1) == "[1–9 suppressed]"
     assert r01.safe_count(10) == "10"
+
+
+def test_month_boundary_uses_explicit_utc_not_executor_timezone():
+    from datetime import datetime, timedelta, timezone
+    just_before_may = datetime(2024, 5, 1, tzinfo=timezone.utc) - timedelta(seconds=1)
+    db = duckdb.connect(":memory:")
+    db.execute("SET TimeZone = 'UTC'")
+    month = db.execute(
+        "SELECT strftime(to_timestamp(?), '%Y-%m')",
+        [int(just_before_may.timestamp())]
+    ).fetchone()[0]
+    assert month == "2024-04"
+    db.close()
