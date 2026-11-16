@@ -1,9 +1,9 @@
 # H-B06: Does timing differ on weekends within comparable payments?
 
 - **Owner:** B
-- **Status:** exploratory
+- **Status:** confirmation-ready
 - **Script:** `uv run python analysis/20_routing_time/H-B06_calendar_timing.py`
-- **Evidence:** [aggregate report](../../analysis/20_routing_time/out/H-B06_calendar_timing_explore.md)
+- **Evidence:** [initial aggregate report](../../analysis/20_routing_time/out/H-B06_calendar_timing_explore.md) and [exploratory challenge report](../../analysis/20_routing_time/out/H-B06_calendar_timing_sensitivity.md)
 
 ## Proposed rule and scope
 
@@ -17,11 +17,24 @@ Within 1,107 bank/route/party/month strata with at least 30 payments of each cal
 
 An exploratory alignment screen finds minute and hour boundary shares close to uniform-second references. It offers no obvious large excess at those boundaries and does not establish that sub-minute timing is uniform. Calendar dates define the denominators. No holiday or workweek external data were used.
 
+The May–June follow-up preserved the primary strata and statistic. Estimates were −7.2779 points in May and −6.7832 in June. Saturday and Sunday comparisons also went in the same direction, with independently recalculated 15-payments-per-arm support of 230 and 340 banks respectively. Their contrasts were −9.7148 and −5.9016 points, so treating the two days as interchangeable is not warranted. A Monday–Tuesday versus Wednesday–Friday placebo gave +0.0590 points on 658 banks. Raising the primary support cutoff to 50 gave −7.2551 points on 173 banks with lower coverage. Lowering it to 10 gave −6.5803 points on 658 banks. Among payments between declared bank countries the estimate was −7.0442 points on 254 banks. Same-country traffic and exact refinements by beneficiary country, country/currency, beneficiary bank and ordering account each lacked 100 supported banks. The primary result consequently leaves customer and geographic composition within ordering banks unresolved.
+
+Recomputing support across nine leave-one-calendar-week-out samples gave contrasts between −7.5100 and −6.7388 points on 212–270 ordering banks. Each omission retained at least 42% of each remaining arm. This checks whether a single observed week dominates, without establishing sampling uncertainty across weeks.
+
 ## Test plan and exposure
 
 Phase 0 conditional and full-data aggregates and the Round 1 B01–B03 outcomes are already exposed. Round 2 B04 and B05 use May–June and July within endpoint-bit-0/0, and the B05 ledger already notes a UTC hour/day pilot. This screen uses only May–June endpoint-bit-0/0. The exact July matched timing contrast remains unqueried in B06, but July records are reused and cannot be independent.
 
-This screen sets no validation criteria and reads no validation records. A later test should freeze the eligible population, effect-size and coverage requirements, a comparison sensitive to bank composition, and uncertainty accounting for calendar dates and correlated ordering banks before checking a further period. Check beneficiary geography and currency as composition alternatives only with a predeclared design. Weekend is defined as Saturday/Sunday UTC, irrespective of country-specific weekends.
+The frozen internal test uses July 2023 UTC, unlabelled rows and the same endpoint bit-0/0 predicate as May–June. July covers the half-open interval from July 1 to August 1. The exact July B06 outcome remains uninspected before freeze. Weekend is Saturday/Sunday UTC irrespective of local weekends. Preserve the original bank/route/party/month strata with 30 payments per arm and smaller-arm weighting. All four criteria must pass:
+
+1. Retain at least 100 declared ordering banks and 30% of each calendar arm.
+2. Weekend minus weekday UTC daytime share is at most −3 percentage points.
+3. Recompute support and the same contrast after omitting each Monday-start UTC calendar block, including partial blocks at the boundaries. Require at least four omissions. Every omission must retain at least 100 banks and 20% of each remaining arm, and show a contrast of at most −1 percentage point.
+4. Recompute with the weekday-only contrast of Monday–Tuesday versus Wednesday–Friday. Require at least 100 banks and an absolute difference strictly below 3 percentage points. This is a specificity challenge to a broad within-week composition explanation, not an exchangeable null.
+
+The tolerances are practical discovery-informed requirements. The 3-point gate is materially smaller than the original 6.97-point contrast and its observed subgroup counterparts. The 1-point gate tests whether one week determines direction and practical size. Omission replicates share most dates and are a sensitivity range rather than a confidence interval. Same banks, customers and calendar dependence can recur. No row-level inference or independent temporal holdout claim is made. Covered stays descriptive and remains suppressed if too sparse.
+
+Run `uv run python analysis/20_routing_time/H-B06_calendar_timing.py --phase confirm --freeze SHA` only after committing this confirmation-ready plan and exact executable. Save all outcomes as internal validation conditional on the recorded exposure. No threshold changes after inspecting July.
 
 ## Assessment
 
