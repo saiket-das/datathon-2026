@@ -7,7 +7,7 @@ Files:
 - G_LEDGER.md: append-only exposure, failed tests and recovery ledger.
 - R-G01_visible_endpoints.py: independent B12 operationalisation, training, control models, eligibility denominator audit and dependent-unit sensitivity.
 - test_R_G01.py: synthetic fixture tests that do not access the sponsor dataset.
-- run_local_executor.sh: opt-in *local* execution path with branch/remote guards. Not a cloud executor.
+- run_local_executor.sh: opt-in *local* execution path with branch/remote guards and a mandatory manual publication gate. Not a cloud executor.
 - out/R-G01_aggregates.md: generated aggregate report after a real local dataset run. NEVER fabricate this file to appear executed.
 - ../../findings/hypotheses/R-G01_directed_visible_endpoints.md: frozen test plan and assumptions.
 
@@ -32,12 +32,12 @@ full SHA and chosen train/evaluation periods *before* viewing July outcomes.
 bash analysis/40_g_adversarial/run_local_executor.sh YYYY FULL_40_CHARACTER_FREEZE_COMMIT
 ~~~
 
-The local executor runs uv run pytest, then the frozen script; writes the aggregate
-Markdown under G's out/; records ignored execution metadata under
-dataset/g_executor/; appends a run entry to G_LEDGER.md; and pushes only
-that checked aggregate report and ledger to codex/r2-g-falsification
-after checking the remote is exactly the user-authorised repository. Use only
-on the authorised team machine and within the temporary disclosure scope.
+The local executor runs uv run pytest, then the frozen script; writes a LOCAL aggregate
+Markdown under G's out/ and ignored execution metadata under dataset/g_executor/.
+It deliberately does NOT stage, commit, or push the generated report. A human must
+review complementary counts, percentages, uncertainty bounds and subgroup intersections
+for recoverable small cells, then explicitly approve any separate aggregate-only
+publication on the G branch. Use only on the authorised team machine.
 
 It does not run automatically just because a ChatGPT task has been scheduled.
 No GitHub Actions job should be supplied the raw sponsor dataset or a path to it.
