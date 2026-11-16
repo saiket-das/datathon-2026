@@ -28,3 +28,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A04: FX residuals and path gaps](../../findings/hypotheses/H-A04_fx_gap_residuals.md) is exploration only. Run H-A04_fx_gap_residuals.py for grouped signed errors and gap comparisons.
 
 [H-A05: tighter FX upper bound](../../findings/hypotheses/H-A05_fx_repeat_classes.md) tests the H-A03 class-change count as a bound and records the failed repeat-class alternative.
+
+[H-A06: endpoint currency association](../../findings/hypotheses/H-A06_currency_endpoint.md) compares country-specific modal currency predictors on the same score rows, with paired bank-cluster sensitivity.
