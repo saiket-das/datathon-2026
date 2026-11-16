@@ -2,9 +2,9 @@
 # G read-only dataset executor. Git receives only reviewed aggregates.
 # Usage: bash analysis/40_g_adversarial/run_local_executor.sh YYYY FULL40CHARFREEZESHA
 set -euo pipefail
-cd "$(dirname "\${BASH_SOURCE[0]}")/../.."
-YEAR="\${1:-}"
-FREEZE="\${2:-}"
+cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+YEAR="${1:-}"
+FREEZE="${2:-}"
 BRANCH="codex/r2-g-falsification"
 REPO="saiket-das/datathon-2026"
 if [[ ! "$YEAR" =~ ^20[0-9]{2}$ ]]; then
@@ -37,7 +37,7 @@ fi
 # Git receives only code hashes and aggregates; no sponsor data is added.
 uv run pytest
 uv run python analysis/40_g_adversarial/R-G01_visible_endpoints.py \
-  --phase validate --train-period "\${YEAR}-05" --eval-period "\${YEAR}-07" \
+  --phase validate --train-period "${YEAR}-05" --eval-period "${YEAR}-07" \
   --freeze-commit "$FREEZE"
 
 REPORT="analysis/40_g_adversarial/out/R-G01_aggregates.md"
@@ -50,12 +50,12 @@ REPORT_SHA="$(shasum -a 256 "$REPORT" | awk '{print $1}')"
 STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 {
  echo
- echo "## R-G01 external local executor, \${STAMP} UTC"
+ echo "## R-G01 external local executor, ${STAMP} UTC"
  echo "- Recovery head before execution: $(git rev-parse HEAD)"
- echo "- Original frozen test commit: \${FREEZE}"
- echo "- Data: local dataset/payments.parquet, not added to Git; year \${YEAR}"
+ echo "- Original frozen test commit: ${FREEZE}"
+ echo "- Data: local dataset/payments.parquet, not added to Git; year ${YEAR}"
  echo "- Program: R-G01_visible_endpoints.py; actual dataset script and pytest executed."
- echo "- Aggregate report SHA256: \${REPORT_SHA}"
+ echo "- Aggregate report SHA256: ${REPORT_SHA}"
  echo "- Report: analysis/40_g_adversarial/out/R-G01_aggregates.md"
  echo "- Status: executed internally on reused synthetic dataset, NOT independent confirmation."
  echo "- Read report for denominators, exclusions, failures and negative-control results."
@@ -70,5 +70,5 @@ if [[ "$CHANGED" != "$REPORT"$'\n'"$LEDGER" &&
 fi
 git diff --cached --check
 git commit -m "G: R-G01 supervised local aggregate-only replication"
-git push origin "HEAD:refs/heads/\${BRANCH}"
+git push origin "HEAD:refs/heads/${BRANCH}"
 echo "G-R01 EXECUTED: pushed aggregate commit $(git rev-parse HEAD)"
