@@ -30,12 +30,12 @@ pyproject.toml, uv.lock    the Python libraries and their pinned versions (manag
 docs/
   01_project_in_simple_words.md   plain-language introduction
   02_competition_brief.md         one-page factual brief of the rules
+  09_c_investigation_handoff.md   C investigation scope, validation provenance and review handoff
   03_execution_plan.md            team strategy and timeline
   04_research_pathways.md         optional method ideas (non-binding)
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
-  handoff.md                     C investigation scope, validation provenance and review handoff
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/

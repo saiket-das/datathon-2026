@@ -26,7 +26,7 @@ receivers/banks. Source-row adjacency is a construction signature, not a fraud
 detector robust to row shuffling. Four other labels remain mechanistically unresolved.
 
 Frozen SHA: `bd61bc32dc61f4985c757244051404fb6622a71b` (16 Nov 2026,
-16:19:47 Malaysia). [C handoff](../../docs/handoff.md) records provenance and review steps.
+16:19:47 Malaysia). [C handoff](../../docs/09_c_investigation_handoff.md) records provenance and review steps.
 
 Confirmation evidence: [H-C01 report](out/H-C01_duplicate_bursts_confirm.md) and
 [chart](out/H-C01_duplicate_bursts_confirm.png);
