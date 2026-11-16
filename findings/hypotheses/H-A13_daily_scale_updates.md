@@ -59,10 +59,19 @@ or fresh time period follows from this design.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+The unchanged test passed at freeze `7bd948fa5a5663bb9fc3d57ebd35bb567f4ab38f`.
+Bit-1 provided 62 CHF, 90 EUR and 56 GBP adjacent-date changes, with zero
+reciprocal bound violations. Three direct-scale changes exceeded the bound.
+USD remained constant on 90 transitions. Anchor support was 76 of 92 CHF
+dates, 91 of 93 EUR dates and 70 of 93 GBP dates.
+
+The uniform and Gaussian KS distances were .062348 and .100154. The 99%
+date-block interval for the Gaussian-minus-uniform gap was −.021075 to
+.057070. The pooled preference for uniform is sensitive to time resampling.
+[Full aggregate results](../../analysis/10_amounts_currency/out/H-A13_daily_scale_updates_validate.md).
 
 ## Assessment
 
-A pass would support a bounded reciprocal-scale approximation on supported
-dates and currencies. It would leave independence, exact innovation
-distribution and source-code identification open.
+The tested dates support a bounded reciprocal-scale approximation. Shared
+dates limit evidence on the innovation distribution. The exact rate
+generation process remains unresolved.

@@ -42,3 +42,9 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A11: FX transition support](../../findings/hypotheses/H-A11_fx_transition_residuals.md) compares supported and sparse directed pairs on one-transition paths.
 
 [H-A12: conditional log-amount shape](../../findings/hypotheses/H-A12_log_shape.md) compares trained standardization against equal-variance reference shapes.
+
+[H-A13: reciprocal daily scale updates](../../findings/hypotheses/H-A13_daily_scale_updates.md) tests a bounded update approximation across separate account samples on shared dates.
+
+[H-A14: adjacent currency-mode changes](../../findings/hypotheses/H-A14_currency_class_disagreement.md) tests an FX count based on pre-July currency modes.
+
+[H-A15: recorded currency as an endpoint state](../../findings/hypotheses/H-A15_payment_currency_insertion.md) records failed endpoint alternatives on exploration data.

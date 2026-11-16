@@ -58,10 +58,19 @@ entities and earlier scored records overlap.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+The unchanged test passed at freeze `7bd948fa5a5663bb9fc3d57ebd35bb567f4ab38f`.
+Of 257,566 scoped July bit-1 payments, 253,934 were jointly mapped (98.59%)
+and 3,632 lacked joint support. Eligible counts included 52,571 senders,
+119,287 receivers and 4,838 declared ordering banks. Mode changes repaired
+all 1,036 class-count errors, with zero new errors or bound violations.
+The absolute gain was 0.408 percentage points, with a 99% ordering-bank
+sensitivity interval of 0.325 to 0.521 points.
+[Full aggregate results](../../analysis/10_amounts_currency/out/H-A14_currency_class_disagreement_validate.md).
 
 ## Assessment
 
-A pass would identify a reproducible count rule for mapped July paths
-and explain the direction of the class approximation's residuals there.
-It would leave the generator's currency assignment and stage ordering open.
+Adjacent currency-mode changes recover the observed count on the jointly
+supported July internal test. Every FX-trained class mismatch there falls
+where the mode map implies fewer transitions. Scope is limited to mapped
+multibank paths on reused records. A03's frozen failure retains its original
+scope. The underlying currency assignment and stage ordering remain open.

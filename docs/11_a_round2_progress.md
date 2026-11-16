@@ -1,6 +1,6 @@
 # A Round 2 progress register
 
-Updated 16 November 2026. Worktree: `datathon-2026-R2-A`; branch `codex/r2-a-amount-generation`.
+Updated 17 November 2026. Worktree: `datathon-2026-R2-A`; branch `codex/r2-a-amount-generation`.
 Research cutoff: 18 November 2026, 20:00 MYT. No new exploratory hypotheses after cutoff.
 No automatic merge; final PDFs need user approval. Round 1 evidence remains unchanged.
 
@@ -35,6 +35,29 @@ H-A10 froze at `f31764d04d8d4280281ace5f0e8c0dbc8cb1dff5` and H-A11
 at `33bb0c0f921719c2f04bfc5debc18aad043ade8a`. Their records contain
 the exact executable test, cutoffs, failed controls, reused-population
 exposure and local reproduction commands.
+
+## 17 November continuation
+
+| Hypothesis | Outcome and qualification |
+| --- | --- |
+| H-A12 | Frozen internal test passed on 658,785 of 699,603 July bit-1 payments. Gaussian TV .007371 vs .038275 logistic and .082839 Laplace. Gaussian upper 99% TV .017461. No exact-tail or subgroup-law claim. |
+| H-A13 | Frozen internal re-extraction passed on 208 CHF/EUR/GBP changes. Three direct-scale violations and zero reciprocal violations. Uniform fit advantage remains uncertain under seven-date blocks. |
+| H-A14 | Frozen internal test repaired 1,036 class errors with zero new errors on 253,934 eligible July multibank payments. The maps cover 98.59% of scope. A03's frozen failure retains its original scope. |
+| H-A15 | Bit-0 endpoint alternatives caused 31,444 first substitutions, 10,173 last substitutions and 49,529 prepend errors among 49,529 first-country exceptions. The geographic count made zero errors. |
+
+H-A12 froze at `36627f0fda8e672ab279868b7807e83d48286acf`.
+Its original plan is preserved, with a separate
+[validation report](../analysis/10_amounts_currency/out/H-A12_log_shape_validate.md).
+The lower 99% ordering-bank advantages were .020742 versus logistic
+and .065301 versus Laplace. The test shares 4,156 of 5,356 banks with
+training. H-A13/H-A14 froze at `7bd948fa5a5663bb9fc3d57ebd35bb567f4ab38f`.
+Argon's methodological feedback informed exposure limits and dependence
+checks. No new result is labelled an independent holdout.
+
+GitHub still reported PUBLIC on 17 November. The additional commits remain
+local under organiser rule 3.3. PR #8 is open and unmerged. The new FX rule
+can next be probed on geography absent from the fitted map and the rate
+update bound on currencies with competing anchor denominations.
 
 ## Completed and exposure
 
