@@ -1,9 +1,9 @@
 # H-C02: Romance-labelled payments form chronological, variable-amount copy bursts
 
 - **Owner:** C
-- **Status:** confirmation-ready
-- **Script / exact command / commit:** `uv run python analysis/30_parties_anomalies/H-C02_romance_bursts.py --phase explore`; implementation shared with H-C01; introducing commit freezes both.
-- **Chart:** `analysis/30_parties_anomalies/out/H-C02_romance_bursts_explore.png`
+- **Status:** replicated
+- **Script / exact command / commit:** `uv run python analysis/30_parties_anomalies/H-C02_romance_bursts.py --phase confirm --freeze-commit bd61bc32dc61f4985c757244051404fb6622a71b`; implementation shared with H-C01.
+- **Chart:** `analysis/30_parties_anomalies/out/H-C02_romance_bursts_confirm.png`
 
 ## Proposed rule and scope
 
@@ -58,8 +58,9 @@ not an extra acceptance condition or a claim of an exact multiplier distribution
   inside the same sender confirmation partition. Whole families are scored before
   monthly summaries, avoiding artificial boundary failures. These are overlapping
   sensitivity checks, not independent temporal or bank replication.
-- **Freeze commit/time and prior access:** introducing commit freezes the plan;
-  append its actual SHA/time afterward. Only sender-bit-0 outcomes were queried
+- **Freeze commit/time and prior access:** `bd61bc32dc61f4985c757244051404fb6622a71b`,
+  2026-11-16 08:19:47 UTC (16:19:47 Malaysia time), recorded before opening confirmation.
+  Only sender-bit-0 outcomes were queried
   here before freeze. Shared Phase 0 full-data structural and split-support
   aggregates were already exposed. No other investigator's developing work read.
 
@@ -87,12 +88,36 @@ an amount and therefore overlap H-C01's looser duplicate-family signature.
 
 ## Confirmation and robustness results
 
-Not accessed at freeze. Insert unchanged test results, support, exact exception
-counts, sensitivity results and the freeze SHA after the frozen commit exists.
+**PASS, unchanged frozen test.** Full safe evidence:
+[`H-C02_romance_bursts_confirm.md`](../../analysis/30_parties_anomalies/out/H-C02_romance_bursts_confirm.md).
+All **1,154/1,154 romance-labelled confirmation payments** match the signature,
+with zero target exceptions, across **236 pairs/senders and 200 receivers**.
+Every target-containing pair is fully romance-labelled; its 15 context fields
+remain unchanged. Family size range is 2–8, median timestamp span 1,068 seconds,
+maximum 4,191 seconds; timestamps are nondecreasing and amounts vary in every pair.
+The frozen descriptive median-family geometric growth statistic is 1.4791 versus
+1.4954 in exploration; no exact growth distribution or multiplier is inferred.
+
+Row-, equal-sender- and equal-receiver-weighted coverage are all 100%. Sender
+bootstrap interval [100%,100%] is degenerate; exact one-sided 97.5% lower bound for
+the all-success sender probability is **98.4491%**, above the frozen 90% criterion.
+Largest sender contributes 0.693241%, largest receiver 1.55979% of target payments.
+No matches occur among **4,898,616 unlabelled confirmation payments**, or any of
+the other five labels. By contrast, ordinary pair repetition occurs in 1,122,890
+unlabelled payments (22.9226%): repeated transfers alone are a poor anomaly rule.
+
+**Predeclared sensitivity:** all 302 consumer→business and 852 consumer→consumer
+target payments match, preserving the rejection of a consumer-only receiver rule.
+Business receivers account for 26.1698% of confirmation cases. May/June/July target
+counts are 394/379/381, each with 100% signature coverage. All target cases again
+occur in source-file million-row blocks 0–2 (465/533/156); no claim of file-order
+generality is warranted. These are overlapping within-partition controls, not
+independent temporal/bank holdouts. Small entity support remains masked in the
+report; no criteria, key, threshold, code or partition changed after freeze.
 
 ## Assessment
 
-Candidate reconstruction: reuse a sampled consumer-origin payment context for a
+Replicated reconstruction within the selected sender split: reuse a sampled consumer-origin payment context for a
 short chronological sequence to one receiver, varying amounts while retaining
 even duration and complete details/tokens. This supports a context-copy sequence
 interpretation; it does not prove the exact random-number process, causality or

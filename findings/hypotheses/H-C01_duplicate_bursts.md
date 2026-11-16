@@ -1,9 +1,9 @@
 # H-C01: Duplicate-labelled payments form exact-context, short copy bursts
 
 - **Owner:** C
-- **Status:** confirmation-ready
-- **Script / exact command / commit:** `uv run python analysis/30_parties_anomalies/H-C01_duplicate_bursts.py --phase explore`; frozen in the commit introducing this plan (record SHA before confirmation).
-- **Chart:** `analysis/30_parties_anomalies/out/H-C01_duplicate_bursts_explore.png`
+- **Status:** replicated
+- **Script / exact command / commit:** `uv run python analysis/30_parties_anomalies/H-C01_duplicate_bursts.py --phase confirm --freeze-commit bd61bc32dc61f4985c757244051404fb6622a71b`.
+- **Chart:** `analysis/30_parties_anomalies/out/H-C01_duplicate_bursts_confirm.png`
 
 ## Proposed rule and scope
 
@@ -64,8 +64,8 @@ dictionary definition of an accidental duplicate and not proof of the source cod
   checks within confirmation. Family membership uses the entire sender partition,
   so a month boundary does not truncate sequences. This is not a time holdout, and
   no bank holdout or alternative partition is pooled as independent evidence.
-- **Freeze commit/time and prior exposure:** the introducing commit is the freeze;
-  its SHA and actual UTC commit timestamp will be inserted in the results commit.
+- **Freeze commit/time and prior exposure:** `bd61bc32dc61f4985c757244051404fb6622a71b`,
+  2026-11-16 08:19:47 UTC (16:19:47 Malaysia time). Recorded before opening confirmation.
   Before freezing, only sender-bit-0 outcomes were queried by this investigator.
   Prior exposure includes the shared Phase 0 full-data structural, balance and
   label-support aggregates. No partition is wholly unseen. Other investigators'
@@ -90,12 +90,39 @@ No uniform-jitter distribution or exact number-of-copies distribution is asserte
 
 ## Confirmation and robustness results
 
-Not accessed at freeze. Run the predeclared command unchanged and insert the
-freeze SHA, support, uncertainty, exceptions and all failures here afterward.
+**PASS, unchanged frozen test.** The confirmation report is
+[`H-C01_duplicate_bursts_confirm.md`](../../analysis/30_parties_anomalies/out/H-C01_duplicate_bursts_confirm.md).
+Confirmation read 4,902,062 sender-bit-1 payments. All **367/367 duplicate-labelled
+payments**, spanning **100 exact-key families, 100 senders and 100 receivers**,
+match the signature, with zero target exceptions. Family size remains 2–5;
+median span 4,028 seconds, maximum 6,980. Every target family has constant complete
+context and every member is labelled duplicate. Only 15% have monotone timestamps;
+chronology still cannot identify a pristine original.
+
+Row-, sender- and receiver-weighted coverage are all 100%. Sender bootstrap interval
+is [100%,100%] (degenerate, descriptive); exact one-sided 97.5% lower bound for the
+all-success sender probability is **96.3783%**, exceeding the frozen 90% criterion.
+Largest sender and largest receiver each contribute 1.3624% of target payments.
+No signature hits occur among **4,898,616 unlabelled confirmation payments**.
+Ordinary same-key repetition, without full context/source-order conditions, instead
+occurs in 2,508 unlabelled payments (0.0511981%).
+
+**Exceptions to exclusivity:** 1.03986% of romance-labelled confirmation payments
+also match this exact-amount-family signature; there are no matches in the other
+four labelled classes. This was anticipated by discovery and is not hidden or
+treated as a new reason to change the key.
+
+**Predeclared sensitivities:** the complete signature covers every target row in
+each month, party pair and source block. Suppressed strata remain suppressed in
+the report; apparent missing stratum estimates do not imply absence of cases.
+The displayable business→consumer stratum (215 payments), June (165) and July
+(105) each have 100% coverage; all corresponding unlabelled strata have zero
+signature matches. These checks use overlapping sender-confirmation records and
+are not independent calendar/bank holdouts. No post-freeze code or test change.
 
 ## Assessment
 
-Candidate reconstruction: make a small batch sharing the payment context and
+Replicated reconstruction within the selected sender split: make a small batch sharing the payment context and
 amount, with timestamps lying within a two-hour range; retain all members' labels.
 The source-row adjacency is a file-construction signature and would disappear
 under row shuffling. Identical context also fits independent template reuse; its
