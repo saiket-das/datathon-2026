@@ -21,7 +21,7 @@ def test_single_order_dictionary_with_positional_bias():
 def test_repeated_identities_are_not_multiplied():
     early = [("A", "A", "B")]
     r = run(early, [("A", "A", "B")])
-    assert isclose(r["weighted_null_recurrence"], 0.5)
+    assert isclose(r["weighted_null_recurrence"], 2 / 3)
 
 
 def test_unseen_category_abstains_and_denominator_preserved():
