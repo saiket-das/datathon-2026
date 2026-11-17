@@ -87,7 +87,29 @@ holdout claim.
 
 ## Validation and robustness results
 
-Pending at freeze.
+Freeze: `b82670542b97fa295cf719d7cd48a978af035f55`.
+Exact command:
+`uv run --locked python analysis/10_amounts_currency/H-A21_country_amount_context.py --phase validate --freeze b82670542b97fa295cf719d7cd48a978af035f55`.
+
+The frozen all-criteria claim **failed**. Of 699,603 scoped July bit-1
+payments, 656,546 were jointly covered (93.8455%), from 75,374 senders,
+255,885 receivers and 5,228 declared ordering banks. Of those banks,
+4,045 also occur in training. Baseline MSE is4.575395. Source/base MSE
+ratio is .975232, a descriptive 2.4768% reduction, but its99% bank-cluster
+interval is [.965461,.984483]. The required upper bound was .98.
+
+The source/receiver ratio interval [.965073,.984096] meets its .99
+ceiling. Equal-sender source/base ratio .969730 has interval
+[.958215,.979533], meeting .98. All support requirements pass. The
+receiver correction alone has ratio1.000448 and shifted-country control
+1.315288; the naive source-plus-receiver correction .976804 remains worse
+than source alone. These descriptive controls do not reverse the failed
+primary threshold. No criterion or model was adjusted after scoring.
+
+[Complete aggregate result](../../analysis/10_amounts_currency/out/H-A21_country_amount_context_validate.md).
+The executable verifies its own and shared-helper content against the
+freeze before reading the scoring population. Before freeze,
+`uv run --locked pytest` passed68 tests and `git diff --check` passed.
 
 ## Assessment
 

@@ -81,6 +81,24 @@ The unchanged frozen tests and all five exploration commands ran successfully.
 
 ## Completed and exposure
 
+### A21 — country context, 17 November
+
+Frozen all-criteria prediction claim rejected. Freeze
+`b82670542b97fa295cf719d7cd48a978af035f55`; executable and helper unchanged.
+Command: `uv run --locked python analysis/10_amounts_currency/H-A21_country_amount_context.py --phase validate --freeze b82670542b97fa295cf719d7cd48a978af035f55`.
+The first-path-country residual correction reduces row MSE descriptively
+by2.4768% on656,546/699,603 covered July bit-1 payments, but upper99
+bank-cluster model/base ratio .984483 exceeds frozen .98. Other ratio
+and support criteria pass. 75,374 senders,255,885 receivers,5,228 banks;
+4,045 banks overlap training. A weaker conditional association remains
+supported, without an independent holdout, causal wealth effect or
+generator architecture claim. Receiver correction and rotated-country
+negative controls remain in the complete aggregate report. Phase0,
+Round1 and A01-A20 exposure applies. No raw data or identifiers exported.
+Tests before freeze:68 passed; diff checks passed. A03 failure remains.
+Next opportunity: explain previously observed USD rounding/heaping using
+bit-0 exploration, without inferring mixture weights from compatibility.
+
 Read AGENTS, competition brief, the original case-study PDF, existing scientific helper and
 A01/A02 code/records. Used Ponytail for minimal code. All pre-freeze queries used both-account exploration. The complete plan and executable were
 committed at `2196f80cc3ab647ce67e7eb493aeed23cc190628` (16 November 17:31:22 MYT). Phase 0 and Round 1
