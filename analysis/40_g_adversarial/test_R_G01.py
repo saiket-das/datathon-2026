@@ -98,8 +98,8 @@ def test_input_mutation_aborts_without_creating_report_or_metadata(tmp_path, mon
           SELECT 1714521600::BIGINT AS EPOCH_SECONDS,
                  'Covered'::VARCHAR AS TRANSACTION_TYPE_CODE,
                  'AAAAAAAA;BBBBBBBB'::VARCHAR AS BIC8_PATH
-        ) TO ? (FORMAT PARQUET)
-    """, [str(data)])
+        ) TO '" + str(data).replace("'", "''") + "' (FORMAT PARQUET)
+    """)
     db.close()
 
     monkeypatch.setattr(r01, "ROOT", tmp_path)
