@@ -59,6 +59,22 @@ local under organiser rule 3.3. PR #8 is open and unmerged. The new FX rule
 can next be probed on geography absent from the fitted map and the rate
 update bound on currencies with competing anchor denominations.
 
+## Round 3 discovery, 17 November 2026
+
+| Hypothesis | Status and evidence |
+| --- | --- |
+| H-A16 | Frozen internal pass. Class-filter removal scores 2,909 of A14's 3,632 exclusions without error. Strong mode map covers 256,843 of 257,566, or 99.72%. All 723 residual exclusions lack both strong maps. Weak modes and necessary edgewise bounds gave no observed contradiction. |
+| H-A17 | Exploratory negative result. Same-day tenth-unit fits beat shifted dates after conditioning on the off-unit population. None clears the two opportunity-matched phase controls. |
+| H-A18 | Exploratory. Whole-dollar, one-digit and two-digit heaping differ markedly in USD. A universal single one-digit rule would leave most observed amounts unexplained. Magnitude, party strata and weak half-dollar heaping are recorded. |
+| H-A19 | Frozen internal pass. EUR fits current-date scales around 40% in the first and last two UTC hours, with paired lifts of 38.38 and 38.48 points against the union of neighboring rates. Date windows are reused and the exact switching instant remains open. |
+
+H-A16 froze at `319f6d2f25bf9bc62911a37e58b495809ee8e43a`.
+H-A19 froze at `5b6b952ed029696e0991df60d677998a64cc7c4c`.
+Both tests scored both-account bit-1 after freezing. H-A17 and H-A18
+queried bit-0 only. Known May/June/July exposure, dependency limitations,
+thresholds and reproduction commands are recorded in each hypothesis.
+The repository remains public. Local research stays within the A worktree.
+
 ## Completed and exposure
 
 Read AGENTS, competition brief, the original case-study PDF, existing scientific helper and

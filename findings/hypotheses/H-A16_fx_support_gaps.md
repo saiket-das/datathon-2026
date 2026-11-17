@@ -60,10 +60,22 @@ across splits. A17 is an amount analysis developed on bit-0.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+The unchanged internal test passed at freeze
+`319f6d2f25bf9bc62911a37e58b495809ee8e43a`. Strong currency modes scored
+256,843 of 257,566 July bit-1 payments (99.72%) with zero FX errors,
+up from A14's 253,934. The extra 2,909 paths involved 2,093 senders,
+2,484 receivers and 891 ordering banks, and made up 80.09% of the 3,632
+original exclusions. The 99% bank sensitivity interval for coverage
+was 99.53–99.82%, and for added coverage 0.96–1.33 points.
+
+All 723 remaining paths lacked both strong maps. Weak modes scored
+nearly all of these with zero observed errors. The known-edge interval
+had zero violations overall. The unsolved paths remain a coverage gap
+without a point prediction. [Aggregate validation](../../analysis/10_amounts_currency/out/H-A16_fx_support_gaps_validate.md).
 
 ## Assessment
 
-Separating the support requirements can test whether the old filter hid
-contradictions or mostly removed otherwise predictable payments. Weak
-mode fits and edgewise bounds are diagnostics of the remaining gap.
+The class filter removed many otherwise predictable payments. The
+remaining gaps concern mapping support and partial bounds. The weak-map
+comparison leaves weaker evidence about transfer to truly unobserved
+countries or new dates.

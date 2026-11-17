@@ -51,10 +51,18 @@ country, account neighborhoods and date effects remain possible.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+The unchanged bit-1 test passed both windows at
+`5b6b952ed029696e0991df60d677998a64cc7c4c`.
+From 200,142 scoped EUR payments, 195,974 were eligible (97.92%).
+The early window had 5,151 payments and 40.09% same-day fit. Its
+paired lift was 38.38 points, 99% date-block sensitivity 36.52–40.18.
+The late window had 8,028 payments and 40.60% same-day fit. Its lift
+was 38.48 points, interval 36.71–40.22. Both span 89 supported dates.
+GBP early and both CHF boundary windows are below display support.
+[Aggregate validation](../../analysis/10_amounts_currency/out/H-A19_utc_scale_boundary_validate.md).
 
 ## Assessment
 
-A pass would support UTC date alignment in these windows. It cannot set
-an exact change instant, identify the internal clock or exclude a smaller
-intraday exception population.
+The same-day rate best describes the grid near both sides of UTC midnight
+in these windows. The result leaves the exact change instant, internal
+clock and smaller intraday exception populations open.

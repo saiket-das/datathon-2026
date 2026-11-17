@@ -53,7 +53,7 @@ analysis/
     H-A08_path_currency_set.py    controlled visible-path currency membership test
     test_fx_country_classes.py  invented aggregate graph tests
     out/H-A03_*                safe exploration/internal-validation reports
-    H-A09_* to H-A15_*        amount-scale, log-shape and currency-mode FX investigations
+    H-A09_* to H-A19_*        amount-scale, log-shape, FX support and date alignment investigations
     test_value_mechanisms.py   dataset-independent calculation checks
     out/H-A01_*, H-A02_*       aggregate exploration/confirmation reports and charts
   20_routing_time/         owner B
