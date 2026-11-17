@@ -6,7 +6,7 @@ from R_G02_bank_components import bank_component_diagnostics as check
 def test_transitive_shared_bank_is_one_component():
     rows = [("A", "X", 1.), ("B", "X", -1.), ("B", "Y", 1.),
             ("C", "Z", 0.)]
-    r = check(rows, min_components=2, max_component_share=1)
+    r = check(rows, min_components=2)
     assert r["components"] == 2
     assert r["largest_share"] == 0.75
     assert not r["ci_supported"]
