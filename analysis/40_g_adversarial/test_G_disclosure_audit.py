@@ -58,3 +58,26 @@ Interpretation gate
     assert result["suppressed_line_count"] == 1
     assert result["derived_statistic_line_count"] == 1
     assert result["publication_authorised"] is False
+
+
+def test_audit_report_bytes_digest_and_findings_share_one_snapshot():
+    """A changed file between separate reads must not misattribute the audit."""
+    import hashlib
+
+    original = b"Training period denominators\n| [1\xe2\x80\x939 suppressed] | 99.9999% |\n"
+    changed = b"Training period denominators\n| 100 | 0.0000% |\n"
+    original_result = module.audit_report_bytes(original)
+    changed_result = module.audit_report_bytes(changed)
+    assert original_result["report_sha256"] == hashlib.sha256(original).hexdigest()
+    assert original_result["suppressed_line_count"] == 1
+    assert changed_result["report_sha256"] == hashlib.sha256(changed).hexdigest()
+    assert changed_result["suppressed_line_count"] == 0
+    assert original_result["publication_authorised"] is False
+    assert changed_result["publication_authorised"] is False
+
+
+def test_audit_report_bytes_rejects_invalid_utf8():
+    import pytest
+
+    with pytest.raises(UnicodeDecodeError):
+        module.audit_report_bytes(b"Training period denominators\n\\xff")
