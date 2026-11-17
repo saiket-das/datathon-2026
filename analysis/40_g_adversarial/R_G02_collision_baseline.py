@@ -10,7 +10,7 @@ import math
 def collision_probability(weights: list[float], k: int) -> float:
     """P(at least one repeat among k iid categorical draws).
 
-    Uses elementary-symmetric-polynomial DP: P(all distinct)=k!*e_k(p).
+    Uses ordered-distinct dynamic programming directly: dp[j] is the\n    probability that j draws are all distinct using categories processed so far.\n    This avoids factorial overflow when k >= 171.
     This is an analytic baseline, NOT a fitted generator or validation.
     """
     if not isinstance(k, int) or isinstance(k, bool) or k < 0:
@@ -31,6 +31,6 @@ def collision_probability(weights: list[float], k: int) -> float:
     for p in positive:
         seen += 1
         for j in range(min(k, seen), 0, -1):
-            dp[j] += p * dp[j - 1]
-    no_repeat = math.factorial(k) * dp[k]
+            dp[j] += j * p * dp[j - 1]
+    no_repeat = dp[k]
     return min(1.0, max(0.0, 1.0 - no_repeat))
