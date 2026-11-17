@@ -67,3 +67,35 @@ Compare the bank-pair overlap pattern with the number of repeat payments per dir
 - H-F04 results: none.
 - Frozen hypothesis/validation gate: none.
 - Next step: coordinator review this independent mechanism-focused study and approve implementation before any local execution.
+
+
+## Implementation addendum: phased, private-only exploratory source (17 Nov 2026 MYT)
+
+This addendum records **prospective code preparation**, not experimental outcomes. None of H-F04's sponsor-data findings, supports, source fingerprints, private execution metadata or report hashes have been seen by Investigator F or published in this repository.
+
+**Script:** `analysis/40_cross_mechanisms/H-F04_occupancy_state_sorting.py`, initial implementation commit `dd0de73feef33105cd959426b4e6f41327efa635`; corrected source-and-fixture commit `03f55694b80f5bb2fe7c6b754296e34508f5e242`. The second commit explicitly counts records with missing directed BIC endpoints in the **private report** and makes the synthetic fixture assert **within-S0 and within-S1 exact FX marginals**, not only the overall FX total. Nulls remain valid stratum labels. All other threshold and benchmark definitions remain as predeclared above.
+
+**Phased execution proposal, from repository root:**
+
+1. Pure invented-fixture SQL check: `uv run python analysis/40_cross_mechanisms/H-F04_occupancy_state_sorting.py --self-test`.
+2. Capacity, observed overlap, pair-size and repeated-account descriptive checks: `uv run python analysis/40_cross_mechanisms/H-F04_occupancy_state_sorting.py --data-dir /mnt/f-parquet --phase capacity`.
+3. Only after resource review, independent full-universe conditional FX assignments: `uv run python analysis/40_cross_mechanisms/H-F04_occupancy_state_sorting.py --data-dir /mnt/f-parquet --phase permute --population dev`.
+4. Separately, coarse common-support sensitivity: `uv run python analysis/40_cross_mechanisms/H-F04_occupancy_state_sorting.py --data-dir /mnt/f-parquet --phase permute --population P0`.
+
+Every phase operates on the same *May–June only* source eligibility and read-only verified source paths; `P0` includes both FX states in every matched S0 group with >=100 observations per state. `P0` support joins use `IS NOT DISTINCT FROM`, matching the prior H-F03 semantics. The ordered bank-pair key is preserved, including null-containing keys for comparability; a separate local-only missing-BIC coverage audit warns if a grouped unknown endpoint could be mistaken for a genuine exact-bank pair.
+
+**Private phase outputs** (all under Git-ignored `dataset/private_reports/`; no public output):
+
+- `H-F04_occupancy_state_sorting_capacity.md`
+- `H-F04_occupancy_state_sorting_perm_dev.md`
+- `H-F04_occupancy_state_sorting_perm_p0.md`
+
+The earlier single-file output proposal is superseded **only operationally** so long-running permutations can be reviewed independently and interrupted jobs cannot overwrite a prior report. Every final/partial report is fail-closed against overwriting. No result publication is authorised.
+
+**Exact fixed-marginal implementation:** for benchmark `M0`, globally; `M1`, partitioned by S0; and `M2`, partitioned by S1, deterministically rank distinct source row IDs by `hash(row_id, seed)` with `row_id` tie-breaking and assign exactly the original number of FX1 labels within each partition. Fixed seeds `20261117` through `20261148` are used for **32** replicates per model per population. This tests row-exchangeability expectations only. The synthetic fixture includes null group keys, repeated account pairs and three separate bank-pair strata with sufficient FX0/FX1 support; both total and conditional marginals are asserted in the latest script. The revised source and fixture have **not been executed by Investigator F**. An offline coordinator must run fixture and perform an independent code/scale review before approving payment-data use.
+
+**Resource and failure control:** each `--phase permute` run is potentially expensive (96 window sorts over an eligible population); schedule/review it independently after `--phase capacity` with at least 6–8 GiB available memory and 20–40 GiB private free scratch as planning allowances, **not measured peaks**. The DuckDB per-process memory limit is 3 GiB and thread count 2. Coordinator must enforce the absolute 18 November 2026 20:00 MYT termination externally; the script also checks the cutoff between operations. Any OOM, SQL test failure, incomplete replicate or missing fixed-margin conservation must be reported as a failed attempt, not silently omitted.
+
+**Source-only and privacy constraints:** there is no `SELECT *`; the source view explicitly lists all 26 authorised columns. Source fingerprint values are computed only in the private local executor and must be checked against the local approved manifest. Account pair diagnostics exclude null account identifiers **only in that diagnostic** and report excluded volume privately; this does not redefine the payment universe. No bank/account names, observed pair sizes, transaction contents or report hashes are written to stdout/GitHub.
+
+**H-F04 scientific state:** Proposed protocol + reviewed-source candidate, **NO execution, NO validation freeze, NO July exposure**. Source requires fixture/runtime approval, and coordinator must preserve each failure and private return before any interpretation.
