@@ -49,7 +49,8 @@ analysis/
 findings/
   hypotheses/H-F01_fx_route_duration.md   F pilot (coordinator-run reported; result publication pending)
   hypotheses/H-F02_bank_path_confounding.md   F exploratory job history; private evidence only
-  hypotheses/H-F03_composition_overlap.md   F fixed-support decomposition and bank overlap (unexecuted)
+  hypotheses/H-F03_composition_overlap.md   F exploratory research (private outcomes only)
+  hypotheses/H-F04_occupancy_state_sorting.md   F proposed occupancy-vs-FX sorting investigation (not executed)
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
