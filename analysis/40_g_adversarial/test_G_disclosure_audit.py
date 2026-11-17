@@ -81,3 +81,33 @@ def test_audit_report_bytes_rejects_invalid_utf8():
 
     with pytest.raises(UnicodeDecodeError):
         module.audit_report_bytes(b"Training period denominators\n\xff")
+
+
+def test_cli_rejects_public_worktree_report_and_destination(tmp_path, monkeypatch):
+    """A private disclosure audit must never read/write artifacts in public Git."""
+    import sys
+    import pytest
+
+    repo = tmp_path / "public_repo"
+    script = repo / "analysis" / "40_g_adversarial" / "G_disclosure_audit.py"
+    script.parent.mkdir(parents=True)
+    private = tmp_path / "private"
+    private.mkdir()
+    private_report = private / "report.md"
+    private_report.write_text("Training period denominators", encoding="utf-8")
+    public_report = repo / "analysis" / "report.md"
+    public_report.write_text("Training period denominators", encoding="utf-8")
+    monkeypatch.setattr(module, "__file__", str(script))
+
+    cases = (
+        (public_report, private / "audit.json"),
+        (private_report, repo / "analysis" / "audit.json"),
+    )
+    for report, dest in cases:
+        monkeypatch.setattr(sys, "argv", [
+            "G_disclosure_audit.py", "--report", str(report),
+            "--private-audit", str(dest),
+        ])
+        with pytest.raises(SystemExit, match="outside the public repository"):
+            module.main()
+        assert not dest.exists()
