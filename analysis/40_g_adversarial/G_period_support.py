@@ -125,9 +125,13 @@ def validate_commit(commit: str) -> None:
 def write_private_atomic(output: Path, report: dict) -> None:
     """Only explicit private output; no network, no Git, no publication."""
     final = output.expanduser().resolve(strict=False)
-    final.parent.mkdir(parents=True, exist_ok=True)
-    if final.is_relative_to(ROOT) and not final.is_relative_to(ROOT / "dataset"):
+    if final.suffix.lower() != ".json":
+        raise ValueError("Private output must use .json")
+    if final.is_relative_to(ROOT) and not final.is_relative_to(
+        ROOT / "dataset" / "g_executor"
+    ):
         raise ValueError("Private output cannot live in a Git-trackable repository folder")
+    final.parent.mkdir(parents=True, exist_ok=True)
     temp = final.with_name(final.name + "." + uuid.uuid4().hex + ".tmp")
     try:
         temp.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
