@@ -84,3 +84,39 @@ def test_brier_score_requires_probability_and_binary_outcome():
     for p in (-0.01, 1.01, float("nan")):
         with pytest.raises(ValueError):
             brier(0, p)
+
+
+def test_unordered_motif_mass_counts_permutations_once():
+    from R_G02_competing_models import unordered_motif_recurrence_probability
+    w = {"A": 0.5, "B": 0.5}
+    assert unordered_motif_recurrence_probability({("A", "B")}, w) == pytest.approx(0.5)
+    assert unordered_motif_recurrence_probability(
+        {("A", "B"), ("B", "A")}, w
+    ) == pytest.approx(0.5)
+    assert unordered_motif_recurrence_probability(
+        {("A", "A", "B")}, w
+    ) == pytest.approx(3 / 8)
+    assert unordered_motif_recurrence_probability(
+        {("A", "A", "A")}, w
+    ) == pytest.approx(1 / 8)
+
+
+def test_ordered_recurrence_fails_to_identify_multiset_cache():
+    from R_G02_competing_models import ordered_vs_unordered_recurrence
+    early = {("A", "B")}
+    late = [("B", "A")] * 100
+    scores = ordered_vs_unordered_recurrence(early, late)
+    assert scores == pytest.approx({
+        "ordered_recurrence": 0.0,
+        "unordered_recurrence": 1.0,
+        "order_sensitive_gap": 1.0,
+    })
+    assert all(len(set(t)) == 2 for t in late)
+    assert all(len(set(t)) == 2 for t in early)
+
+
+def test_recurrence_placebo_rejects_mixed_k():
+    from R_G02_competing_models import ordered_vs_unordered_recurrence
+    with pytest.raises(ValueError):
+        ordered_vs_unordered_recurrence({("A", "B")}, [("A", "B", "C")])
+    assert ordered_vs_unordered_recurrence(set(), []) is None
