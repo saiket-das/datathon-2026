@@ -47,7 +47,8 @@ analysis/
   40_cross_mechanisms/   investigator F, experimental cross-domain scripts only
     (each owner folder has out/ for charts)
 findings/
-  hypotheses/H-F01_fx_route_duration.md   F pilot (not yet executed)
+  hypotheses/H-F01_fx_route_duration.md   F pilot (coordinator-run reported; result publication pending)
+  hypotheses/H-F02_bank_path_confounding.md   F bank/path confounding exploration (not executed)
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
