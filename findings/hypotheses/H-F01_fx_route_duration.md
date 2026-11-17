@@ -66,3 +66,12 @@ No designated H-F01 validation outcomes have yet been opened by Investigator F.
 - Validation verdict: **not attempted**.
 - Next: run the pilot on the complete local dataset via a verified read-only DuckDB
   executor; review actual aggregates and competing explanations before any freeze.
+
+
+## 2026-11-17 MYT — coordinator-reported execution, publication pending
+
+**Provenance:** direct report from the user about the coordinator's local Windows run; **not independently recovered by Investigator F**. At the time of this entry, the expected reviewed report `analysis/40_cross_mechanisms/out/H-F01_fx_route_duration.md` returned GitHub 404 and F branch head remained `c31ae3476ca6a8a12b637da40b6328b633f1b6b6`. No local execution record or coordinator's `chat-F.md` handoff has been supplied in this Chat conversation. Do not change the original script or treat these numbers as a validated result.
+
+Reported source: five verified Parquet partitions, 10,000,000 rows, 26 columns and all five SHA-256 checksums passing. Reported May–June eligible population: **6,837,489**. Matched FX=0 versus FX=1 strata: **122**. Matched weighted log(1+duration) difference (FX1−FX0): **−0.146278**; log(1+amount) difference: **−0.083975**. Exact per-FX denominators, support/coverage, runtime version, execution SHA and uncertainty estimates are not recoverable yet; no confidence interval or causal interpretation is justified.
+
+**Scientific status:** exploratory, coordinator-reported only, approved aggregate publication **PENDING**. **Frozen test:** none. **Designated confirmation opened by F:** none. **Next action:** coordinator should approve/publish the original aggregate-only H-F01 report and execution provenance to the existing F branch; F should recover the exact report commit and compare the report's script/version, counts, eligibility and contrasts before marking the report GitHub-verified.
