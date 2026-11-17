@@ -31,3 +31,30 @@ def test_missing_sections_and_no_suppression_still_hold():
     assert result["publication_authorised"] is False
     assert "July eligibility / selection" in result["missing_required_sections"]
     assert result["suppressed_line_count"] == 0
+
+
+def test_derived_regex_detects_full_decimal_and_word_boundaries():
+    """A trailing integer-percent match alone masks the escaped-regex defect."""
+    pattern = module.DERIVED_PATTERN
+    assert pattern.search("optimistic upper 95% error bound")
+    assert pattern.search("Clopper-Pearson")
+    assert pattern.search("confidence interval")
+    assert pattern.search("0.0123")
+    assert pattern.search("99.9999%").group(0) == "99.9999%"
+    assert pattern.search("0.0123").group(0) == "0.0123"
+    assert pattern.search("xCloppery") is None
+
+
+def test_suppressed_counts_with_bounds_still_hold():
+    text = """Training period denominators
+July eligibility / selection
+Evaluation subset: all
+Evaluation subset: novel-path
+Evaluation subset: May-seen-path
+Interpretation gate
+| [1–9 suppressed] | 0.0123 | 99.9999% |
+"""
+    result = module.audit(text)
+    assert result["suppressed_line_count"] == 1
+    assert result["derived_statistic_line_count"] == 1
+    assert result["publication_authorised"] is False
