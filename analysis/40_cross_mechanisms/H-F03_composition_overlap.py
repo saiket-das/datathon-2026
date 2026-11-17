@@ -85,7 +85,7 @@ def configure(con: duckdb.DuckDBPyConnection, scratch: Path) -> None:
     con.execute("SET TimeZone='UTC'")
     con.execute("SET preserve_insertion_order=false")
     # Scratch holds private, potentially row-derived intermediate data.
-    temp = str(scratch.resolve()).replace("'", "''")
+    temp = scratch.resolve().as_posix().replace("'", "''")
     con.execute("SET temp_directory='" + temp + "'")
 
 
@@ -108,7 +108,7 @@ def setup_development(con: duckdb.DuckDBPyConnection) -> None:
                ln(1.0 + USD_AMOUNT) AS log_amount,
                CAST(least(31, floor(log2(1.0 + USD_AMOUNT))) AS INTEGER)
                    AS amount_band
-        FROM source
+        FROM payments_source
         WHERE ts_utc >= TIMESTAMP '2023-05-01'
           AND ts_utc < TIMESTAMP '2023-07-01'
           AND ANOMALY_TYPE IS NULL
@@ -359,14 +359,14 @@ def main() -> int:
         con = duckdb.connect()
         try:
             configure(con, PRIVATE_ROOT / ".duckdb_tmp")
-            con.execute("CREATE TEMP VIEW source AS SELECT * FROM read_parquet(" +
+            con.execute("CREATE TEMP VIEW payments_source AS SELECT * FROM read_parquet(" +
                         read_parquet_literal(sources) + ")")
-            columns = {item[0] for item in con.execute("DESCRIBE source").fetchall()}
+            columns = {item[0] for item in con.execute("DESCRIBE payments_source").fetchall()}
             if columns != ALL_COLUMNS:
                 raise ValueError("Unexpected source schema")
             cutoff_guard()
             n_all, unique_row_ids = con.execute(
-                "SELECT count(*), count(DISTINCT ROW_ID) FROM source"
+                "SELECT count(*), count(DISTINCT ROW_ID) FROM payments_source"
             ).fetchone()
             if n_all != 10_000_000 or unique_row_ids != n_all:
                 raise ValueError("Expected ten million distinct source rows")
