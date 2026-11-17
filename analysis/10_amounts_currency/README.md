@@ -55,3 +55,4 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 - [H-A17: fractional denomination grids](../../findings/hypotheses/H-A17_fractional_denominations.md) compares aligned tenth-unit rates with shifted dates and translated phases.
 - [H-A18: USD heaping shape](../../findings/hypotheses/H-A18_usd_heaping_shape.md) checks whole-dollar and significant-digit overlap by amount and party type.
 - [H-A19: UTC scale boundary](../../findings/hypotheses/H-A19_utc_scale_boundary.md) compares neighboring date scales near UTC midnight.
+- [H-A20: cross-route mode transfer](../../findings/hypotheses/H-A20_route_mode_transfer.md) tests maps learned separately on two-bank and multibank payments.

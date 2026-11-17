@@ -57,10 +57,17 @@ The new fit contrast does not supply independent confirmation.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+The unchanged test passed all routes at
+`a045ce3340ccc00df5e8aee0918d719f1d0474a2`. The joint maps scored
+695,472 of 699,603 July bit-1 payments, with zero errors for either
+map. The joint counts were 439,703 of 442,037 Direct, 228,199 of
+229,801 Indirect and 27,570 of 27,765 Covered. Both maps left 4,131
+outside the joint comparison, and the two-bank map alone covered
+696,744. The lowest route-specific 99% coverage sensitivity bound
+was 98.88% for Covered. [Aggregate validation](../../analysis/10_amounts_currency/out/H-A20_route_mode_transfer_validate.md).
 
 ## Assessment
 
-A pass would support cross-route stability of the observed FX count rule
-on covered paths. It would leave route selection and the source of
-underlying denomination assignments open.
+The count rule is stable across training route mixtures and supplied
+score labels on covered paths. Latent route selection and the source of
+denomination assignments remain open.

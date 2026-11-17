@@ -67,13 +67,17 @@ update bound on currencies with competing anchor denominations.
 | H-A17 | Exploratory negative result. Same-day tenth-unit fits beat shifted dates after conditioning on the off-unit population. None clears the two opportunity-matched phase controls. |
 | H-A18 | Exploratory. Whole-dollar, one-digit and two-digit heaping differ markedly in USD. A universal single one-digit rule would leave most observed amounts unexplained. Magnitude, party strata and weak half-dollar heaping are recorded. |
 | H-A19 | Frozen internal pass. EUR fits current-date scales around 40% in the first and last two UTC hours, with paired lifts of 38.38 and 38.48 points against the union of neighboring rates. Date windows are reused and the exact switching instant remains open. |
+| H-A20 | Frozen internal pass. Maps trained separately on two-bank and multibank payments each scored all 695,472 jointly mapped July rows without error. Each supplied route type met the 98% eligibility floor. |
 
 H-A16 froze at `319f6d2f25bf9bc62911a37e58b495809ee8e43a`.
 H-A19 froze at `5b6b952ed029696e0991df60d677998a64cc7c4c`.
-Both tests scored both-account bit-1 after freezing. H-A17 and H-A18
+H-A20 froze at `a045ce3340ccc00df5e8aee0918d719f1d0474a2`.
+All three tests scored both-account bit-1 after freezing. H-A17 and H-A18
 queried bit-0 only. Known May/June/July exposure, dependency limitations,
 thresholds and reproduction commands are recorded in each hypothesis.
 The repository remains public. Local research stays within the A worktree.
+The unchanged frozen tests and all five exploration commands ran successfully.
+`uv run --locked pytest`: 68 passed.
 
 ## Completed and exposure
 
