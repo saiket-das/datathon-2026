@@ -78,3 +78,17 @@ If exact-bank overlap disappears at high but not low thresholds, support-driven 
 - Falsified mechanisms: **none established by H-F03**.
 - Failed attempts: none yet under H-F03; prior H-F02 preparatory syntax failure explicitly retained above.
 - Future: update this record only after a reviewed private job handoff, avoiding restricted details in GitHub.
+
+
+## 17 Nov 2026 MYT — implementation and private queue proposal
+
+- **Design document:** established in Git before any H-F03 payment outcome access.
+- **Implementation:** `analysis/40_cross_mechanisms/H-F03_composition_overlap.py`, source commit **`d6303983012a7a4e6fed2e0af9d663486328a913`** (contains source-typed invented-fixture self-test; previous script commits were preparatory).
+- **Frozen confirmation plan:** **NONE**. This Git commit captures an exploratory design; it is not a frozen validation plan and does not license access to July outcomes.
+- **Data exposure by F during this design:** No H-F03 source rows, matched group outcomes, bank identities or validation data read. Existing H-F01/H-F02 exploratory evidence was disclosed privately and informs the design; its protected counts, report hashes and executor metadata are deliberately absent here. Prior H-F02 parser failure remains a recorded failed attempt without scientific outcomes, not a falsification of H-F02.
+- **Local test:** Neither `--self-test` nor `uv run pytest` has been executed by F in this Chat because available local Python/container runtimes returned client errors. A Docker/Windows coordinator must execute them; no pass is claimed.
+- **Approval candidate:** `python analysis/40_cross_mechanisms/H-F03_composition_overlap.py --self-test` followed, only if approved and fixture passed, by `python analysis/40_cross_mechanisms/H-F03_composition_overlap.py --data-dir /mnt/f-parquet`. No other flags are needed. The coordinator checks the computed local five-source SHA-256 digests against its reviewed private manifest and preserves the run command, environment, exit code and output hash **locally**, not in GitHub.
+- **Expected private report:** `dataset/private_reports/H-F03_composition_overlap.md`; report is Git-ignored by the existing `/dataset/*` rule. Temporary private DuckDB scratch: `dataset/private_reports/.duckdb_tmp`.
+- **Resource provision:** DuckDB memory limit 3GB, threads=2, minimum 5–6 GiB RAM allocated to the local runner with 10–20 GiB private scratch free. No source records may be uploaded to GitHub/hosted CI, and no report is public by default.
+- **Cutoff:** Never start at or after 2026-11-18 20:00 Asia/Kuala_Lumpur; local supervisor must also terminate any in-flight process at cutoff.
+- **Output interpretation:** no H-F03 empirical result until exact approved private execution/review is returned. Keep failed tests and unsuccessful controls as separate additions rather than replacing the original design.
