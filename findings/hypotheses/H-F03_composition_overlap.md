@@ -112,3 +112,10 @@ The earlier H-F03 code-only implementation commit remains part of the immutable 
 **Scientific implication:** Whether real data contains such NULL matching keys is **unknown from this revision**, and no new sponsor data were queried. If none exist, the corrected join should yield the same supported rows as before; if any exist, the old code would have excluded them contrary to the predefined `GROUP BY` support rule. The proposed eligible development population, May–June dates, FX0/FX1 states, thresholds, nested-support definitions, decompositions, overlap audit and private output path are unchanged. Effects remain exploratory, no freeze/validation.
 
 **Code-only correction commit:** `95f38fad635d99c995949861abe2c062a0d23463`. Supersedes earlier H-F03 source commits for execution approval. The coordinator must rerun `--self-test` using the exact final source commit before considering a private H-F03 payment-data run. Preserve any test failures, never publish detailed findings or source fingerprints to GitHub.
+
+
+## Private coordinator handoff — exploratory execution reported, report not received
+
+The coordinator privately notified Investigator F that the revised invented-source self-test passed and an offline read-only May–June H-F03 exploratory run completed. Its full report remains local and has **not been delivered** to this conversation. No H-F03 numerical outcomes, source fingerprints, report hashes, private job provenance or restricted execution metadata are reproduced in this public hypothesis file.
+
+**Current scientific status:** Executed as reported by coordinator; detailed outcomes not recovered or independently reviewed by F. No frozen validation, July outcome access, interpretation or confirmation. Previous synthetic fixture mount-depth failure is preserved in the earlier addendum. Hold all scientific conclusions pending a complete *private* report handoff. The ordinary Chat hourly automation remains gated on demonstrated scheduled private recovery.
