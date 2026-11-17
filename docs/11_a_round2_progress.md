@@ -81,6 +81,18 @@ The unchanged frozen tests and all five exploration commands ran successfully.
 
 ## Completed and exposure
 
+### A22 — USD quantization levels, 17 November
+
+Exploratory only. Command: `uv run --locked python analysis/10_amounts_currency/H-A22_usd_quantization_levels.py`.
+129,847 scoped July bit-0 USD payments;123,641 selected observed decades2–6,
+6,206 excluded. Preferred exact mantissa5 mass is a lead, not a verified
+generator rule:4,116/12,404 leading-5 rows versus685/10,819 leading4 and
+569/7,489 leading6. Leading1 also has a large mass but decimal boundary
+crossing is a competing explanation. Existing A18 varied-grid results
+remain intact. A symmetric local-density control is the next step.
+No validation queried, no quantizer-mixture weight inferred. Prior
+Phase0/Round1, rounding, UTC and rate exposures explicitly retained.
+
 ### A21 — country context, 17 November
 
 Frozen all-criteria prediction claim rejected. Freeze

@@ -58,3 +58,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 - [H-A20: cross-route mode transfer](../../findings/hypotheses/H-A20_route_mode_transfer.md) tests maps learned separately on two-bank and multibank payments.
 
 [H-A21: country amount context](../../findings/hypotheses/H-A21_country_amount_context.md) compares a first-path-country residual correction with currency/party, receiver and rotated-country baselines.
+
+[H-A22: USD quantization levels](../../findings/hypotheses/H-A22_usd_quantization_levels.md) screens nested grids and preferred decimal mantissas without assuming mixture weights.
