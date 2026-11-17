@@ -292,3 +292,23 @@ B11 already exposed. It is a separate internal contrast, not an independent
 holdout or a rescue of B11's rejected joint claim. Common dates and paths
 and cross-role banks/accounts limit bank-role resampling. No hidden-hop
 absence or causal effect is inferred.
+
+## Recovered state and geographic tests, 17 November 2026
+
+Resumed at ddf5da4681cef5f163ad45966cb577f7d8fce31e, preserving all
+five local commits since the pushed checkpoint and the existing untracked
+B28 output. B28 passed on378 matched July cells. Mean placeholder contrast
+is+.066669s and both bank-role99% intervals lie inside +/-1s. Weekly
+matching lacks support. These outcomes are now exposed.
+
+B29's institution-prefix predictor is unsupported in exploration on3,812
+June corridors,308 origins,740 receivers and131 prefixes. Brier is.026743
+versus.025323 global and.022124 own-origin. More detailed institution
+attributes remain open.
+
+B30 proposes an origin-matched bank-country contrast with May receiver
+adjustment and a hash-order placebo. June matching retains35,537 corridors,
+118,059 payments,201 origins and784 receivers. Raw and adjusted contrasts
+exceed4 points. Specific July contrasts remain unopened before freeze.
+Shared entities, countries and earlier July exposure limit inference.
+Local locked suite passed79 tests in35.29 seconds before freezing B30.

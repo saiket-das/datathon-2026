@@ -85,6 +85,12 @@ short-median corridor gaps with bounded distributions.
 whether earlier multibank labels locate the slower Direct direction.
 The records link the exact commands and frozen tests.
 
+[H-B29](../../findings/hypotheses/H-B29_institution_prefix_transfer.md)
+screens whether other banks with the same institution prefix explain an
+origin's Covered propensity. [H-B30](../../findings/hypotheses/H-B30_same_country_corridor.md)
+tests the bank-country relationship within origins. Run their matching
+scripts from the repository root.
+
 ## Round 3
 
 - [H-B20](../../findings/hypotheses/H-B20_unseen_corridor_propensities.md)

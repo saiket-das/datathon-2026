@@ -87,3 +87,17 @@ an incorrect duration column name, before the successful source query used
 `total_duration`. Neither failed query produced a result. The complete
 executable and safe [exploration report](../../analysis/20_routing_time/out/H-B28_placeholder_duration_explore.md)
 preserve the chosen estimator; no confirmation threshold will be retuned.
+
+## Recovered frozen internal result
+
+The existing July aggregate was recovered after resuming at freeze
+ddf5da4681cef5f163ad45966cb577f7d8fce31e. It records a pass.
+The primary cohort has378 cells/paths,261 first banks,205 last banks,
+59,643 retained payments and3,553 with placeholders, versus411,335 scoped
+payments. Equal-cell mean contrast is+.066669s. First-bank99% interval
+[-.282442,.462346]s and last-bank interval[-.252486,.515665]s lie within
+the frozen +/-1s bounds. Weekly matching lacks support. Currency and
+endpoint-agreement controls remain near zero. Shared account strings
+number22,908 of34,980 eligible, and all403 visible endpoint banks recur.
+This supports average equivalence on the retained population. Specific
+July B28 outcomes are now exposed.
