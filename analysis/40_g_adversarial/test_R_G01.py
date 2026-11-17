@@ -82,3 +82,44 @@ def test_month_boundary_uses_explicit_utc_not_executor_timezone():
     ).fetchone()[0]
     assert month == "2024-04"
     db.close()
+
+
+def test_input_mutation_aborts_without_creating_report_or_metadata(tmp_path, monkeypatch):
+    """Synthetic regression: changed input digest must block fresh artifacts."""
+    import sys
+    import pytest
+
+    # Exercise the actual CLI orchestration against a tiny synthetic Parquet.
+    data = tmp_path / "dataset" / "payments.parquet"
+    data.parent.mkdir(parents=True)
+    db = duckdb.connect(":memory:")
+    db.execute("""
+        COPY (
+          SELECT 1714521600::BIGINT AS EPOCH_SECONDS,
+                 'Covered'::VARCHAR AS TRANSACTION_TYPE_CODE,
+                 'AAAAAAAA;BBBBBBBB'::VARCHAR AS BIC8_PATH
+        ) TO ? (FORMAT PARQUET)
+    """, [str(data)])
+    db.close()
+
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+    script = tmp_path / r01.SCRIPT_REL
+    script.parent.mkdir(parents=True)
+    script.write_text("synthetic fixture executable", encoding="utf-8")
+
+    observed = []
+    def changed_digest(path):
+        assert path == data
+        observed.append(path)
+        return "a" * 64 if len(observed) == 1 else "b" * 64
+
+    monkeypatch.setattr(r01, "sha256_file", changed_digest)
+    monkeypatch.setattr(sys, "argv", [
+        "R-G01_visible_endpoints.py", "--phase", "explore",
+        "--train-period", "2024-05", "--data", str(data),
+    ])
+    with pytest.raises(SystemExit, match="INPUT INTEGRITY FAILURE"):
+        r01.main()
+    assert len(observed) == 2
+    assert not (tmp_path / "analysis/40_g_adversarial/out/R-G01_aggregates.md").exists()
+    assert not (tmp_path / "dataset/g_executor/R-G01_metadata.json").exists()
