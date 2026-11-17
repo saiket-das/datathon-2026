@@ -66,3 +66,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A24: party-type scale transfer](../../findings/hypotheses/H-A24_party_scale_transfer.md) preserves the failed stringent EUR re-extraction threshold and factor-five ambiguity.
 
 [H-A25: scaled preferred five](../../findings/hypotheses/H-A25_scaled_five_anchor.md) tests preferred denominations in CHF, EUR and GBP with fitted scales, disjoint amount ranges and neighboring-anchor controls.
+
+[H-A26: sender amount persistence](../../findings/hypotheses/H-A26_sender_scale_persistence.md) compares own and matched-peer histories, retaining the failed individual-persistence screen and contextual centering diagnostic.

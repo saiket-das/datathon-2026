@@ -151,6 +151,27 @@ or credentials. Only dataset/README.md is tracked under dataset/.
 The existing PR remains unmerged. The pre-publication local suite passed
 68 tests in 29.41 seconds with uv --locked.
 
+### A26 — sender residual persistence versus bank context
+
+May-to-June bit-0 exploration only. On 8,545 matched cells across6,163
+senders and958 banks (476,291 June payments), sender mean residuals
+correlate .6372. Own-history error does not improve over a matched
+bank/currency/party peer:ratio1.0370, nominal99% bank sensitivity
+.9860–1.0880. The exploratory own-history screen fails. Separately
+centering each month's bank/currency/party groups reduces the
+correlation to .0190. That centering uses target outcomes and remains
+a descriptive variance-structure diagnostic. No new bit-1 outcome
+or July confirmation query was made. The next question is which
+group attributes explain shared persistent amount scale, alongside
+how preferred denominations produce the A24 factor-five alias.
+
+The authorised A08–A25 research publication was verified on GitHub at
+`59f5ba1a3f368e9febed356f870d1bb981139936`. PR8 remains open and unmerged.
+Its Ubuntu and Windows CI checks passed. The earlier blanket public
+visibility hold was superseded by the user's explicit temporary
+publication authorisation for safe code and aggregates. No raw or
+identifying sponsor extracts were added.
+
 ## Next wave
 
 1. Audit discrepancies only as a new exploratory question with honest exposure disclosure;
