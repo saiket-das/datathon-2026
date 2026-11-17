@@ -67,6 +67,11 @@ def main() -> int:
     args = parser.parse_args()
     report = args.report.resolve(strict=True)
     dest = args.private_audit.resolve()
+    # A public Git worktree is not a private output mount. Resolve symlinks before
+    # checking containment; reject both source and destination inside this repo.
+    repo_root = Path(__file__).resolve().parents[2]
+    if report.is_relative_to(repo_root) or dest.is_relative_to(repo_root):
+        parser.error("Report and private audit must both be outside the public repository")
     if not report.is_file() or report == dest:
         parser.error("Private report file required; audit destination must differ")
     if dest.exists():
