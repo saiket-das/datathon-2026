@@ -12,7 +12,7 @@ def test_transitive_shared_bank_is_one_component():
     assert not r["ci_supported"]
 
 
-def test_sender_receiver_roles_not_accidentally_collapsed():
+def test_bank_identity_shared_across_roles_is_connected():
     rows = [("A", "X", 1.), ("X", "B", 0.)]
     r = check(rows, min_components=2, max_component_share=1)
     assert r["components"] == 2
