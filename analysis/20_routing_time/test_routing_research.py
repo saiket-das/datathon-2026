@@ -79,3 +79,19 @@ def test_eligible_overlap_includes_cross_role_accounts() -> None:
         columns, rows = common.overlaps(con, "sample", "NOT labelled")
         assert columns == ["row_ids", "either_role_accounts", "endpoint_banks", "visible_path_banks"]
         assert rows == [(0, 1, 0, 1)]
+
+
+def test_receiver_rank_checkerboard_counterexample() -> None:
+    module = load("H-B27_nested_receiver_rank")
+    with duckdb.connect() as con:
+        con.execute("""CREATE TABLE supported AS
+            SELECT origin a,receiver b,
+                   (receiver<CASE WHEN origin=0 THEN 30 ELSE 60 END)::INT covered
+            FROM range(2) o(origin) CROSS JOIN range(100) r(receiver)""")
+        nested = module.checkerboards(con)
+        assert nested[0] == 1 and nested[3] == 100
+        assert nested[4:7] == (0, 0, 0)
+        con.execute("""UPDATE supported SET covered=(b>=50)::INT WHERE a=1""")
+        crossed = module.checkerboards(con)
+        assert crossed[4] == 1 and crossed[5] == 1500
+        assert crossed[6] == 1 and crossed[7] == pytest.approx(.3)

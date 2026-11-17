@@ -245,3 +245,36 @@ and 88,634 payments, both directions are Covered on .800% of pairs versus
 interval for the gap excludes zero, while the second-bank interval spans
 −.116 to .946 percentage points. Shared pair effects remain a possibility,
 with no designated July outcome or frozen claim.
+
+
+## Round 3 mechanism falsification, 17 November
+
+Continued locally from `ce623d00d09ac29ac45b56c5f6a41c0642717583`, with
+512MB DuckDB, one thread and spill disabled. No remote publication or new
+July outcome. May–June records, Phase 0/Round 1 aggregates and earlier
+Round 2/3 July direction and Covered outcomes are already exposed.
+
+| Hypothesis | Evidence and status |
+| --- | --- |
+| [B26](../findings/hypotheses/H-B26_origin_penalty.md) | A single fixed increment per actual Covered-origin bank does not describe selected observed direction medians. 504 pairs, 195 receiving banks; repeated-origin cohorts cover 461 corridors and all have gap range >20 seconds. Actual-origin support is below 100 and its count is suppressed. This is exploratory, with selected short baselines, estimation noise and asymmetric pair baselines remaining alternatives. |
+| [B27](../findings/hypotheses/H-B27_nested_receiver_rank.md) | Exact common receiver ranking plus origin thresholds is rejected by alternating labels. Primary 95,742 corridors/249 origins/4,332 receivers: 14,829 of 30,171 supported origin pairs violate nesting. Endpoint-agreement control also violates nesting (12,940/25,005). Local pairwise minimum edits range from .935% to 1.267% across the three screens; approximate ranking remains unresolved. Repeated motifs are correlated, not independent observations. |
+
+An additional pre-freeze B26 support screen removed the >20-second gap
+selection. It found no negative signed gap, while gaps within 20 seconds
+and above 600 seconds occurred; exact small-cell counts are suppressed.
+This does not establish an exact uniform draw
+or an unselected 0–600 law. It uses the same exposed exploration population;
+no new validation or frozen positive claim follows. Syntax retries of B27
+used reserved alias `second` before changing it; no output from the failed
+query was treated as a result.
+
+These falsifications narrow exact assignment/penalty proposals while leaving
+pair attributes, graded origin effects, approximate receiver effects and
+broader baseline duration structure open. Low actual-origin support prevents
+a strong origin-resampling interpretation of the selected B19-like sample.
+The complete reproduction commands and support restrictions are in the two
+records. No Round 1 or frozen experiment was edited.
+
+`uv run --locked pytest` passed 77 checks for B26/B27, including an artificial
+nested-versus-crossed receiver graph. Aggregate outputs contain no bank or
+account identifiers; low-support B26 origin counts are suppressed.

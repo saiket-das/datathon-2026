@@ -99,3 +99,10 @@ The records link the exact commands and frozen tests.
   binary origin activity and graded origin propensities.
 - [H-B25](../../findings/hypotheses/H-B25_covered_reciprocity.md) compares
   reciprocal Covered labels with a calibrated independent-direction model.
+
+- [H-B26](../../findings/hypotheses/H-B26_origin_penalty.md) screens a fixed
+  Covered-origin duration increment on selected repeated-origin corridors.
+- [H-B27](../../findings/hypotheses/H-B27_nested_receiver_rank.md) falsifies
+  exact shared receiver ranks using alternating Covered/Indirect labels.
+  Both are May–June exploration screens; run their matching Python scripts
+  without phase arguments. Their negative results do not open July outcomes.
