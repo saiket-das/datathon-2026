@@ -56,3 +56,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 - [H-A18: USD heaping shape](../../findings/hypotheses/H-A18_usd_heaping_shape.md) checks whole-dollar and significant-digit overlap by amount and party type.
 - [H-A19: UTC scale boundary](../../findings/hypotheses/H-A19_utc_scale_boundary.md) compares neighboring date scales near UTC midnight.
 - [H-A20: cross-route mode transfer](../../findings/hypotheses/H-A20_route_mode_transfer.md) tests maps learned separately on two-bank and multibank payments.
+
+[H-A21: country amount context](../../findings/hypotheses/H-A21_country_amount_context.md) compares a first-path-country residual correction with currency/party, receiver and rotated-country baselines.
