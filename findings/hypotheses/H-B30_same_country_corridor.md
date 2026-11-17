@@ -1,6 +1,6 @@
 # H-B30 Origin-matched bank-country association with Covered states
 
-- **Status:** confirmation-ready
+- **Status:** supported in frozen internal validation
 - **Explore:** `uv run python analysis/20_routing_time/H-B30_same_country_corridor.py --phase explore`.
 - **Internal test:** replace phase with `--phase confirm --freeze <SHA>`.
 
@@ -68,3 +68,26 @@ The exact origin-matched July country contrast, adjustment and placebo
 remain unopened before freeze. Thus this is internal validation on reused
 records, not independent confirmation. The June outcomes guided the
 criteria. No outside geography data is incorporated.
+
+## Frozen July result
+
+Freeze `daf2979fc4c8017e557c0f555d19254295a8d041` was committed
+17 November2026 at16:18:12MYT. The unchanged internal test passed.
+The July receiver-supported population has63,715 corridors and196,947
+payments. Primary matching retains28,113 corridors,80,657 payments,
+167 origins and784 receivers. There are2,743 same-country and25,370
+different-country corridors.
+
+The equal-origin raw contrast is+.044937, with99% interval
+[.028316,.060484]. Receiver adjustment gives+.044518,
+[.027839,.059786]. The hash-order placebo mean is+.000423
+among467 supported origins. Both contrast intervals meet the frozen
+minimum+.02 and the placebo meets its absolute.02 tolerance.
+
+This supports a bank-country relationship in corridor-state occurrence
+within the supported origin population. Receiver attributes, selection of
+trading partners, common countries and previously exposed July records
+remain competing explanations and dependencies. The comparison permits
+known corridors, and it cannot establish transfer to new banks or an
+individual assignment algorithm. Specific July outcomes are now exposed.
+[Aggregate report](../../analysis/20_routing_time/out/H-B30_same_country_corridor_confirm.md).

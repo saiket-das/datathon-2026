@@ -1,6 +1,6 @@
 # H-B28 Matched mean duration with and without placeholders
 
-- **Status:** confirmation-ready
+- **Status:** supported in frozen internal validation
 - **Explore:** `uv run python analysis/20_routing_time/H-B28_placeholder_duration.py --phase explore`
 - **Frozen internal test:** same command with `--phase confirm --freeze SHA`.
 

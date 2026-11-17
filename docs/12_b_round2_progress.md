@@ -312,3 +312,20 @@ adjustment and a hash-order placebo. June matching retains35,537 corridors,
 exceed4 points. Specific July contrasts remain unopened before freeze.
 Shared entities, countries and earlier July exposure limit inference.
 Local locked suite passed79 tests in35.29 seconds before freezing B30.
+
+B30 internal July test passed unchanged at freeze
+daf2979fc4c8017e557c0f555d19254295a8d041 (17November16:18:12MYT).
+Across28,113 matched corridors,80,657 payments,167 origins and784 receivers,
+the same-country contrast is+4.4937points,99% interval[2.8316,6.0484].
+Receiver adjustment gives+4.4518points,[2.7839,5.9786]. Hash-order placebo
+is+.0423points among467 origins. Common countries and receivers,
+partner selection and reused July outcomes limit causal interpretation.
+
+B31 screened observed May Direct timing classes as an explanation of
+Covered propensity. On5,223 June unseen corridors,352 origins/758 receivers,
+binary timing Brier.029345 and duration-band.029348 match the global
+.029318, while own-origin Brier is.025308. Those coarse timing groups
+are unsupported as substitutes for origin propensities. The script
+exposes no new July results. Historical frozen tests and failures remain intact.
+The next unresolved question is which latent bank attributes or partner
+selection rules produce origin variability after accounting for geography.

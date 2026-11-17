@@ -91,6 +91,10 @@ origin's Covered propensity. [H-B30](../../findings/hypotheses/H-B30_same_countr
 tests the bank-country relationship within origins. Run their matching
 scripts from the repository root.
 
+[H-B31](../../findings/hypotheses/H-B31_timing_origin_state.md) screens
+timing-derived origin groups on unseen corridors. Run its matching
+script for exploration-only evidence.
+
 ## Round 3
 
 - [H-B20](../../findings/hypotheses/H-B20_unseen_corridor_propensities.md)
