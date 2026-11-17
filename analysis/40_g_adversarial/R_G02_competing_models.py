@@ -159,3 +159,47 @@ def brier(y: int, p: float) -> float:
     if y not in (0, 1) or not isfinite(p) or not 0 <= p <= 1:
         raise ValueError("invalid binary label or probability")
     return (y - p) ** 2
+
+
+def unordered_motif_recurrence_probability(
+    known_motifs: set[tuple[str, ...]],
+    weight_map: Mapping[str, float],
+) -> float:
+    """Exact iid probability of matching a May-seen intermediary MULTISET.
+
+    Deduplicate sorted tuples first: each multiset is one event. Its iid mass
+    is multinomial(k; multiplicities) times the ordered tuple probability.
+    This is a synthetic-only M3b placebo primitive, NOT an outcome test.
+    """
+    from math import factorial
+    canonical = {tuple(sorted(t)) for t in known_motifs}
+    total = 0.0
+    for motif in canonical:
+        counts = Counter(motif)
+        # Calculate multinomial exactly, avoiding intermediate truncation.
+        multiplicity = factorial(len(motif))
+        denom = 1
+        for n in counts.values():
+            denom *= factorial(n)
+        total += (multiplicity // denom) * _motif_mass(motif, weight_map)
+    return max(0.0, min(1.0, total))
+
+
+def ordered_vs_unordered_recurrence(
+    known_motifs: set[tuple[str, ...]],
+    observed_motifs: Sequence[tuple[str, ...]],
+) -> dict[str, float] | None:
+    """Separate exact-order recall from multiset recall on fixed observations."""
+    if not observed_motifs:
+        return None
+    lengths = {len(t) for t in known_motifs | set(observed_motifs)}
+    if len(lengths) != 1:
+        raise ValueError("motif lengths must match within k stratum")
+    ordered = sum(t in known_motifs for t in observed_motifs)
+    unordered_set = {tuple(sorted(t)) for t in known_motifs}
+    unordered = sum(tuple(sorted(t)) in unordered_set for t in observed_motifs)
+    return {
+        "ordered_recurrence": ordered / len(observed_motifs),
+        "unordered_recurrence": unordered / len(observed_motifs),
+        "order_sensitive_gap": (unordered - ordered) / len(observed_motifs),
+    }
