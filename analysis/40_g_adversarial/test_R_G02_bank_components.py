@@ -15,7 +15,9 @@ def test_transitive_shared_bank_is_one_component():
 def test_bank_identity_shared_across_roles_is_connected():
     rows = [("A", "X", 1.), ("X", "B", 0.)]
     r = check(rows, min_components=2, max_component_share=1)
-    assert r["components"] == 2
+    assert r["components"] == 1
+    assert r["largest_share"] == 1.0
+    assert not r["ci_supported"]
 
 
 def test_deterministic_paired_cluster_bootstrap():
