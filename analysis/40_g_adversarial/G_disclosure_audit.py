@@ -52,6 +52,14 @@ def audit(text: str) -> dict:
     }
 
 
+def audit_report_bytes(report_bytes: bytes) -> dict:
+    """Bind risk assessment and digest to the same immutable byte snapshot."""
+    report_text = report_bytes.decode("utf-8", errors="strict")
+    result = audit(report_text)
+    result["report_sha256"] = hashlib.sha256(report_bytes).hexdigest()
+    return result
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, required=True)
@@ -63,8 +71,7 @@ def main() -> int:
         parser.error("Private report file required; audit destination must differ")
     if dest.exists():
         parser.error("Refuse to overwrite a prior private audit")
-    result = audit(report.read_text(encoding="utf-8"))
-    result["report_sha256"] = hashlib.sha256(report.read_bytes()).hexdigest()
+    result = audit_report_bytes(report.read_bytes())
     dest.parent.mkdir(parents=True, exist_ok=True)
     with dest.open("x", encoding="utf-8") as handle:
         json.dump(result, handle, indent=2)
