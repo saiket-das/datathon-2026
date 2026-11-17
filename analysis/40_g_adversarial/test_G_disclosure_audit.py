@@ -80,4 +80,4 @@ def test_audit_report_bytes_rejects_invalid_utf8():
     import pytest
 
     with pytest.raises(UnicodeDecodeError):
-        module.audit_report_bytes(b"Training period denominators\n\\xff")
+        module.audit_report_bytes(b"Training period denominators\n\xff")
