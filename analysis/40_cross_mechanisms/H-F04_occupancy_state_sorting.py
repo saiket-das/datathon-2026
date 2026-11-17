@@ -384,7 +384,16 @@ def capacity_phase(con: duckdb.DuckDBPyConnection,
         pair_counts(con,population,table)
         summary = private_bank_summary(con,table)
         rows = support_thresholds(con,table,n0,n1,True)
+        # NULL endpoint identifiers are not verified exact bank identities.
+        # Keep H-F03-compatible grouping, but quantify this sensitivity
+        # separately to avoid treating an unknown bank as a real endpoint.
+        null_bic_rows = con.execute(f"""
+            SELECT count(*) FILTER (
+                WHERE ord_bank IS NULL OR ben_bank IS NULL
+            ) FROM {population}
+        """).fetchone()[0]
         lines.extend(["### "+population,"",f"Development population n={total}, FX0={n0}, FX1={n1}",
+                      f"Rows with missing directed-bank endpoint(s): {null_bic_rows}",
                       ""])
         lines.extend([f"- {k}: {fmt(v)}" for k,v in summary.items()])
         lines.extend(markdown_table(
@@ -541,6 +550,17 @@ def self_test() -> None:
                     ).fetchone()
                     if (p0,p1)!=(360,360):
                         raise AssertionError("FX marginals not conserved")
+                    if mode in ("M1","M2"):
+                        # Invented fixture gives each conditional stratum one
+                        # unique bank pair. Bank counts therefore test the
+                        # exact within-stratum FX margins, including NULLs.
+                        matched, total_pairs = con.execute("""
+                            SELECT count(*) FILTER (WHERE n0=120 AND n1=120),
+                                   count(*) FROM perm_pairs
+                        """).fetchone()
+                        if (matched,total_pairs)!=(3,3):
+                            raise AssertionError(
+                                "Conditional FX marginals not conserved")
                     support_thresholds(con,"perm_pairs",360,360,False)
                 finally:
                     con.execute("DROP TABLE IF EXISTS perm_pairs")
