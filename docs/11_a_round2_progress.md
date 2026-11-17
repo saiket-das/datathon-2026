@@ -118,6 +118,39 @@ aggregate exposure is disclosed in H-A03. No Round 2 colleague developing work w
 Sponsor data remain a local ignored hard link; no rows or identifiers are printed/exported.
 Initial materialisation hit the 512MB cap; switched to lazy streaming views without spill.
 
+## 17 November 16:00 continuation and publication
+
+Recovered committed A21/A22 and uncommitted A23 instead of restarting their
+experiments. A21's failed threshold was preserved. A23 froze at
+`7581544b1917f567ffabf8d4b18796268f1fd62b` and passed unchanged on
+25,967 selected July bit-1 USD payments. The five-anchor ratio was
+7.4086 [6.7446,8.2617], control .9245 [.7618,1.1159].
+
+A24 froze at `559bdce5a72fd02708fd4249c683df3fb956d086` and failed.
+Only 72 of 73 common EUR dates met the near-identical-scale criterion,
+below 99%, and every party-pair disagreement bound exceeded .002.
+One ratio was approximately .2. No date, scale or threshold was changed
+after scoring. A25 explores a shared preferred-denomination explanation
+under the pre-existing whole-population rate fit as a distinct question.
+
+A25 froze at `ee8a5c55b97d31404ff3a28d444a4eca9c36abcf`. CHF/EUR/GBP
+all passed, with selected counts 14,466/68,535/15,650, preferred-five
+ratios 6.4404/6.9461/7.0102 and full near-one seven-anchor controls.
+This test selects whole untruncated local windows under the amount cutoff.
+Dates and previous account outcomes overlap; no independent confirmation
+or generator source-code claim is made. All scripts suppress source-valued
+error details and export only aggregate tables. The A23/A24 frozen code
+and helper comparisons were verified before their outcome runs.
+
+Publication decision updated under the user's explicit temporary
+authorisation to use the connected research branch for code and safe
+aggregate evidence. Earlier public-visibility holds above describe their
+historical decisions. Repository visibility remains public. Publication
+includes no sponsor records, bank/account identifiers, daily rate tables
+or credentials. Only dataset/README.md is tracked under dataset/.
+The existing PR remains unmerged. The pre-publication local suite passed
+68 tests in 29.41 seconds with uv --locked.
+
 ## Next wave
 
 1. Audit discrepancies only as a new exploratory question with honest exposure disclosure;

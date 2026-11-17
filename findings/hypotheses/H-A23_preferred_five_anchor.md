@@ -82,4 +82,18 @@ generator. No sponsor data or identifiers leave the local machine.
 
 ## Validation result
 
-Pending at freeze. Preserve all failures, including A03 and A21.
+Frozen at `7581544b1917f567ffabf8d4b18796268f1fd62b`, 17 November
+2026 16:10:37 MYT. The unchanged internal test passed. Of 119,382 July
+bit-1 scoped USD payments, 25,967 were selected and 93,415 excluded.
+Selected rows involved 7,782 senders, 17,748 receivers and 1,566 banks.
+The five-anchor odds ratio was 7.408630, with 99% bank sensitivity
+6.744610–8.261722. The seven-anchor control ratio was .924516,
+interval .761835–1.115900. Magnitude-three and magnitude-four/five
+primary ratios were 7.327989 and 7.451636. All disclosure floors and
+prespecified criteria passed.
+
+[Full aggregate result](../../analysis/10_amounts_currency/out/H-A23_preferred_five_anchor_validate.md).
+The outcome supports a preferred amount constraint on reused USD records.
+It leaves fixed value selection, quantization and latent mixture
+operators unresolved. Earlier failures, including A03 and A21, retain
+their original criteria.

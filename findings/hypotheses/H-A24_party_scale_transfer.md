@@ -58,10 +58,26 @@ overlap across splits. It supplies no independent new rate innovations.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+Frozen at `559bdce5a72fd02708fd4249c683df3fb956d086`, 17 November
+2026 16:12:53 MYT. The unchanged internal test **failed**.
+The EUR fits shared 73 dates, with 72 scale ratios near one (98.63%),
+below the required 99%. The other ratio was .20000014, approximately
+a factor-five alias. The data do not determine whether it represents
+different native units, a selected denomination or another effect.
+
+EUR small-amount coverage was 188,480 of 200,142 (94.17%). All four
+party-pair display-support conditions passed. However upper 99%
+date-block disagreement bounds were .004345 BB, .003770 BC, .004995
+CB and .003881 CC, each exceeding the .002 criterion. Point estimates
+were .001415, .001042, .001370 and .000983. Strong typical agreement
+does not reverse any failed threshold. No day was removed or scale
+adjusted after scoring.
+
+[Full aggregate result](../../analysis/10_amounts_currency/out/H-A24_party_scale_transfer_validate.md).
 
 ## Assessment
 
-A pass would support a common date-specific currency scale across sender
-types and lower-magnitude party pairs. It would leave the original amount
-distribution, heaping probabilities and stage ordering unresolved.
+The frozen stringent compatibility claim failed on a reused-account
+sample. A possible factor-five denomination alias is a separate
+exploratory lead. Original amount distribution, heaping probabilities,
+party effects on denomination and stage ordering remain unresolved.

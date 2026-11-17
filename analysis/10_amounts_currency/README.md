@@ -62,3 +62,7 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A22: USD quantization levels](../../findings/hypotheses/H-A22_usd_quantization_levels.md) screens nested grids and preferred decimal mantissas without assuming mixture weights.
 
 [H-A23: preferred USD five anchor](../../findings/hypotheses/H-A23_preferred_five_anchor.md) tests a local-density-normalized point-mass constraint with a matched neighboring-anchor control.
+
+[H-A24: party-type scale transfer](../../findings/hypotheses/H-A24_party_scale_transfer.md) preserves the failed stringent EUR re-extraction threshold and factor-five ambiguity.
+
+[H-A25: scaled preferred five](../../findings/hypotheses/H-A25_scaled_five_anchor.md) tests preferred denominations in CHF, EUR and GBP with fitted scales, disjoint amount ranges and neighboring-anchor controls.

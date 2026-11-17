@@ -69,10 +69,26 @@ payment records. It supplies no independent rate or economic sample.
 
 ## Confirmation and robustness results
 
-Pending at freeze.
+Freeze `ee8a5c55b97d31404ff3a28d444a4eca9c36abcf`, 17 November 2026
+16:18:22 MYT. The unchanged internal test passed all three primary
+currencies. Selected sample counts were 14,466 CHF, 68,535 EUR and
+15,650 GBP payments, with 72,91,73 dates. The corresponding under-9,000
+scoped counts were 108,456,488,287,111,916. Windows, date support and
+denomination restrictions account for the exclusions.
+
+| Currency | Five ratio | Nominal 99% bank interval | Seven control | Control interval |
+| --- | ---: | ---: | ---: | ---: |
+| CHF | 6.4404 | 5.7384–7.3664 | 1.0341 | .8399–1.2436 |
+| EUR | 6.9461 | 6.5260–7.4179 | .9607 | .8671–1.0770 |
+| GBP | 7.0102 | 6.0396–7.9446 | .9025 | .6997–1.1264 |
+
+The USD descriptive ratio was 7.3193. Complete support checks passed,
+including point/background entity counts at all five anchors.
+[Aggregate results](../../analysis/10_amounts_currency/out/H-A25_scaled_five_anchor_validate.md).
 
 ## Assessment
 
-A pass would extend a preferred denomination constraint across currencies
-under a fixed amount-implied scale. Mixture weight, exact quantization
-operator, causal order and unique native units would remain unresolved.
+Preferred denomination structure transfers to the three scaled currencies
+on reused account records and supported dates. Mixture weight, exact
+quantization operator, causal order and unique native units remain
+unresolved. A24's failed scale-re-extraction criteria retain their scope.
