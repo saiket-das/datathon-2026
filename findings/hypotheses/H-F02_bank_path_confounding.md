@@ -55,3 +55,14 @@ Print only counts: number of eligible FX0/FX1 payments, qualifying strata, match
 - **Freeze commit:** none.
 - **Validation set:** unopened by H-F02; prior shared aggregate exposures mean not independently blind.
 - **Next:** inspect the reviewed H-F01 report, recover local `chat-F.md` operational handoff, obtain approval to execute H-F02 and preserve the resulting evidence and failures.
+
+
+## 17 November 2026 MYT — approved exploratory queue failure and independent source correction
+
+**Coordinator handoff (received verbatim in F Chat):** Approved queue job `hf02-explore-4615580` attempted H-F02 offline from input branch commit `4615580a6d9c7beb7b5db29b9ce42f185f523a52`. The coordinator reports all five source Parquet partitions verified, read-only execution, S4 disabled and no July outcomes examined. The run **exited 1 before creating the development view**, so **there are no H-F02 exploratory payment aggregates, no supported strata, no duration estimate and no validation result**. Its failure is preserved, not converted into a negative scientific finding.
+
+**Reported failure:** DuckDB 2.0.0 parser rejects the development-view projection `TOTAL_DURATION seconds` on an empty source-typed fixture. Coordinator reports `TOTAL_DURATION AS seconds` binds and runs S0–S3 on that fixture. This is a coordinator-reported fixture result; F has independently inspected the source and confirmed the exact problematic text, but has not locally executed a fixture or the 10M-row dataset.
+
+**F-only correction:** The one-line alias change to `TOTAL_DURATION AS seconds` was committed at `1d1cac7442d1e38d9ad0c4c50671452af880f905`. All other script bytes and hypothesis definitions were preserved. This is an *unfrozen bugfix* to an exploratory script, not a post-freeze retuning. No proof of a successful data run follows from the correction alone.
+
+**Next coordinator approval request:** Sync the corrected F branch commit, rerun only the previously approved exploratory S0–S3 job using the local read-only executor with all five verified Parquet partitions; **do not enable S4**. Execute from the repository root with `uv run python analysis/40_cross_mechanisms/H-F02_bank_path_confounding.py --data-dir <local-data-directory>` (replace placeholder with the existing approved local dataset directory). Target local aggregate report: `analysis/40_cross_mechanisms/out/H-F02_bank_path_confounding.md`. Keep raw rows and identifying bank/path/account data local. Review exact denominators and complementary disclosure/reconstruction risk before any public repository publication; exact totals alone are *not* automatically safe, as H-F01 showed. Recover coordinator's job provenance, actual invocation, source/script hashes, exit status and approved sanitized report before claiming H-F02 execution success. Preserve this failed job and any subsequent failures.
