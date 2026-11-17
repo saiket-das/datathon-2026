@@ -23,7 +23,7 @@ EXPECTED_SECTIONS = (
 )
 # This list is deliberately broad: derived numbers can undo count suppression.
 DERIVED_PATTERN = re.compile(
-    r"\b(?:[0-9]+(?:\.[0-9]+)?%|(?:0\.)[0-9]+|"
+    r"(?:[0-9]+(?:\.[0-9]+)?%|\b(?:0\.)[0-9]+|
     r"Clopper|confidence|upper 95%|upper error bound)\b", re.I
 )
 SMALL_CELL_PATTERN = re.compile(r"\b[1-9]\b")
