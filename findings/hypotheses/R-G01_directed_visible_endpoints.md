@@ -43,8 +43,31 @@ The above rule definitions are G-created, potentially different from B12. Freeze
 
 - **May exploratory query:** NOT RUN.
 - **July validation outcome:** NOT OPENED BY G.
-- **Frozen calendar periods:** NOT YET SELECTED. Periods-only scan is permitted; after learning supported year, append the exact literal `FROZEN_PERIODS: YYYY-05 -> YYYY-07` to this protocol and commit BEFORE running validation. The script rejects uncommitted period choices. Do not substitute periods after inspecting label outcomes.
-- **Freeze SHA:** PENDING PERIOD-SPECIFIC COMMIT.
-- **Observed numerators/denominators:** NONE from G.
-- **Unsupported cohorts:** NOT YET COUNTED.
-- **Failures/controls:** NOT YET TESTED.
+## Immutable R-G01 validation specification · Frozen before July outcome access
+
+**FROZEN_PERIODS: 2023-05 -> 2023-07**
+
+- **Training interval (UTC inclusive/exclusive):** `2023-05-01T00:00:00Z <= ts_utc < 2023-06-01T00:00:00Z`, operationalized by `--train-period 2023-05`, using UTC `strftime(to_timestamp(EPOCH_SECONDS),'%Y-%m')`.
+- **Designated validation interval (UTC inclusive/exclusive):** `2023-07-01T00:00:00Z <= ts_utc < 2023-08-01T00:00:00Z`, operationalized by `--eval-period 2023-07`. **DO NOT query July routing labels or paths before this protocol and executable exist in one immutable Git commit.**
+- **Calendar-period exposure:** Coordinator-attested G-PERIODS job `g-periods-61a039d` (2026-11-17 10:18 MYT), exit 0. Only `EPOCH_SECONDS` was queried: April 2023 = 6,161, May 2023 = 3,044,400, June 2023 = 4,050,160, July 2023 = 2,899,279; unfiltered total = 10,000,000. These are **NOT** Covered/Indirect eligible denominators, error observations, or new independent confirmation. Private full JSON and source SHA256 remain local. Script commit `61a039d7112dced23a934c328a715da019f997f3`, script SHA256 `c6be68e96f95e9086dbd77031d0045daf87eee2a06ebb782e23534f58f6b1dc1`, private result SHA256 `40e9ca81daa7ad13841cc005b7fd018a60cbae75cd35252cc5eac75b3aaaa612`; values received through coordinator handoff, not independently retrieved from the private executor by G.
+- **Dataset and source eligibility:** The exact organiser synthetic dataset, all rows for the two frozen calendar months, no sampling. The executable currently accepts one complete readable Parquet input via `--data` (default `dataset/payments.parquet`), never a partial single partition. A read-only single-file mount must be verified by the separately approved executor before validation; if only five parts are mounted, **STOP** and perform a reviewed input-adapter change followed by a **new** pre-outcome freeze (without changing scientific definitions). Compare private source SHA256 with G-PERIODS provenance locally. No row-level export.
+- **Frozen scientific definitions:** All eligibility, parsing, May-pure support rules, July novel-path predicate and control definitions in the preceding sections are unchanged. No labels from June are fit; no April outcomes are inspected for this exercise. May model fitting is deterministic full-population counting, no random seed. The reserved July outcome is first accessed only by a separately approved `--phase validate` job.
+- **Frozen control plan:** Directed pair against unordered pair, first-only and last-only bank, ordered visible-BIC country pair, reverse direction, seen-versus-novel paths, May-pure versus conflicted and unseen keys. Report target-support coverage on all three predeclared denominators, class exclusions, and all unsupported/conflicted groups; pair and bank overlaps are dependence limitations.
+- **Frozen primary decision criteria:** (i) any error among May-pure-supported July novel-path Covered/Indirect records falsifies the operational **zero-error** rule on that eligible scope; (ii) conditional support under 90% of July novel-path endpoint-valid Covered/Indirect records prohibits any “generally deterministic” wording; (iii) a simpler control with equal or lower errors at equal or greater coverage prevents claiming a uniquely directed-pair generator. Each criterion is evaluated separately, including conjunction failures. No interpolation, post hoc exceptions, or eligibility changes are permitted to rescue failure.
+- **Frozen uncertainty:** Exact error counts, full denominators, distinct directed pairs and bank support. Compute payment-level one-sided Clopper-Pearson 95% upper bounds as **optimistic** independence approximations; include pair-level failure count and distinct-bank support sensitivity, explicitly not an independent cluster confidence interval. Do not infer causal ordering or exact generator code.
+- **Frozen decision status categories:** internal same-dataset reimplementation **agrees**, **disagrees**, or **insufficient eligibility/support**; never “independently confirmed.” Note prior whole-dataset/May-July shared entity exposure and the previously published B12 aggregate `167,205/0`; no G validation labels or outputs have been accessed as of this freeze.
+- **Frozen code artifact:** `analysis/40_g_adversarial/R-G01_visible_endpoints.py` at the **same Git freeze commit that stores this protocol**. Do not modify its bytes after freeze. An entirely new scientific test, if necessary, requires a new freeze entry and must not overwrite this frozen version.
+- **Exact validation command once separately approved:** `uv run python analysis/40_g_adversarial/R-G01_visible_endpoints.py --phase validate --train-period 2023-05 --eval-period 2023-07 --freeze-commit <FULL_FREEZE_COMMIT_SHA> --data <EXACT_VERIFIED_FULL_PARQUET_MOUNT>`.
+- **Access guard:** Verify Git branch and frozen script/protocol bytes, approved queue job identity, local source fingerprint, prior results disclosure status, and a private result-output location before invoking validation; no direct Chat execution, public GitHub Action or unauthorised queue launch. Keep all generated aggregates local for disclosure review.
+- **Freeze record location:** Immutable Git commit containing this document (and the unchanged executable), full SHA/time recorded separately in append-only G ledger. Do not edit this document just to insert its own commit SHA and thereby invalidate the frozen bytes.
+
+## Outcome register (reserved; DO NOT backfill before approved July evaluation)
+
+- **May exploratory query:** NOT RUN by G.
+- **July validation outcome:** NOT OPENED by G.
+- **Eligible May/July population denominators:** UNKNOWN.
+- **Supported / conflicted / unseen pairs:** UNKNOWN.
+- **Errors and comparison controls:** NOT TESTED.
+- **Source full-file validation mount:** NOT ESTABLISHED by G.
+- **Separate G queue R-G01 approval:** NOT GRANTED in this Chat.
+
