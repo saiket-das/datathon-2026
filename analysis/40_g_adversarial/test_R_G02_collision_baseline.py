@@ -41,3 +41,14 @@ def test_scale_invariance():
 def test_invalid_inputs_fail_closed(weights, k):
     with pytest.raises(ValueError):
         m.collision_probability(weights, k)
+
+
+def test_many_categories_no_factorial_overflow():
+    # Previous factorial(k) * e_k implementation overflowed for k >= 171.
+    assert m.collision_probability([1] * 200, 171) == pytest.approx(1.0)
+    assert m.collision_probability([1] * 200, 200) == pytest.approx(1.0)
+
+
+def test_two_draw_probability_large_support():
+    # Exact birthday probability for uniform categorical draws.
+    assert m.collision_probability([1] * 1000, 2) == pytest.approx(0.001)
