@@ -93,12 +93,12 @@ def test_input_mutation_aborts_without_creating_report_or_metadata(tmp_path, mon
     data = tmp_path / "dataset" / "payments.parquet"
     data.parent.mkdir(parents=True)
     db = duckdb.connect(":memory:")
-    db.execute("""
+    db.execute(f"""
         COPY (
           SELECT 1714521600::BIGINT AS EPOCH_SECONDS,
                  'Covered'::VARCHAR AS TRANSACTION_TYPE_CODE,
                  'AAAAAAAA;BBBBBBBB'::VARCHAR AS BIC8_PATH
-        ) TO '" + str(data).replace("'", "''") + "' (FORMAT PARQUET)
+        ) TO '{data.as_posix()}' (FORMAT PARQUET)
     """)
     db.close()
 
