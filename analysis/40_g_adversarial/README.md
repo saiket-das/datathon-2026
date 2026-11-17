@@ -62,42 +62,29 @@ R-G01 validator currently expects a *single* full Parquet source; if
 G-PERIODS finds only split mounts, change solely its input adapter
 and regression-test it BEFORE freezing, without changing path/label rules.
 
-## Step 1: Verify local dataset without opening target labels
+## R-G01 frozen validation · operator instructions (2026-11-17)
 
-From the repository root on the machine holding the original dataset:
+The pre-freeze G-PERIODS job `g-periods-61a039d` is reported by the coordinator as successful, using ONLY `EPOCH_SECONDS` (10,000,000 unfiltered records; May 2023: 3,044,400; July 2023: 2,899,279). This is calendar exposure, **not** eligibility or validation. Its source fingerprint and full JSON stay private.
 
-~~~bash
-uv run pytest
-uv run python analysis/40_g_adversarial/R-G01_visible_endpoints.py --phase periods
-~~~
+**Immutable scientific freeze:** `09807e62e4155229b64feec23362c31f197cd3a3`, containing `FROZEN_PERIODS: 2023-05 -> 2023-07` and the exact unchanged R-G01 validator. The executable trains on all May 2023 UTC Covered/Indirect endpoint-valid rows and reserves July 2023 UTC for the designated outcome test. Do not modify either frozen file, or read July outcomes before an approved validation job.
 
-This prints only calendar-month record totals to identify the correct year.
-The data file must be dataset/payments.parquet and is never sent to GitHub.
+**Current blocker:** no separate approved R-G01 validation job ID or verified complete single-file Parquet mount has been supplied to Investigator G. A previous *periods-only* approval is not a validation approval. If the executor exposes only five split parts, **STOP**; the frozen validator currently requires a complete single file. A new input-only adapter and pre-outcome re-freeze would be necessary.
 
-## Step 2: Execute after a designated Git freeze
+The operator must independently authenticate the G queue approval and Docker's offline, read-only complete source, verify the local private Parquet SHA256 matches the G-PERIODS source fingerprint, and confirm the complete 10M-row dataset. The wrapper cannot authenticate an ID or verify source provenance; a matching ID regex proves nothing. Arrange private output mounts, no automatic publication, and a clean checkout on `codex/r2-g-falsification`.
 
-Freeze commit must contain the entire R-G01 protocol and executable. Record the
-full SHA and chosen train/evaluation periods *before* viewing July outcomes.
+**Approved-job execution template, NOT an approval or a command executed by Chat:**
 
 ~~~bash
-bash analysis/40_g_adversarial/run_local_executor.sh YYYY FULL_40_CHARACTER_FREEZE_COMMIT
+bash analysis/40_g_adversarial/run_local_executor.sh \
+  ACTUAL_APPROVED_G_VALIDATION_JOB_ID \
+  /ACTUAL_VERIFIED_READ_ONLY_MOUNT/payments.parquet
 ~~~
 
-The local executor runs uv run pytest, then the frozen script; writes a LOCAL aggregate
-Markdown under G's out/ and ignored execution metadata under dataset/g_executor/.
-It deliberately does NOT stage, commit, or push the generated report. A human must
-review complementary counts, percentages, uncertainty bounds and subgroup intersections
-for recoverable small cells, then explicitly approve any separate aggregate-only
-publication on the G branch. Use only on the authorised team machine.
+The wrapper hardcodes the exact freeze and UTC cohorts, verifies branch, remote, clean tree, freeze ancestry and file bytes, refuses pre-existing outputs, runs `uv run pytest` and invokes the frozen validator. It then checks that private report and metadata exist. An approved job must independently ensure the output paths are on private writable storage, not a public checkout. The validator's source SHA256 guard checks pre/post bytes but does not prove source immutability against swap/reversion.
 
-It does not run automatically just because a ChatGPT task has been scheduled.
-No GitHub Actions job should be supplied the raw sponsor dataset or a path to it.
+**Post-run handling:** keep `analysis/40_g_adversarial/out/R-G01_aggregates.md` and `dataset/g_executor/R-G01_metadata.json` private until a disclosure review. Confirm report hash and job identity, full eligible/unsupported denominators, exact failures, negative controls, clustering and overlap. Suppressed small counts may be reconstructed from totals, percentages or Clopper-Pearson bounds; never auto-publish. A separate reviewed aggregate-only Git publication may be approved later. The result is at most an internal same-dataset reimplementation, never independent dataset confirmation.
 
-## Step 3: Recover
-
-Next G iteration fetches G_LEDGER.md, R-G01_aggregates.md (if present),
-and the branch head commit. Confirm report SHA and the prior freeze commit.
-Classify output as same-dataset replication, never as fresh independent confirmation.
+**Next research direction:** if validation remains blocked, prepare an independently testable input compatibility or disclosure safety improvement without changing the frozen scientific rules. Continue R-G02/B14 only after R-G01's first controlled attempt or a documented durable blocker.
 
 ## Limitations
 
