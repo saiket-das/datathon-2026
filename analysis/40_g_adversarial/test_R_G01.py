@@ -123,3 +123,69 @@ def test_input_mutation_aborts_without_creating_report_or_metadata(tmp_path, mon
     assert len(observed) == 2
     assert not (tmp_path / "analysis/40_g_adversarial/out/R-G01_aggregates.md").exists()
     assert not (tmp_path / "dataset/g_executor/R-G01_metadata.json").exists()
+
+
+def test_freeze_guard_rejects_wrong_calendar_and_changed_bytes(tmp_path, monkeypatch):
+    """Dataset-free regression: freeze gate must fail before any July query."""
+    import subprocess
+    from types import SimpleNamespace
+    import pytest
+
+    freeze = "0" * 40
+    script = tmp_path / r01.SCRIPT_REL
+    protocol = tmp_path / r01.PROTOCOL_REL
+    script.parent.mkdir(parents=True, exist_ok=True)
+    protocol.parent.mkdir(parents=True, exist_ok=True)
+    frozen_script = b"frozen script bytes\n"
+    frozen_protocol = b"FROZEN_PERIODS: 2023-05 -> 2023-07\n"
+    script.write_bytes(frozen_script)
+    protocol.write_bytes(frozen_protocol)
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+
+    def frozen_git_show(command, **kwargs):
+        assert command[:2] == ["git", "show"]
+        assert kwargs["cwd"] == tmp_path
+        rel = command[2].split(":", 1)[1]
+        return SimpleNamespace(stdout={
+            r01.SCRIPT_REL: frozen_script,
+            r01.PROTOCOL_REL: frozen_protocol,
+        }[rel])
+
+    monkeypatch.setattr(subprocess, "run", frozen_git_show)
+    r01.verify_freeze(freeze, "2023-05", "2023-07")
+
+    with pytest.raises(SystemExit, match="Validation cohort not frozen"):
+        r01.verify_freeze(freeze, "2024-05", "2024-07")
+
+    script.write_bytes(b"post-freeze script modification\n")
+    with pytest.raises(SystemExit, match="Frozen file changed"):
+        r01.verify_freeze(freeze, "2023-05", "2023-07")
+    script.write_bytes(frozen_script)
+
+    protocol.write_bytes(frozen_protocol + b"post-freeze protocol edit\n")
+    with pytest.raises(SystemExit, match="Frozen file changed"):
+        r01.verify_freeze(freeze, "2023-05", "2023-07")
+
+
+def test_validation_rejects_unfrozen_calendar_before_source_hash(tmp_path, monkeypatch):
+    """A synthetic source must not be opened when the validation freeze fails."""
+    import sys
+    import pytest
+
+    data = tmp_path / "payments.parquet"
+    data.write_bytes(b"not a real parquet; it must never be opened")
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+
+    def fail_closed(*args, **kwargs):
+        raise SystemExit("Validation cohort not frozen: synthetic mismatch")
+
+    monkeypatch.setattr(r01, "verify_freeze", fail_closed)
+    monkeypatch.setattr(r01, "sha256_file",
+                        lambda _: pytest.fail("source hash must not be read before freeze"))
+    monkeypatch.setattr(sys, "argv", [
+        "R-G01_visible_endpoints.py", "--phase", "validate",
+        "--train-period", "2024-05", "--eval-period", "2024-07",
+        "--freeze-commit", "0" * 40, "--data", str(data),
+    ])
+    with pytest.raises(SystemExit, match="Validation cohort not frozen"):
+        r01.main()
