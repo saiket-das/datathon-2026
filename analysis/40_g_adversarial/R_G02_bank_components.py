@@ -1,6 +1,6 @@
 """G-041 synthetic-only dependence diagnostics for paired model comparisons.
 
-Build connected components in the bipartite endpoint-bank graph. Every route
+Build connected components in the bank-identity graph. Every route
 sharing either endpoint bank belongs to the same component, including
 transitive links. This is conservative: components may be too large to support
 meaningful independent-cluster inference. No sponsor-data adapter.
@@ -42,10 +42,10 @@ def bank_component_diagnostics(rows, *, seed=20261118, replicates=2000,
             raise ValueError("nonempty bank identifiers required")
         if not isinstance(d, (float, int)) or not isfinite(d):
             raise ValueError("finite paired differences required")
-        join(("S", a), ("R", b))
+        join(a, b)
     components = defaultdict(list)
     for a, b, d in rows:
-        components[root(("S", a))].append(float(d))
+        components[root(a)].append(float(d))
     clusters = [(len(x), fsum(x)) for x in components.values()]
     n = len(rows)
     largest = max(c for c, _ in clusters)
