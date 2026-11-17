@@ -63,7 +63,7 @@ analysis/
     H-B17_directional_triangle.py     directional bank-score falsification
     H-B18_bounded_directional_gap.py  conditional shape of Direct duration gaps
     H-B19_covered_direction_duration.py  multibank labels and Direct timing
-    H-B20_* to H-B27_*              corridor propensities, directional delays and mechanism falsifications
+    H-B20_* to H-B28_*              corridor propensities, directional delays and mechanism falsifications
     duration_reversals.py            shared directed-median query for B17–B19
     H-B10_country_bank_class.py       country-only class falsification
     routing_common.py               local validation/privacy helpers

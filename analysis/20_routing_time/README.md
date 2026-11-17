@@ -106,3 +106,9 @@ The records link the exact commands and frozen tests.
   exact shared receiver ranks using alternating Covered/Indirect labels.
   Both are May–June exploration screens; run their matching Python scripts
   without phase arguments. Their negative results do not open July outcomes.
+
+- [H-B28](../../findings/hypotheses/H-B28_placeholder_duration.md) tests
+  a one-second equivalence bound for matched Direct duration with versus
+  without placeholders. Run its script with `--phase explore`, or the
+  recorded frozen `--phase confirm --freeze SHA` command. This new contrast
+  reuses B11's duration populations and is an internal test.

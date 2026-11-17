@@ -278,3 +278,17 @@ records. No Round 1 or frozen experiment was edited.
 `uv run --locked pytest` passed 77 checks for B26/B27, including an artificial
 nested-versus-crossed receiver graph. Aggregate outputs contain no bank or
 account identifiers; low-support B26 origin counts are suppressed.
+
+
+[B28](../findings/hypotheses/H-B28_placeholder_duration.md) now proposes a
+narrow matched placeholder-timing equivalence test. May–June has 1,047
+path/month cells, 764 paths, 414 first and 305 last banks. The equal-cell
+mean contrast is -.090970 seconds; both role-specific 99% intervals fit
+inside [-1,1] seconds. Weekly, currency and endpoint-agreement controls
+remain near zero. Full criteria, code, support gates and an entity-reuse
+audit are being committed before opening the specific July contrast.
+This revisits records whose duration differences and placeholder controls
+B11 already exposed. It is a separate internal contrast, not an independent
+holdout or a rescue of B11's rejected joint claim. Common dates and paths
+and cross-role banks/accounts limit bank-role resampling. No hidden-hop
+absence or causal effect is inferred.
