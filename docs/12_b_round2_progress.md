@@ -237,3 +237,11 @@ B23 shows that on supported three-bank paths the duration surcharge
 transfers along adjacent pairs. The actual draw for the Covered state,
 the higher-baseline timing process and longer path transfer remain open.
 `uv run --locked pytest` passed 76 checks for this wave.
+
+[B25](../findings/hypotheses/H-B25_covered_reciprocity.md) then tested
+reciprocity in May–June exploration. Among 5,502 supported unordered pairs
+and 88,634 payments, both directions are Covered on .800% of pairs versus
+.438% estimated with calibrated independent origin rates. A 99% first-bank
+interval for the gap excludes zero, while the second-bank interval spans
+−.116 to .946 percentage points. Shared pair effects remain a possibility,
+with no designated July outcome or frozen claim.

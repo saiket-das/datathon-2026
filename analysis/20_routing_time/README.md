@@ -97,3 +97,5 @@ The records link the exact commands and frozen tests.
   adjacent-edge and outer-endpoint duration components using fixed May and June fits.
 - [H-B24](../../findings/hypotheses/H-B24_origin_structural_zero.md) compares
   binary origin activity and graded origin propensities.
+- [H-B25](../../findings/hypotheses/H-B25_covered_reciprocity.md) compares
+  reciprocal Covered labels with a calibrated independent-direction model.
