@@ -359,6 +359,10 @@ def main() -> int:
             self_test()
             return 0
         PRIVATE_ROOT.mkdir(parents=True, exist_ok=True)
+        staged = PRIVATE_REPORT.with_suffix(".md.partial")
+        if PRIVATE_REPORT.exists() or staged.exists():
+            raise FileExistsError(
+                "Existing private H-F03 report or partial; preserve/review before rerun")
         sources = source_paths(args.data_dir.resolve())
         fingerprints = [file_sha256(p) for p in sources]
         cutoff_guard()
@@ -517,8 +521,9 @@ def main() -> int:
                 "",
             ]
             PRIVATE_ROOT.mkdir(parents=True, exist_ok=True)
-            temp_report = PRIVATE_REPORT.with_suffix(".md.partial")
-            temp_report.write_text("\n".join(lines), encoding="utf-8")
+            temp_report = staged
+            with temp_report.open("x", encoding="utf-8") as stream:
+                stream.write("\n".join(lines))
             cutoff_guard()
             os.replace(temp_report, PRIVATE_REPORT)
             print("OK: H-F03 exploratory PRIVATE report written locally; coordinator review required.")
