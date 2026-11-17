@@ -60,3 +60,5 @@ uses `H-A03_fx_country_classes.py --phase explore`; internal validation requires
 [H-A21: country amount context](../../findings/hypotheses/H-A21_country_amount_context.md) compares a first-path-country residual correction with currency/party, receiver and rotated-country baselines.
 
 [H-A22: USD quantization levels](../../findings/hypotheses/H-A22_usd_quantization_levels.md) screens nested grids and preferred decimal mantissas without assuming mixture weights.
+
+[H-A23: preferred USD five anchor](../../findings/hypotheses/H-A23_preferred_five_anchor.md) tests a local-density-normalized point-mass constraint with a matched neighboring-anchor control.
