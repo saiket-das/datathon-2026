@@ -35,7 +35,8 @@ THRESHOLDS = (1, 5, 10, 25, 50, 100)
 S0 = ("route", "participants", "currency", "party_pair", "gaps")
 S1 = S0 + ("ord_country", "ben_country")
 S3 = S1 + ("amount_band",)
-ALL_COLUMNS = frozenset((
+# Explicitly preserve the 26 fields from the original source view, in source order.
+SOURCE_COLUMNS = (
     "ROW_ID", "EPOCH_SECONDS", "CURRENCY_CODE", "USD_AMOUNT",
     "ORDERING_BIC8", "BENEFICIARY_BIC8", "BIC8_PATH", "TOTAL_DURATION",
     "CONTINUITY_QFLAG", "CURRENCY_CONVERSION_COUNT", "PARTICIPANT_COUNT",
@@ -44,7 +45,14 @@ ALL_COLUMNS = frozenset((
     "BENEFICIARY_TOKENS", "ORDERING_TYPE", "BENEFICIARY_TYPE",
     "ANOMALY_TYPE", "ts_utc", "ord_country", "ben_country", "path_len",
     "gap_count",
-))
+)
+ALL_COLUMNS = frozenset(SOURCE_COLUMNS)
+# Exact 13 columns produced by the existing May–June development projection.
+DEVELOPMENT_COLUMNS = (
+    "route", "participants", "currency", "party_pair", "gaps",
+    "ord_country", "ben_country", "ord_bank", "ben_bank", "fx",
+    "log_duration", "log_amount", "amount_band",
+)
 PAIRS = (("P0", "S0", S0), ("P1", "S0", S0), ("P1", "S1", S1),
          ("P3", "S0", S0), ("P3", "S1", S1), ("P3", "S3", S3))
 
@@ -131,10 +139,17 @@ def support(con: duckdb.DuckDBPyConnection, name: str,
         HAVING count(*) FILTER (WHERE fx=0) >= 100
            AND count(*) FILTER (WHERE fx=1) >= 100
     """)
+    # GROUP BY groups NULL keys together; USING (=) would silently discard
+    # their supported rows on rejoining. Preserve the intended cohort with
+    # NULL-safe equality on every key. support_{name} is unique by GROUP BY.
+    on = " AND ".join(
+        f"d.{key} IS NOT DISTINCT FROM s.{key}" for key in keys
+    )
+    projection = ", ".join(f"d.{column}" for column in DEVELOPMENT_COLUMNS)
     con.execute(f"""
         CREATE TEMP VIEW {name} AS
-        SELECT d.* FROM {population} d
-        INNER JOIN support_{name} s USING ({group})
+        SELECT {projection} FROM {population} AS d
+        INNER JOIN support_{name} AS s ON {on}
     """)
 
 
@@ -318,14 +333,25 @@ def self_test() -> None:
           )
         """)
         rows = []
-        for cc, bn, amount, n0, n1, duration0, duration1 in (
-            ("US", "BANK_A", 127, 150, 200, 100, 120),
-            ("GB", "BANK_B", 255, 180, 140, 220, 130),
+        nullable_count = 0
+        for cc, bn, amount, n0, n1, duration0, duration1, nullable in (
+            ("US", "BANK_A", 127, 150, 200, 100, 120, False),
+            ("GB", "BANK_B", 255, 180, 140, 220, 130, False),
+            # Synthetic NULL values in several matching keys, with >=100
+            # records in each FX state. Ordinary USING drops this entire
+            # supported group; IS NOT DISTINCT FROM must retain it.
+            (None, "BANK_NULL", 511, 160, 180, 300, 110, True),
         ):
             for fx, n, duration in ((0, n0, duration0), (1, n1, duration1)):
-                rows.extend([("Direct", 2, "USD", "B", "C", 0, cc, "SG",
+                rows.extend([(None if nullable else "Direct", 2,
+                              None if nullable else "USD",
+                              None if nullable else "B", "C",
+                              None if nullable else 0, cc,
+                              None if nullable else "SG",
                               bn, "BANK_Z", fx, float(duration),
                               float(amount), datetime(2023, 5, 15), None)] * n)
+                if nullable:
+                    nullable_count += n
         con.executemany(
             "INSERT INTO payments_source VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
             rows)
@@ -334,13 +360,31 @@ def self_test() -> None:
         n0, n1, n3 = (population_counts(con, name) for name in ("P0","P1","P3"))
         if n0 != n1 or n1 != n3 or n0[0] != len(rows):
             raise AssertionError("Synthetic common-support nesting failed")
+        # All FX rows with NULL route/currency/party/gaps/countries survive
+        # each support join. Each retained population has exactly the same
+        # original row multiplicity, not merely equal aggregate means.
+        for population in ("dev", "P0", "P1", "P3"):
+            total, kept_null = con.execute(f"""
+                SELECT count(*),
+                       count(*) FILTER (WHERE route IS NULL
+                          AND currency IS NULL AND party_pair IS NULL
+                          AND gaps IS NULL AND ord_country IS NULL
+                          AND ben_country IS NULL)
+                FROM {population}
+            """).fetchone()
+            if total != len(rows) or kept_null != nullable_count:
+                raise AssertionError("Nullable supported strata lost or duplicated")
+        for name, expected in (("P0", 2), ("P1", 3), ("P3", 3)):
+            strata = con.execute(f"SELECT count(*) FROM support_{name}").fetchone()[0]
+            if strata != expected:
+                raise AssertionError("Unexpected synthetic support strata")
         for p, _, grouping in PAIRS:
             for y in ("log_duration", "log_amount"):
                 v = decompose(con, p, grouping, y)
                 if v["strata"] == 0:
                     raise AssertionError("Synthetic fixture unexpectedly unsupported")
         summary, levels = pair_overlap(con, "dev")
-        if summary["observed_pairs"] != 2 or levels[-1][1] != 2:
+        if summary["observed_pairs"] != 3 or levels[-1][1] != 3:
             raise AssertionError("Synthetic bank overlap failed")
     finally:
         con.close()
@@ -369,7 +413,9 @@ def main() -> int:
         con = duckdb.connect()
         try:
             configure(con, PRIVATE_ROOT / ".duckdb_tmp")
-            con.execute("CREATE TEMP VIEW payments_source AS SELECT * FROM read_parquet(" +
+            source_projection = ", ".join(SOURCE_COLUMNS)
+            con.execute("CREATE TEMP VIEW payments_source AS SELECT " +
+                        source_projection + " FROM read_parquet(" +
                         read_parquet_literal(sources) + ")")
             columns = {item[0] for item in con.execute("DESCRIBE payments_source").fetchall()}
             if columns != ALL_COLUMNS:
