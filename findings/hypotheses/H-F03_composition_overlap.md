@@ -92,3 +92,8 @@ If exact-bank overlap disappears at high but not low thresholds, support-driven 
 - **Resource provision:** DuckDB memory limit 3GB, threads=2, minimum 5–6 GiB RAM allocated to the local runner with 10–20 GiB private scratch free. No source records may be uploaded to GitHub/hosted CI, and no report is public by default.
 - **Cutoff:** Never start at or after 2026-11-18 20:00 Asia/Kuala_Lumpur; local supervisor must also terminate any in-flight process at cutoff.
 - **Output interpretation:** no H-F03 empirical result until exact approved private execution/review is returned. Keep failed tests and unsuccessful controls as separate additions rather than replacing the original design.
+
+
+## Exploratory implementation safety amendment (before any H-F03 data run)
+
+The earlier H-F03 code-only implementation commit remains part of the immutable Git history. A subsequent **non-scientific** safeguard now refuses to overwrite an existing private report or incomplete `.partial` report. If either exists, the coordinator must preserve and review it before launching another attempt. New approved code SHA/commit is **`5bed769b022e62e4738bf82c1a4e29bab28147aa`** (code change only); this **supersedes the preceding code commit as the requested execution input**. Experimental populations, decomposition, thresholds, references and May–June restrictions have not changed. No source outcome was read and no H-F03 self-test was run by F while making this amendment. The coordinator must still run the invented-fixture self-test and review source integrity before payment-data execution.
