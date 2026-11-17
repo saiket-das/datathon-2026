@@ -168,7 +168,7 @@ def main() -> int:
                        gap_count gaps,
                        CURRENCY_CONVERSION_COUNT fx,
                        USD_AMOUNT amount,
-                       TOTAL_DURATION seconds,
+                       TOTAL_DURATION AS seconds,
                        ORDERING_BIC8 ord_bank, BENEFICIARY_BIC8 ben_bank,
                        ord_country, ben_country, BIC8_PATH path,
                        CAST(LEAST(31, floor(log2(1.0 + USD_AMOUNT))) AS INTEGER)
