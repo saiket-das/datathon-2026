@@ -301,16 +301,20 @@ def report_table(columns: tuple[str, ...], rows: list[tuple]) -> list[str]:
 
 
 def self_test() -> None:
-    """Invented, non-sponsor fixture: SQL binding, nesting, overlap and closure."""
+    """Invented source-typed fixture also exercises the real SQL projection."""
     con = duckdb.connect()
     try:
+        # The earlier H-F02 failure occurred BEFORE creating its dev view.
+        # For H-F03, test the actual setup_development SQL, not a prebuilt dev.
         con.execute("""
-          CREATE TEMP TABLE dev (
-            route VARCHAR, participants INTEGER, currency VARCHAR,
-            party_pair VARCHAR, gaps INTEGER, ord_country VARCHAR,
-            ben_country VARCHAR, ord_bank VARCHAR, ben_bank VARCHAR,
-            fx INTEGER, log_duration DOUBLE, log_amount DOUBLE,
-            amount_band INTEGER
+          CREATE TEMP TABLE payments_source (
+            TRANSACTION_TYPE_CODE VARCHAR, PARTICIPANT_COUNT INTEGER,
+            CURRENCY_CODE VARCHAR, ORDERING_TYPE VARCHAR,
+            BENEFICIARY_TYPE VARCHAR, gap_count INTEGER,
+            ord_country VARCHAR, ben_country VARCHAR,
+            ORDERING_BIC8 VARCHAR, BENEFICIARY_BIC8 VARCHAR,
+            CURRENCY_CONVERSION_COUNT INTEGER, TOTAL_DURATION DOUBLE,
+            USD_AMOUNT DOUBLE, ts_utc TIMESTAMP, ANOMALY_TYPE VARCHAR
           )
         """)
         rows = []
@@ -318,19 +322,21 @@ def self_test() -> None:
             ("US", "BANK_A", 127, 150, 200, 100, 120),
             ("GB", "BANK_B", 255, 180, 140, 220, 130),
         ):
-            band = min(31, math.floor(math.log2(1.0 + amount)))
             for fx, n, duration in ((0, n0, duration0), (1, n1, duration1)):
-                rows.extend([("Direct", 2, "USD", "BC", 0, cc, "SG",
-                              bn, "BANK_Z", fx, math.log1p(duration),
-                              math.log1p(amount), band)] * n)
-        con.executemany("INSERT INTO dev VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", rows)
+                rows.extend([("Direct", 2, "USD", "B", "C", 0, cc, "SG",
+                              bn, "BANK_Z", fx, float(duration),
+                              float(amount), datetime(2023, 5, 15), None)] * n)
+        con.executemany(
+            "INSERT INTO payments_source VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            rows)
+        setup_development(con)
         setup_populations(con)
         n0, n1, n3 = (population_counts(con, name) for name in ("P0","P1","P3"))
         if n0 != n1 or n1 != n3 or n0[0] != len(rows):
             raise AssertionError("Synthetic common-support nesting failed")
         for p, _, grouping in PAIRS:
             for y in ("log_duration", "log_amount"):
-                v = decompose(con,p,grouping,y)
+                v = decompose(con, p, grouping, y)
                 if v["strata"] == 0:
                     raise AssertionError("Synthetic fixture unexpectedly unsupported")
         summary, levels = pair_overlap(con, "dev")
@@ -338,7 +344,7 @@ def self_test() -> None:
             raise AssertionError("Synthetic bank overlap failed")
     finally:
         con.close()
-    print("OK: H-F03 invented-fixture SQL and decomposition checks passed; no sponsor data accessed.")
+    print("OK: H-F03 invented-source SQL and decomposition checks passed; no sponsor data accessed.")
 
 
 def main() -> int:
