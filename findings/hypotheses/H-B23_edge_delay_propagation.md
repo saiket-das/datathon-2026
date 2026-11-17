@@ -65,3 +65,36 @@ unopened before freeze. Its July payment rows, corridors, banks and
 possibly accounts overlap prior research. It is internal validation.
 The narrow scope and five-witness selection can miss other timing
 regimes, interior arrangements or outer effects.
+
+## Frozen internal result
+
+The unchanged July test passed at freeze
+`af07496a8a81d970bbb30531c1a4f484ec03fa55` (17 November 2026,
+10:44:59 MYT). The locked −13 second shift applies to 3,111 of
+151,146 scoped paths (2.06%). The primary subset has 1,099 marked
+paths, 733 outer corridors, 114 origins, 130 receivers, and 109
+interior banks.
+
+| Added excess | Mean absolute error in seconds |
+| --- | ---: |
+| Adjacent only | 7.263 |
+| No directional excess | 244.262 |
+| Outer only | 289.970 |
+| Adjacent plus outer | 132.056 |
+
+Adjacent-only is within 20 seconds on 95.81%. The smallest lower 99%
+relative MAE reductions across the three bank-role sensitivities
+are 95.81% against no excess, 96.65% against outer only, and 91.21%
+against adding both. Of 645 supported adjacent-marked paths with
+unmarked outer pairs, the median observed excess is 310 seconds.
+The fitted adjacent mean is 311.17 seconds and the outer mean is
+1.16. Cells with marked outer pairs lack separate role support, so
+their route-specific timing remains unresolved.
+
+Adjacent ordered pairs carry the transferable duration component on
+this selected population. B19's association between the outer Covered
+label and Direct direction can coexist with that rule. The July
+results do not recover the exact mechanism for choosing direction
+states or extrapolate to unsupported edges or longer visible paths.
+These specific July outcomes are now exposed.
+[Aggregate report](../../analysis/20_routing_time/out/H-B23_edge_delay_propagation_confirm.md).

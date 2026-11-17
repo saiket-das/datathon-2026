@@ -202,3 +202,38 @@ The next open question is what determines the directed Covered state,
 including its relationship with bank support and pairs with no early
 multibank witnesses. The observed rules do not determine assignment
 for new corridors or identify the original sequence of generator stages.
+
+## Round 3 discovery and exposure checkpoint
+
+Resumed 17 November 2026 in the isolated B worktree from
+`5cd77221d2b1769fbe16f700ed579fc47798da8a`. The organiser's original
+Rules and Regulations section 3.3 restricts access to substantive work
+to registered team members. Round 3 research remains local while the
+GitHub destination is public. All earlier freezes and failures are
+preserved. May–June queries preceded the new July outcomes.
+
+| Hypothesis | Evidence and status |
+| --- | --- |
+| [B20](../findings/hypotheses/H-B20_unseen_corridor_propensities.md) | Frozen internal test passed on 3,384 of 5,008 novel repeated July corridors. Origin-only Brier .025336 versus .029565 global, .029831 receiver and .029426 directed country pair. The smallest 99% conditional lower gain is 5.38%. Receiver odds did not demonstrate incremental improvement over origin alone. |
+| [B21](../findings/hypotheses/H-B21_reversed_path_penalty.md) | Exploration lacks matched support. Fewer than 100 exact reversed three-bank sequences, and none with all required Direct controls. No July query. |
+| [B22](../findings/hypotheses/H-B22_covered_long_corridors.md) | Exploration lacks 100 pairs where both Direct direction medians are at least 100 seconds. No test of B19's transfer to slow baselines. |
+| [B23](../findings/hypotheses/H-B23_edge_delay_propagation.md) | Frozen internal test passed. 3,111 of 151,146 July paths matched, 1,099 marked. Adjacent-only MAE 7.263 s, zero excess 244.262 s, outer only 289.970 s, both 132.056 s. Lowest 99% lower lift across controls and roles is 91.21%. |
+| [B24](../findings/hypotheses/H-B24_origin_structural_zero.md) | Exploration rejects a literal zero-witness gate. Among 706 corridors from origins without May Covered witnesses, 1.13% are Covered in June. A graded origin rate beats the two-rate model on the whole 5,487-corridor comparison. |
+
+B20 and B23 froze at `af07496a8a81d970bbb30531c1a4f484ec03fa55` on
+17 November at 10:44:59 MYT. The unchanged `--phase confirm --freeze`
+commands ran successfully and both July decision rows read True. These
+outcomes are now exposed. B20 excludes both scored pair orientations
+from May fitting, while every scored endpoint has May role support.
+B23 uses separate May Direct and June calibration records and July
+three-bank scoring. The evaluated July records and likely shared
+accounts, banks, corridors, countries and dates limit both results to
+internal tests. Separate bank-role resampling does not remove those
+dependencies. Reproduction commands and denominators are in the records.
+
+The current mechanism question is why origin propensities vary across
+known banks. B20 and B24 constrain a candidate assignment function.
+B23 shows that on supported three-bank paths the duration surcharge
+transfers along adjacent pairs. The actual draw for the Covered state,
+the higher-baseline timing process and longer path transfer remain open.
+`uv run --locked pytest` passed 76 checks for this wave.

@@ -84,3 +84,16 @@ short-median corridor gaps with bounded distributions.
 [H-B19](../../findings/hypotheses/H-B19_covered_direction_duration.md) tests
 whether earlier multibank labels locate the slower Direct direction.
 The records link the exact commands and frozen tests.
+
+## Round 3
+
+- [H-B20](../../findings/hypotheses/H-B20_unseen_corridor_propensities.md)
+  compares endpoint propensities on ordered corridors with no May witness in either orientation.
+- [H-B21](../../findings/hypotheses/H-B21_reversed_path_penalty.md) screens
+  exact reversed three-bank paths for sufficient timing support.
+- [H-B22](../../findings/hypotheses/H-B22_covered_long_corridors.md) screens
+  Covered versus Indirect duration asymmetry when both Direct directions are slow.
+- [H-B23](../../findings/hypotheses/H-B23_edge_delay_propagation.md) compares
+  adjacent-edge and outer-endpoint duration components using fixed May and June fits.
+- [H-B24](../../findings/hypotheses/H-B24_origin_structural_zero.md) compares
+  binary origin activity and graded origin propensities.

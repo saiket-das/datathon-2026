@@ -69,3 +69,29 @@ partition, records, currencies, banks, accounts and possible corridor
 structure seen by other experiments. The novelty rule excludes both
 literal orientations from this May training only. This is internal
 validation and leaves new-bank transport and generator stage order open.
+
+## Frozen internal result
+
+The unchanged July test passed at freeze
+`af07496a8a81d970bbb30531c1a4f484ec03fa55` (17 November 2026,
+10:44:59 MYT). July had 81,372 directed corridors and 227,489
+payments. Of 30,112 repeated pure corridors, 5,008 were absent in
+both orientations from May (11,581 payments). After excluding 1,624
+unsupported endpoint roles, 3,384 corridors and 7,907 payments remain.
+These cover 408 origin banks and 732 receiver banks. The scorable
+cohort represents 67.57% of novel repeated corridors and 3.48% of all
+scoped July payments.
+
+Origin-only Brier was .025336 versus .029565 global, .029831 receiver,
+and .029426 directed country pair. Pooled Covered share was 3.0142%
+versus 4.0149% estimated by origin. The origin-bank lower 99% gains
+over the three controls were 6.005%, 6.373%, and 6.959%. The respective
+receiver-bank bounds were 5.815%, 6.227%, and 5.377%. Combining
+endpoint odds gave Brier .026256 and had a relative gain interval
+over origin only spanning zero under either bank resample.
+
+This supports persistent origin-associated variation in the population
+of supported May-unseen corridors. It leaves the individual state
+assignment, receiver interactions and new-bank transport unresolved.
+These specific July outcomes are now exposed.
+[Aggregate report](../../analysis/20_routing_time/out/H-B20_unseen_corridor_propensities_confirm.md).
