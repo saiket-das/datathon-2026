@@ -83,7 +83,7 @@ def test_audit_report_bytes_rejects_invalid_utf8():
         module.audit_report_bytes(b"Training period denominators\n\xff")
 
 
-def test_cli_rejects_public_worktree_report_and_destination(tmp_path, monkeypatch):
+def test_cli_rejects_public_worktree_report_and_destination(tmp_path, monkeypatch, capsys):
     """A private disclosure audit must never read/write artifacts in public Git."""
     import sys
     import pytest
@@ -108,6 +108,8 @@ def test_cli_rejects_public_worktree_report_and_destination(tmp_path, monkeypatc
             "G_disclosure_audit.py", "--report", str(report),
             "--private-audit", str(dest),
         ])
-        with pytest.raises(SystemExit, match="outside the public repository"):
+        with pytest.raises(SystemExit) as exc:
             module.main()
+        assert exc.value.code == 2
+        assert "outside the public repository" in capsys.readouterr().err
         assert not dest.exists()
