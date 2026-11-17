@@ -95,6 +95,10 @@ scripts from the repository root.
 timing-derived origin groups on unseen corridors. Run its matching
 script for exploration-only evidence.
 
+[H-B32](../../findings/hypotheses/H-B32_country_novelty_support.md) audits
+geographic matching support on May-unseen June pairs. Run its matching
+script for exploration-only support counts.
+
 ## Round 3
 
 - [H-B20](../../findings/hypotheses/H-B20_unseen_corridor_propensities.md)

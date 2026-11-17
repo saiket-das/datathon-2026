@@ -329,3 +329,11 @@ are unsupported as substitutes for origin propensities. The script
 exposes no new July results. Historical frozen tests and failures remain intact.
 The next unresolved question is which latent bank attributes or partner
 selection rules produce origin variability after accounting for geography.
+
+B32 audited the B30 extension to pairs absent in either orientation from
+May. The five-per-country-group cohort retains6,487 June corridors but
+fewer than100 matched origins, so its effect is suppressed. Recurring
+pairs retain141 origins/21,011 corridors and a+4.0475point contrast.
+Ten-per-group controls also lack support. No new July outcome or
+frozen validation follows. B30 cannot be presented as a validated
+effect specifically on unseen pairs.
