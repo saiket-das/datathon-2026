@@ -1,5 +1,8 @@
 """Invented tests only; never sponsor rows."""
 import pytest
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from R_G02_bank_components import bank_component_diagnostics as check
 
 
