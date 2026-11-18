@@ -10,6 +10,7 @@
 4. [03 — Conflicts and falsification](03_conflicts_and_falsification.md): failed tests, unidentifiable mechanisms and support failures preserved.
 5. [04 — Evidence/exposure audit](04_evidence_and_exposure_audit.md): data integrity, known overlaps, protected results, limitations.
 6. [05 — Close-out decision](05_scientific_closeout.md): what is actually complete and what remains blocked.
+7. [06 — Selected evidence matrix](06_selected_evidence_matrix.md): reported numerical effects with controls, source links and cohort limitations.
 
 ## Scope summary
 
