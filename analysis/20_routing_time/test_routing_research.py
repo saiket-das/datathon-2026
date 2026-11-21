@@ -79,3 +79,49 @@ def test_eligible_overlap_includes_cross_role_accounts() -> None:
         columns, rows = common.overlaps(con, "sample", "NOT labelled")
         assert columns == ["row_ids", "either_role_accounts", "endpoint_banks", "visible_path_banks"]
         assert rows == [(0, 1, 0, 1)]
+
+
+def test_receiver_rank_checkerboard_counterexample() -> None:
+    module = load("H-B27_nested_receiver_rank")
+    with duckdb.connect() as con:
+        con.execute("""CREATE TABLE supported AS
+            SELECT origin a,receiver b,
+                   (receiver<CASE WHEN origin=0 THEN 30 ELSE 60 END)::INT covered
+            FROM range(2) o(origin) CROSS JOIN range(100) r(receiver)""")
+        nested = module.checkerboards(con)
+        assert nested[0] == 1 and nested[3] == 100
+        assert nested[4:7] == (0, 0, 0)
+        con.execute("""UPDATE supported SET covered=(b>=50)::INT WHERE a=1""")
+        crossed = module.checkerboards(con)
+        assert crossed[4] == 1 and crossed[5] == 1500
+        assert crossed[6] == 1 and crossed[7] == pytest.approx(.3)
+
+
+def test_placeholder_duration_contrast_matches_path_cells() -> None:
+    module = load("H-B28_placeholder_duration")
+    with duckdb.connect() as con:
+        con.execute("""CREATE TABLE x AS
+          SELECT [bank,bank+1000] p,(i>=5) gaps,TIMESTAMP '2023-06-01' ts_utc,
+            'Direct' route,'USD' currency,true agrees,
+            bank*100+CASE WHEN i>=5 THEN 2 ELSE 0 END d
+          FROM range(100) b(bank) CROSS JOIN range(10) r(i)""")
+        result = module.contrast(con,"month",False,False)
+        assert result[:6] == (100,100,100,100,1000,500)
+        assert result[6:10] == pytest.approx((2,2,4,0))
+        assert result[10] == pytest.approx((2,2))
+        assert result[11] == pytest.approx((2,2))
+
+
+def test_placeholder_entity_audit_counts_cross_role_reuse(tmp_path, monkeypatch) -> None:
+    module = load("H-B28_placeholder_duration")
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "dataset").mkdir()
+    with duckdb.connect() as con:
+        con.execute("""COPY (SELECT 'old_sender' ordering_account,'old_receiver' beneficiary_account,
+          'A' ordering_bic8,'B' beneficiary_bic8,'A;B' bic8_path,
+          TIMESTAMP '2023-05-01' ts_utc,2 participant_count,'Direct' transaction_type_code,
+          NULL::VARCHAR anomaly_type) TO 'dataset/payments.parquet' (FORMAT PARQUET)""")
+        con.execute("""CREATE TABLE x AS SELECT ['A','C'] p,TIMESTAMP '2023-07-01' ts_utc,
+          'Direct' route,'old_receiver' oa,'new_account' ba""")
+        con.execute("""CREATE TABLE cells AS SELECT ['A','C'] p,TIMESTAMP '2023-07-01' period,'Direct' route""")
+        assert module.entity_audit(con) == [('Accounts, either role',2,1),('Visible endpoint banks',2,1)]
