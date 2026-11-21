@@ -1,0 +1,191 @@
+"""Dataset-independent synthetic fixture tests for Investigator G R-G01."""
+from importlib.util import module_from_spec, spec_from_file_location
+from pathlib import Path
+
+import duckdb
+
+MODULE = Path(__file__).with_name("R-G01_visible_endpoints.py")
+SPEC = spec_from_file_location("g_r01_module", MODULE)
+assert SPEC and SPEC.loader
+r01 = module_from_spec(SPEC)
+SPEC.loader.exec_module(r01)
+
+
+def test_visible_path_extraction_ignores_gaps_and_rejects_non_bic():
+    db = duckdb.connect(":memory:")
+    result = db.execute("""
+        WITH t AS (
+            SELECT list_filter(
+              string_split(' AAAAAAAA ;...; XXXXXXX ; BBBBBBBB ', ';'),
+              lambda x: regexp_full_match(trim(x), '^[A-Z0-9]{8}$')
+            ) AS nodes
+        )
+        SELECT trim(list_extract(nodes, 1)),
+               trim(list_extract(nodes, array_length(nodes))),
+               array_length(nodes)
+        FROM t
+    """).fetchone()
+    assert result == ("AAAAAAAA", "BBBBBBBB", 2)
+    db.close()
+
+
+def test_independent_pair_map_and_reverse_negative_controls():
+    db = duckdb.connect(":memory:")
+    db.execute("""
+        CREATE TEMP TABLE selected (
+          period VARCHAR, label VARCHAR, path VARCHAR, node_count BIGINT,
+          first_bic VARCHAR, last_bic VARCHAR
+        )
+    """)
+    db.executemany("INSERT INTO selected VALUES(?,?,?,?,?,?)", [
+        ("2026-05", "Covered", "AAAAAAAA;BBBBBBBB", 2, "AAAAAAAA", "BBBBBBBB"),
+        ("2026-05", "Covered", "AAAAAAAA;XXXXXXXX;BBBBBBBB", 3, "AAAAAAAA", "BBBBBBBB"),
+        ("2026-05", "Indirect", "BBBBBBBB;AAAAAAAA", 2, "BBBBBBBB", "AAAAAAAA"),
+        ("2026-05", "Covered", "AAAAAAAA;CCCCCCCC", 2, "AAAAAAAA", "CCCCCCCC"),
+        ("2026-07", "Covered", "AAAAAAAA;YYYYYYYY;BBBBBBBB", 3, "AAAAAAAA", "BBBBBBBB"),
+        ("2026-07", "Indirect", "AAAAAAAA;ZZZZZZZZ;BBBBBBBB", 3, "AAAAAAAA", "BBBBBBBB"),
+        ("2026-07", "Indirect", "BBBBBBBB;XXXXXXXY;AAAAAAAA", 3, "BBBBBBBB", "AAAAAAAA"),
+        ("2026-07", "Covered", "DDDDDDDD;EEEEEEEE", 2, "DDDDDDDD", "EEEEEEEE"),
+    ])
+    r01.make_cohort(db, "may", "2026-05")
+    r01.build_maps(db)
+    r01.make_cohort(db, "july", "2026-07")
+    r01.build_eval(db)
+    counts = r01.summarize_model(db, "directed", "novel_path")
+    assert counts["total"] == 4
+    assert counts["supported"] == 3
+    assert counts["unseen"] == 1
+    assert counts["errors"] == 1
+    assert counts["pair_units"] == 2
+    assert counts["bad_pair_units"] == 1
+    assert r01.summarize_model(db, "reverse", "novel_path")["supported"] >= 2
+    assert r01.paired_control(db, "unordered", "novel_path")["common_n"] < 4
+    db.close()
+
+
+def test_one_sided_bound_and_public_small_cell_suppression():
+    assert r01.upper_one_sided(0, 0) == "undefined"
+    assert r01.upper_one_sided(0, 100) != "undefined"
+    assert r01.upper_one_sided(1, 1) == "100.000000%"
+    assert r01.safe_count(1) == "[1–9 suppressed]"
+    assert r01.safe_count(10) == "10"
+
+
+def test_month_boundary_uses_explicit_utc_not_executor_timezone():
+    from datetime import datetime, timedelta, timezone
+    just_before_may = datetime(2024, 5, 1, tzinfo=timezone.utc) - timedelta(seconds=1)
+    db = duckdb.connect(":memory:")
+    db.execute("SET TimeZone = 'UTC'")
+    month = db.execute(
+        "SELECT strftime(to_timestamp(?), '%Y-%m')",
+        [int(just_before_may.timestamp())]
+    ).fetchone()[0]
+    assert month == "2024-04"
+    db.close()
+
+
+def test_input_mutation_aborts_without_creating_report_or_metadata(tmp_path, monkeypatch):
+    """Synthetic regression: changed input digest must block fresh artifacts."""
+    import sys
+    import pytest
+
+    # Exercise the actual CLI orchestration against a tiny synthetic Parquet.
+    data = tmp_path / "dataset" / "payments.parquet"
+    data.parent.mkdir(parents=True)
+    db = duckdb.connect(":memory:")
+    db.execute(f"""
+        COPY (
+          SELECT 1714521600::BIGINT AS EPOCH_SECONDS,
+                 'Covered'::VARCHAR AS TRANSACTION_TYPE_CODE,
+                 'AAAAAAAA;BBBBBBBB'::VARCHAR AS BIC8_PATH
+        ) TO '{data.as_posix()}' (FORMAT PARQUET)
+    """)
+    db.close()
+
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+    script = tmp_path / r01.SCRIPT_REL
+    script.parent.mkdir(parents=True)
+    script.write_text("synthetic fixture executable", encoding="utf-8")
+
+    observed = []
+    def changed_digest(path):
+        assert path == data
+        observed.append(path)
+        return "a" * 64 if len(observed) == 1 else "b" * 64
+
+    monkeypatch.setattr(r01, "sha256_file", changed_digest)
+    monkeypatch.setattr(sys, "argv", [
+        "R-G01_visible_endpoints.py", "--phase", "explore",
+        "--train-period", "2024-05", "--data", str(data),
+    ])
+    with pytest.raises(SystemExit, match="INPUT INTEGRITY FAILURE"):
+        r01.main()
+    assert len(observed) == 2
+    assert not (tmp_path / "analysis/40_g_adversarial/out/R-G01_aggregates.md").exists()
+    assert not (tmp_path / "dataset/g_executor/R-G01_metadata.json").exists()
+
+
+def test_freeze_guard_rejects_wrong_calendar_and_changed_bytes(tmp_path, monkeypatch):
+    """Dataset-free regression: freeze gate must fail before any July query."""
+    import subprocess
+    from types import SimpleNamespace
+    import pytest
+
+    freeze = "0" * 40
+    script = tmp_path / r01.SCRIPT_REL
+    protocol = tmp_path / r01.PROTOCOL_REL
+    script.parent.mkdir(parents=True, exist_ok=True)
+    protocol.parent.mkdir(parents=True, exist_ok=True)
+    frozen_script = b"frozen script bytes\n"
+    frozen_protocol = b"FROZEN_PERIODS: 2023-05 -> 2023-07\n"
+    script.write_bytes(frozen_script)
+    protocol.write_bytes(frozen_protocol)
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+
+    def frozen_git_show(command, **kwargs):
+        assert command[:2] == ["git", "show"]
+        assert kwargs["cwd"] == tmp_path
+        rel = command[2].split(":", 1)[1]
+        return SimpleNamespace(stdout={
+            r01.SCRIPT_REL: frozen_script,
+            r01.PROTOCOL_REL: frozen_protocol,
+        }[rel])
+
+    monkeypatch.setattr(subprocess, "run", frozen_git_show)
+    r01.verify_freeze(freeze, "2023-05", "2023-07")
+
+    with pytest.raises(SystemExit, match="Validation cohort not frozen"):
+        r01.verify_freeze(freeze, "2024-05", "2024-07")
+
+    script.write_bytes(b"post-freeze script modification\n")
+    with pytest.raises(SystemExit, match="Frozen file changed"):
+        r01.verify_freeze(freeze, "2023-05", "2023-07")
+    script.write_bytes(frozen_script)
+
+    protocol.write_bytes(frozen_protocol + b"post-freeze protocol edit\n")
+    with pytest.raises(SystemExit, match="Frozen file changed"):
+        r01.verify_freeze(freeze, "2023-05", "2023-07")
+
+
+def test_validation_rejects_unfrozen_calendar_before_source_hash(tmp_path, monkeypatch):
+    """A synthetic source must not be opened when the validation freeze fails."""
+    import sys
+    import pytest
+
+    data = tmp_path / "payments.parquet"
+    data.write_bytes(b"not a real parquet; it must never be opened")
+    monkeypatch.setattr(r01, "ROOT", tmp_path)
+
+    def fail_closed(*args, **kwargs):
+        raise SystemExit("Validation cohort not frozen: synthetic mismatch")
+
+    monkeypatch.setattr(r01, "verify_freeze", fail_closed)
+    monkeypatch.setattr(r01, "sha256_file",
+                        lambda _: pytest.fail("source hash must not be read before freeze"))
+    monkeypatch.setattr(sys, "argv", [
+        "R-G01_visible_endpoints.py", "--phase", "validate",
+        "--train-period", "2024-05", "--eval-period", "2024-07",
+        "--freeze-commit", "0" * 40, "--data", str(data),
+    ])
+    with pytest.raises(SystemExit, match="Validation cohort not frozen"):
+        r01.main()
