@@ -28,6 +28,7 @@ pyproject.toml, uv.lock    the Python libraries and their pinned versions (manag
 .python-version            the Python version uv installs and uses (3.13)
 .github/workflows/         automatic checks on every pull request (no dataset needed)
 docs/
+  handoff.md                     role A frozen investigation, results and exact review commands
   01_project_in_simple_words.md   plain-language introduction
   02_competition_brief.md         one-page factual brief of the rules
   03_execution_plan.md            team strategy and timeline
@@ -35,19 +36,40 @@ docs/
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
+  11_a_round2_progress.md       Round 2 A progress, validation and submission impact
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
   00_prep/                 shared: conversion, profile, scientific_checks.py, fixture tests
     out/scientific_checks.md  reproducible structural and validation aggregates
   10_amounts_currency/     owner A
+    H-A01_amount_kernel.py     account-controlled business-party scale investigation
+    H-A02_usd_rounding.py      exploration-trained EUR daily scaling investigation
+    H-A03_fx_country_classes.py  Round 2 learned-country-class FX-count test
+    H-A04_fx_gap_residuals.py     exploratory signed errors by gap status and route
+    H-A05_fx_repeat_classes.py    tighter FX bound and repeated-class alternatives
+    H-A06_currency_endpoint.py    first-path-country currency association
+    H-A07_currency_exceptions.py  exploratory receiver-country currency alternatives
+    H-A08_path_currency_set.py    controlled visible-path currency membership test
+    test_fx_country_classes.py  invented aggregate graph tests
+    out/H-A03_*                safe exploration/internal-validation reports
+    H-A09_* to H-A26_*        amount-scale, log-shape, FX support and date alignment investigations
+    test_value_mechanisms.py   dataset-independent calculation checks
+    out/H-A01_*, H-A02_*       aggregate exploration/confirmation reports and charts
   20_routing_time/         owner B
   30_parties_anomalies/    owner C
   40_g_adversarial/        owner G, isolated falsification scripts/ledger and local aggregate executor
     (each owner folder has out/ for charts)
 findings/
+    H-A01_amount_kernel.md, H-A02_usd_rounding.md  A's frozen plans and results
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
+    H-A03_fx_country_classes.md  Round 2 frozen internal-validation design
+    H-A04_fx_gap_residuals.md     Round 2 exploration and FX residual limitations
+    H-A05_fx_repeat_classes.md    Round 2 tighter FX bound and prior exposure
+    H-A06_currency_endpoint.md    Round 2 endpoint currency association
+    H-A07_currency_exceptions.md  Round 2 currency exceptions and prevalence controls
+    H-A08_path_currency_set.md    Round 2 path-set membership and opportunity controls
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
