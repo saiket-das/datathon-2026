@@ -36,6 +36,7 @@ docs/
   05_how_to_start.md              step-by-step guide: setup, working loop, schedule
   06_potential_agent_tools.md     optional AI coding-agent tooling reference (non-binding)
   07_setup_audit_handover.md      repository audit, setup changes and how they were verified
+  11_a_round2_progress.md       Round 2 A progress, validation and submission impact
   official/                       organiser PDFs + searchable Markdown copies (the authority)
 dataset/                   the sponsor data lives here locally; NEVER committed
 analysis/
@@ -44,6 +45,15 @@ analysis/
   10_amounts_currency/     owner A
     H-A01_amount_kernel.py     account-controlled business-party scale investigation
     H-A02_usd_rounding.py      exploration-trained EUR daily scaling investigation
+    H-A03_fx_country_classes.py  Round 2 learned-country-class FX-count test
+    H-A04_fx_gap_residuals.py     exploratory signed errors by gap status and route
+    H-A05_fx_repeat_classes.py    tighter FX bound and repeated-class alternatives
+    H-A06_currency_endpoint.py    first-path-country currency association
+    H-A07_currency_exceptions.py  exploratory receiver-country currency alternatives
+    H-A08_path_currency_set.py    controlled visible-path currency membership test
+    test_fx_country_classes.py  invented aggregate graph tests
+    out/H-A03_*                safe exploration/internal-validation reports
+    H-A09_* to H-A26_*        amount-scale, log-shape, FX support and date alignment investigations
     test_value_mechanisms.py   dataset-independent calculation checks
     out/H-A01_*, H-A02_*       aggregate exploration/confirmation reports and charts
   20_routing_time/         owner B
@@ -53,6 +63,12 @@ findings/
     H-A01_amount_kernel.md, H-A02_usd_rounding.md  A's frozen plans and results
   issues_log.md            data problems found and the decision taken for each
   hypotheses/              one file per hypothesis (tested, confirmed or rejected)
+    H-A03_fx_country_classes.md  Round 2 frozen internal-validation design
+    H-A04_fx_gap_residuals.md     Round 2 exploration and FX residual limitations
+    H-A05_fx_repeat_classes.md    Round 2 tighter FX bound and prior exposure
+    H-A06_currency_endpoint.md    Round 2 endpoint currency association
+    H-A07_currency_exceptions.md  Round 2 currency exceptions and prevalence controls
+    H-A08_path_currency_set.md    Round 2 path-set membership and opportunity controls
 deliverables/              final dashboards PDF and slides PDF, plus the submission checklist
 ```
 
